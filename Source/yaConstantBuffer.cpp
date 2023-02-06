@@ -32,7 +32,7 @@ namespace ya
 
 	void ConstantBuffer::Bind(void* data)
 	{
-		GetDevice()->BindConstantBuffer(buffer.Get(), &data, desc.ByteWidth);
+		GetDevice()->BindConstantBuffer(buffer.Get(), data, desc.ByteWidth);
 	}
 
 	void ConstantBuffer::SetPipline(eShaderStage stage)

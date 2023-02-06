@@ -27,7 +27,7 @@ namespace ya
 
 		mVetexDesc.ByteWidth = sizeof(renderer::Vertex) * count;
 		mVetexDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
-		mVetexDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+		mVetexDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 		mVetexDesc.CPUAccessFlags =0;
 
 		D3D11_SUBRESOURCE_DATA subData = {};
