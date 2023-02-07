@@ -18,6 +18,7 @@ namespace ya
 
 		virtual void FixedUpdate();
 		virtual void Render();
+		void Release();
 
 		void SetWindow(HWND hwnd, UINT width, UINT height);
 

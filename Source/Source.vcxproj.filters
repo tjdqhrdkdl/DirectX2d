@@ -59,6 +59,9 @@
     <Filter Include="Component\MeshRenderer">
       <UniqueIdentifier>{39f04c9a-4599-4865-830b-545a1407f97f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{2f4222bb-45d2-42e0-bb80-b107d39bb3f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaMath.cpp">
@@ -119,6 +122,9 @@
       <Filter>Component\MeshRenderer</Filter>
     </ClCompile>
     <ClCompile Include="yaConstantBuffer.cpp" />
+    <ClCompile Include="yaTexture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -190,6 +196,9 @@
       <Filter>Component\MeshRenderer</Filter>
     </ClInclude>
     <ClInclude Include="yaConstantBuffer.h" />
+    <ClInclude Include="yaTexture.h">
+      <Filter>Resource\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">

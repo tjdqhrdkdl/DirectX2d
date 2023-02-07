@@ -178,6 +178,7 @@
     <ClInclude Include="yaScene.h" />
     <ClInclude Include="yaSceneManager.h" />
     <ClInclude Include="yaShader.h" />
+    <ClInclude Include="yaTexture.h" />
     <ClInclude Include="yaTime.h" />
     <ClInclude Include="yaTransform.h" />
   </ItemGroup>
@@ -200,6 +201,7 @@
     <ClCompile Include="yaScene.cpp" />
     <ClCompile Include="yaSceneManager.cpp" />
     <ClCompile Include="yaShader.cpp" />
+    <ClCompile Include="yaTexture.cpp" />
     <ClCompile Include="yaTime.cpp" />
     <ClCompile Include="yaTransform.cpp" />
   </ItemGroup>

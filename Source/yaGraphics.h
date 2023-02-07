@@ -35,6 +35,12 @@ namespace ya::graphics
 		End,
 	};
 
+	enum class eSamplerType
+	{
+		Point,
+		Linear,
+		Anisotropic
+	};
 	struct GpuBuffer
 	{
 		enum class eType

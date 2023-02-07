@@ -1,7 +1,9 @@
 #include "yaSceneManager.h"
-#include "yaRenderer.h"
 #include "yaTransform.h"
 #include "yaMeshRenderer.h"
+#include "yaRenderer.h"
+#include "yaResources.h"
+#include "yaTexture.h"
 
 
 namespace ya
@@ -12,6 +14,7 @@ namespace ya
 	{
 		mPlayScene = new Scene();
 		mPlayScene->Initialize();
+
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
 		tr->SetPosition(Vector3(0.2f, 0.2f, 0.0f));
@@ -20,8 +23,14 @@ namespace ya
 		MeshRenderer* mr = new MeshRenderer();
 		obj->AddComponent(mr);
 
-		mr->SetShader(renderer::shader);
-		mr->SetMesh(renderer::mesh);
+		Shader* shader = Resources::Find<Shader>(L"RectShader");
+		Mesh* mesh = Resources::Find<Mesh>(L"RectMesh");
+
+		mr->SetShader(shader);
+		mr->SetMesh(mesh);
+
+		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
+		texture->BindShader(eShaderStage::PS, 0);
 
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);

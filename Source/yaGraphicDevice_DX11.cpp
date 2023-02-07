@@ -236,6 +236,42 @@ namespace ya::graphics
 		}
 	}
 
+	void GraphicDevice_DX11::SetShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const* ppShaderResourceView)
+	{
+		switch (stage)
+		{
+		case eShaderStage::VS:
+			mContext->VSSetShaderResources(slot, 1, ppShaderResourceView);
+			break;
+		case eShaderStage::HS:
+			mContext->HSSetShaderResources(slot, 1, ppShaderResourceView);
+			break;
+		case eShaderStage::DS:
+			mContext->DSSetShaderResources(slot, 1, ppShaderResourceView);
+			break;
+		case eShaderStage::GS:
+			mContext->GSSetShaderResources(slot, 1, ppShaderResourceView);
+			break;
+		case eShaderStage::PS:
+			mContext->PSSetShaderResources(slot, 1, ppShaderResourceView);
+			break;
+		case eShaderStage::CS:
+			mContext->CSSetShaderResources(slot, 1, ppShaderResourceView);
+			break;
+		default:
+			break;
+		}
+	}
+
+	void GraphicDevice_DX11::BindsSamplers(UINT startSlot, UINT numSamplers, ID3D11SamplerState* const* ppSamplers)
+	{
+		mContext->VSSetSamplers(startSlot, numSamplers, ppSamplers);
+		mContext->HSSetSamplers(startSlot, numSamplers, ppSamplers);
+		mContext->DSSetSamplers(startSlot, numSamplers, ppSamplers);
+		mContext->GSSetSamplers(startSlot, numSamplers, ppSamplers);
+		mContext->PSSetSamplers(startSlot, numSamplers, ppSamplers);
+	}
+
 	void GraphicDevice_DX11::Clear()
 	{
 		//화면 지워주기
@@ -256,16 +292,25 @@ namespace ya::graphics
 
 	bool GraphicDevice_DX11::CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader)
 	{
-		if(!mDevice->CreateVertexShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppVertexShader))
+		if(FAILED(mDevice->CreateVertexShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppVertexShader)))
 			return false;
 		return true;
 	}
 
 	bool GraphicDevice_DX11::CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader)
 	{
-		if (!mDevice->CreatePixelShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppPixelShader))
+		if (FAILED(mDevice->CreatePixelShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppPixelShader)))
 			return false;
 		return true;
+	}
+
+	bool GraphicDevice_DX11::CreateSamplerState(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
+	{
+		if(FAILED(mDevice->CreateSamplerState(pSamplerDesc, ppSamplerState)))
+			return false;
+		
+		return true;
+
 	}
 
 	void GraphicDevice_DX11::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
@@ -302,23 +347,6 @@ namespace ya::graphics
 	{
 		mSwapChain->Present(0, 0);
 	}
-
-	void GraphicDevice_DX11::Render()
-	{
-		Clear();
-
-		AdjustViewPorts();
-
-		renderer::mesh->BindBuffer();
-
-		renderer::shader->Binds();
-
-		renderer::mesh->Render();
-
-		Present();
-
-	}
-
 
 }
 

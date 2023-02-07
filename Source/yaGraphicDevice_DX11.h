@@ -16,6 +16,7 @@ namespace ya::graphics
 		bool CreateShader();
 		bool CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader);
 		bool CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader);
+		bool CreateSamplerState(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState);
 
 		void BindViewports(D3D11_VIEWPORT* pViewport);
 		void BindVertexBuffer(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets);
@@ -26,7 +27,11 @@ namespace ya::graphics
 		void BindVertexShader(ID3D11VertexShader* pVertexShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances);
 		void BindPixelShader(ID3D11PixelShader* pPixelShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances);
 
+		ID3D11Device* GetID3D11Device() { return mDevice.Get(); }
+
 		void SetConstantBuffer(eShaderStage stage, eCBType type, ID3D11Buffer* buffer);
+		void SetShaderResource(eShaderStage stage, UINT slot, ID3D11ShaderResourceView* const * ppShaderResourceView);
+		void BindsSamplers(UINT startSlot, UINT numSamplers, ID3D11SamplerState* const* ppSamplers);
 
 		void Clear();
 		void AdjustViewPorts();

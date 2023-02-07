@@ -96,7 +96,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             // 그래픽 라이브러리
         }
     }
-
+    application.Release();
+    
     return (int) msg.wParam;
 }
 

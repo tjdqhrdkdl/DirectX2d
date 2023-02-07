@@ -3,6 +3,7 @@
 #include "yaTime.h"
 #include "yaInput.h"
 #include "yaSceneManager.h"
+#include "yaResources.h"
 
 namespace ya
 {
@@ -62,6 +63,11 @@ namespace ya
 
 		//graphicDevice->Render();
 		graphicDevice->Present();
+	}
+
+	void Application::Release()
+	{
+		Resources::Release();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

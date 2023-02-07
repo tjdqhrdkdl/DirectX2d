@@ -8,7 +8,7 @@ namespace ya
 	{
 	public:
 		ConstantBuffer();
-		~ConstantBuffer();
+		virtual ~ConstantBuffer();
 
 		bool Create(size_t size);
 		void Bind(void* data);
