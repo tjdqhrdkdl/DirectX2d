@@ -6,6 +6,16 @@ struct VTX_OUT
     float2 vUV : TEXCOORD;
 };
 
+cbuffer MaterialData : register(b1)
+{
+    int cbiData;
+    float cbfData;
+    float2 cbVector2;
+    float3 cbVector3;
+    float4 cbVector4;
+    matrix cbMatrix;
+};
+
 Texture2D defaultTexture : register(t0);
 
 SamplerState PointSampler : register(s0);

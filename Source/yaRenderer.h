@@ -15,11 +15,26 @@ namespace	ya::renderer
 
 	struct Vertex
 	{
-		Vector3 pos;
+		Vector4 pos;
 		Vector4 color;
 		Vector2 uv;
 	};
 
+	CBUFFER(TransformCB, CBSLOT_TRANSFORM)
+	{
+		Vector4 pos;
+	};
+
+	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
+	{
+		int iData;
+		float fData;
+		Vector2 vector2;
+		Vector3 vector3;
+		Vector4 vector4;
+		Matrix matrix;
+
+	};
 
 	extern Vertex vertexes[4];
 	extern ConstantBuffer* constantBuffers[];

@@ -6,8 +6,8 @@ using namespace ya::graphics;
 
 namespace ya
 {
-	ConstantBuffer::ConstantBuffer()
-		:mType(eCBType::Transform)
+	ConstantBuffer::ConstantBuffer(eCBType type)
+		:mType(type)
 	{
 	}
 

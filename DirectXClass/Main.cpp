@@ -58,7 +58,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 break;
 
             if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-            {
+            {   
                 TranslateMessage(&msg);
                 DispatchMessage(&msg);
             }
@@ -97,7 +97,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
     application.Release();
-    
+    _CrtDumpMemoryLeaks();
+
     return (int) msg.wParam;
 }
 

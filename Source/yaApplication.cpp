@@ -19,13 +19,7 @@ namespace ya
 
 	}
 
-	// Running main engine loop
-	void Application::Run()
-	{
-		Update();
-		FixedUpdate();
-		Render();
-	}
+
 
 	void Application::Initialize()
 	{
@@ -64,7 +58,13 @@ namespace ya
 		//graphicDevice->Render();
 		graphicDevice->Present();
 	}
-
+	// Running main engine loop
+	void Application::Run()
+	{
+		Update();
+		FixedUpdate();
+		Render();
+	}
 	void Application::Release()
 	{
 		Resources::Release();

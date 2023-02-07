@@ -1,7 +1,7 @@
 #pragma once
 #include "yaComponent.h"
 #include "yaMesh.h"
-#include "yaShader.h"
+#include "yaMaterial.h"
 
 using namespace ya::graphics;
 namespace ya
@@ -18,10 +18,10 @@ namespace ya
 		virtual void Render() override;
 
 		void SetMesh(Mesh* mesh) { mMesh = mesh; }
-		void SetShader(Shader* shader) { mShader = shader; }
+		void SetMaterial(Material* material) { mMaterial = material; }
 
 	private:
 		Mesh* mMesh;
-		Shader* mShader;
+		Material* mMaterial;
 	};
 }

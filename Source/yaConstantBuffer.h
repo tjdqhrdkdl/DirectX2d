@@ -1,13 +1,12 @@
 #pragma once
 #include "yaGraphics.h"
 
-namespace ya
+namespace ya::graphics
 {
-	using namespace ya::graphics;
-	class ConstantBuffer : public GpuBuffer
+	class ConstantBuffer :  GpuBuffer
 	{
 	public:
-		ConstantBuffer();
+		ConstantBuffer(eCBType type);
 		virtual ~ConstantBuffer();
 
 		bool Create(size_t size);

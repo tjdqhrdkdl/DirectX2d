@@ -23,15 +23,17 @@ namespace ya
 		MeshRenderer* mr = new MeshRenderer();
 		obj->AddComponent(mr);
 
-		Shader* shader = Resources::Find<Shader>(L"RectShader");
 		Mesh* mesh = Resources::Find<Mesh>(L"RectMesh");
+		Material* mateiral = Resources::Find<Material>(L"RectMaterial");
 
-		mr->SetShader(shader);
+		Vector2 vec2(1.0f, 1.0f);
+		mateiral->SetData(eGPUParam::Vector2, &vec2);
+
+		mr->SetMaterial(mateiral);
 		mr->SetMesh(mesh);
 
 		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
 		texture->BindShader(eShaderStage::PS, 0);
-
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);
 	}
