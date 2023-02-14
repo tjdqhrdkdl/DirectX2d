@@ -22,6 +22,7 @@ namespace ya
 		GameObject* GetOwner() { return mOwner; }
 		void SetOwner(GameObject* owner) { mOwner = owner; }
 
+
 	private:
 		const eComponentType mType;
 		GameObject* mOwner;

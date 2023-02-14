@@ -62,6 +62,9 @@
     <Filter Include="Resource\Texture">
       <UniqueIdentifier>{2f4222bb-45d2-42e0-bb80-b107d39bb3f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Script">
+      <UniqueIdentifier>{5bdaae5e-ccba-4d6c-9c87-43ffb38ec402}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaMath.cpp">
@@ -125,6 +128,9 @@
     <ClCompile Include="yaTexture.cpp">
       <Filter>Resource\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="yaScript.cpp">
+      <Filter>Component\Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -180,9 +186,6 @@
     <ClInclude Include="yaResource.h">
       <Filter>Resource\Base</Filter>
     </ClInclude>
-    <ClInclude Include="yaResources.h">
-      <Filter>Resource\Manager</Filter>
-    </ClInclude>
     <ClInclude Include="yaInput.h">
       <Filter>Input</Filter>
     </ClInclude>
@@ -198,6 +201,12 @@
     <ClInclude Include="yaConstantBuffer.h" />
     <ClInclude Include="yaTexture.h">
       <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="yaScript.h">
+      <Filter>Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="yaResources.h">
+      <Filter>Resource\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

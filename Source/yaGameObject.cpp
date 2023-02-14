@@ -6,68 +6,86 @@ namespace ya
 	GameObject::GameObject()
 		: mState(eState::Active)
 	{
-		mComponents.resize((UINT)eComponentType::End);
+		mvComponents.resize((UINT)eComponentType::End);
 	}
 
 	GameObject::~GameObject()
 	{
-		for (Component* comp : mComponents)
+		for (std::vector<Component*> mComponents : mvComponents)
 		{
-			if (comp == nullptr)
-				continue;
+			for (Component* comp : mComponents)
+			{
+				if (comp == nullptr)
+					continue;
 
-			delete comp;
+				delete comp;
+			}
 		}
 	}
 
 	void GameObject::Initialize()
 	{
-		for (Component* comp : mComponents)
+		for (std::vector<Component*> mComponents : mvComponents)
 		{
-			if (comp == nullptr)
-				continue;
+			for (Component* comp : mComponents)
+			{
+				if (comp == nullptr)
+					continue;
 
-			comp->Initialize();
+				comp->Initialize();
+			}
 		}
 	}
 
 	void GameObject::Update()
 	{
-		for (Component* comp : mComponents)
+		for (std::vector<Component*> mComponents : mvComponents)
 		{
-			if (comp == nullptr)
-				continue;
+			for (Component* comp : mComponents)
+			{
+				if (comp == nullptr)
+					continue;
 
-			comp->Update();
+				comp->Update();
+			}
 		}
 	}
 
 	void GameObject::FixedUpdate()
 	{
-		for (Component* comp : mComponents)
+		for (std::vector<Component*> mComponents : mvComponents)
 		{
-			if (comp == nullptr)
-				continue;
+			for (Component* comp : mComponents)
+			{
+				if (comp == nullptr)
+					continue;
 
-			comp->FixedUpdate();
+				comp->FixedUpdate();
+			}
 		}
 	}
 
 	void GameObject::Render()
 	{
-		for (Component* comp : mComponents)
+		for (std::vector<Component*> mComponents : mvComponents)
 		{
-			if (comp == nullptr)
-				continue;
+			for (Component* comp : mComponents)
+			{
+				if (comp == nullptr)
+					continue;
 
-			comp->Render();
+				comp->Render();
+			}
 		}
 	}
 
 	void GameObject::AddComponent(Component* comp)
 	{
 		int order = comp->GetOrder();
-		mComponents[order] = comp;
-		mComponents[order]->SetOwner(this);
+		mvComponents[order].push_back(comp);
+		
+		comp->SetOwner(this);
 	}
+
+
 }

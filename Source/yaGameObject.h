@@ -1,10 +1,11 @@
 #pragma once
+#include "yaEntity.h"
 #include "yaComponent.h"
 
 
 namespace ya
 {
-	class GameObject
+	class GameObject : public Entity
 	{
 	public:
 		enum eState
@@ -25,22 +26,23 @@ namespace ya
 		void AddComponent(Component* comp);
 
 		template <typename T>
+		std::vector<Component*> GetComponents()
+		{
+			T comp = {};
+			return mvComponents[comp.GetOrder()];
+		}
+
+		template <typename T>
 		T* GetComponent()
 		{
-			T* comp;
-			for (auto c : mComponents)
-			{
-				comp = dynamic_cast<T*>(c);
-
-				if (comp != nullptr)
-					return comp;
-			}
-
+			T comp = {};
+			if (mvComponents[comp.GetOrder()].size() > 0)
+				return dynamic_cast<T*>(mvComponents[comp.GetOrder()][0]);
 			return nullptr;
 		}
 
 	private:
 		eState mState;
-		std::vector<Component*> mComponents;
+		std::vector<std::vector<Component*>> mvComponents;
 	};
 }

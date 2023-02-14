@@ -67,7 +67,7 @@ namespace ya
 	}
 	void Application::Release()
 	{
-		Resources::Release();
+
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

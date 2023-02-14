@@ -3,6 +3,7 @@
 #include "yaMaterial.h"
 namespace ya::renderer
 {
+	using namespace std;
 	Vertex vertexes[4] = {};
 
 	ConstantBuffer* constantBuffers[(UINT)eCBType::End] = {};
@@ -32,7 +33,7 @@ namespace ya::renderer
 		arrLayoutDesc[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 		arrLayoutDesc[2].SemanticName = "TEXCOORD";
 		arrLayoutDesc[2].SemanticIndex = 0;
-		Shader* shader = Resources::Find<Shader>(L"RectShader");
+		std::shared_ptr<Shader> shader = Resources::Find<Shader>(L"RectShader");
 
 		GetDevice()->CreateInputLayout(arrLayoutDesc, 3
 									, shader->GetVSBlobBufferPointer()
@@ -67,7 +68,7 @@ namespace ya::renderer
 
 	void LoadBuffer()
 	{
-		Mesh* mesh = new Mesh;
+		shared_ptr<Mesh> mesh = make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"RectMesh", mesh);
 
 		mesh->CreateVertexBuffer(vertexes, 4);
@@ -94,7 +95,7 @@ namespace ya::renderer
 	;
 	void LoadShader()
 	{
-		Shader* shader = new Shader();
+		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		Resources::Insert<Shader>(L"RectShader", shader);
 		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "VS_Test");
 		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "PS_Test");
@@ -103,10 +104,10 @@ namespace ya::renderer
 
 	void LoadMaterial()
 	{
-		Material* material = new Material();
+		shared_ptr<Material> material = make_shared<Material>();
 		Resources::Insert<Material>(L"RectMaterial", material);
 		
-		material->SetShader(Resources::Find<Shader>(L"RectShader"));
+		material->SetShader(Resources::Find<Shader>(L"RectShader").get());
 	}
 
 	void Initialize()

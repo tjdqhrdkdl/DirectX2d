@@ -8,8 +8,9 @@
 
 namespace ya
 {
-	Scene* SceneManager::mPlayScene = nullptr;
+	using namespace std;
 
+	Scene* SceneManager::mPlayScene = nullptr;
 	void SceneManager::Initalize()
 	{
 		mPlayScene = new Scene();
@@ -23,16 +24,16 @@ namespace ya
 		MeshRenderer* mr = new MeshRenderer();
 		obj->AddComponent(mr);
 
-		Mesh* mesh = Resources::Find<Mesh>(L"RectMesh");
-		Material* mateiral = Resources::Find<Material>(L"RectMaterial");
+		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
+		shared_ptr<Material> mateiral = Resources::Find<Material>(L"RectMaterial");
 
 		Vector2 vec2(1.0f, 1.0f);
 		mateiral->SetData(eGPUParam::Vector2, &vec2);
 
-		mr->SetMaterial(mateiral);
-		mr->SetMesh(mesh);
+		mr->SetMaterial(mateiral.get());
+		mr->SetMesh(mesh.get());
 
-		Texture* texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
+		shared_ptr<Texture> texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
 		texture->BindShader(eShaderStage::PS, 0);
 
 		mPlayScene->AddGameObject(obj, eLayerType::Player);
