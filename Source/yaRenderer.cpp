@@ -97,8 +97,8 @@ namespace ya::renderer
 	{
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		Resources::Insert<Shader>(L"RectShader", shader);
-		shader->Create(eShaderStage::VS, L"TriangleVS.hlsl", "VS_Test");
-		shader->Create(eShaderStage::PS, L"TrianglePS.hlsl", "PS_Test");
+		shader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "Main");
+		shader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
 
 	}
 

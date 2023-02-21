@@ -50,8 +50,8 @@ namespace ya
 		Transform* tr = GetOwner()->GetComponent<Transform>();
 		//시야 행렬 구하기. 세계 좌표 to 카메라 좌표계 변환
 		//국소 좌표계를 세계 좌표로 옮기는 식 W = SRT.
-		//본 변환은 세계 좌표를 국소 좌표계로 옮긴다. W = (SRT)-1 역행렬
-		//SCALE은 동일하니, W= (RT)^-1 = T^-1 * R^-1 = T^-1 * R^T
+		//본 변환은 세계 좌표를 국소 좌표계로 옮긴다. Z =  W^-1 = (SRT)-1 역행렬
+		//SCALE은 동일하니, Z = (RT)^-1 = T^-1 * R^-1 = T^-1 * R^T
 
 		Vector3 pos = tr->GetPosition();
 		Vector3 forward = tr->Forward();

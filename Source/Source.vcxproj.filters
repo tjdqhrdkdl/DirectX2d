@@ -56,9 +56,6 @@
     <Filter Include="Component\Transform">
       <UniqueIdentifier>{da831b5e-e775-4972-bf76-cb4959a31ec0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\MeshRenderer">
-      <UniqueIdentifier>{39f04c9a-4599-4865-830b-545a1407f97f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource\Texture">
       <UniqueIdentifier>{2f4222bb-45d2-42e0-bb80-b107d39bb3f5}</UniqueIdentifier>
     </Filter>
@@ -67,6 +64,9 @@
     </Filter>
     <Filter Include="Component\Camera">
       <UniqueIdentifier>{c2c0fed0-6857-44e0-8d50-5aa5aa8246ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Renderer">
+      <UniqueIdentifier>{39f04c9a-4599-4865-830b-545a1407f97f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +125,7 @@
       <Filter>Component\Transform</Filter>
     </ClCompile>
     <ClCompile Include="yaMeshRenderer.cpp">
-      <Filter>Component\MeshRenderer</Filter>
+      <Filter>Component\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="yaConstantBuffer.cpp" />
     <ClCompile Include="yaTexture.cpp">
@@ -136,6 +136,9 @@
     </ClCompile>
     <ClCompile Include="yaCamera.cpp">
       <Filter>Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="yaSpriteRenderer.cpp">
+      <Filter>Component\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +205,7 @@
       <Filter>Component\Transform</Filter>
     </ClInclude>
     <ClInclude Include="yaMeshRenderer.h">
-      <Filter>Component\MeshRenderer</Filter>
+      <Filter>Component\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="yaConstantBuffer.h" />
     <ClInclude Include="yaTexture.h">
@@ -216,6 +219,9 @@
     </ClInclude>
     <ClInclude Include="yaCamera.h">
       <Filter>Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="yaSpriteRenderer.h">
+      <Filter>Component\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
