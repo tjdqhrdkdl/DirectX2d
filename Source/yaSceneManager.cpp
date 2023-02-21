@@ -4,6 +4,7 @@
 #include "yaRenderer.h"
 #include "yaResources.h"
 #include "yaTexture.h"
+#include "yaCamera.h"
 
 
 namespace ya
@@ -16,9 +17,20 @@ namespace ya
 		mPlayScene = new Scene();
 		mPlayScene->Initialize();
 
+		// Camera Game Object
+		GameObject* cameraObj = new GameObject();
+		Transform* cameraTr = new Transform();
+		cameraTr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		cameraObj->AddComponent(cameraTr);
+		Camera* cameraComp = new Camera();
+		cameraObj->AddComponent(cameraComp);
+
+		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
+
+		//smile obj
 		GameObject* obj = new GameObject();
 		Transform* tr = new Transform();
-		tr->SetPosition(Vector3(0.2f, 0.2f, 0.0f));
+		tr->SetPosition(Vector3(0.f, 0.f, 20.0f));
 		obj->AddComponent(tr);
 
 		MeshRenderer* mr = new MeshRenderer();
@@ -52,6 +64,11 @@ namespace ya
 	void SceneManager::Render()
 	{
 		mPlayScene->Render();
+	}
+
+	void SceneManager::Release()
+	{
+		delete mPlayScene;
 	}
 
 }

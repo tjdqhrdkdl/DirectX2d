@@ -599,7 +599,7 @@ namespace ya::math
     // Binary operators
     Matrix operator+ (const Matrix& M1, const Matrix& M2) noexcept;
     Matrix operator- (const Matrix& M1, const Matrix& M2) noexcept;
-    Matrix operator* (const Matrix& M1, const Matrix& M2) noexcept;
+    //Matrix operator* (const Matrix& M1, const Matrix& M2) noexcept;
     Matrix operator* (const Matrix& M, float S) noexcept;
     Matrix operator/ (const Matrix& M, float S) noexcept;
     Matrix operator/ (const Matrix& M1, const Matrix& M2) noexcept;

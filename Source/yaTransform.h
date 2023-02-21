@@ -21,13 +21,24 @@ namespace ya
 		Vector3 GetRotation() { return mRotation; };
 		Vector3 GetScale() { return mScale; };
 
+		Vector3 Forward() { return mForward; }
+		Vector3 Up() { return mUp; }
+		Vector3 Right() { return mRight; }
+
 		void SetPosition(Vector3 position) { mPosition = position; };
 		void SetRotation(Vector3 rotation) { mRotation = rotation; };
 		void SetScale(Vector3 scale) { mScale = scale; };
 
 	private:
+		Vector3 mForward;
+		Vector3 mUp;
+		Vector3 mRight;
+
 		Vector3 mPosition;
 		Vector3 mRotation;
 		Vector3 mScale;
+
+		Matrix mWorldMatrix;
+
 	};
 }

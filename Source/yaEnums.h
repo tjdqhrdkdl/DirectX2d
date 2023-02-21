@@ -5,6 +5,7 @@ namespace ya::enums
 	enum class eLayerType
 	{
 		None,
+		Camera,
 		Player,
 		Monster,
 		End,

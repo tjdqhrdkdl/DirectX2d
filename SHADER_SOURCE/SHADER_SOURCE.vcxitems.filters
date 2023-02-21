@@ -16,4 +16,7 @@
       <UniqueIdentifier>{75dac0e9-704e-4c80-9e8e-c4eb890e55e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Global.hlsli" />
+  </ItemGroup>
 </Project>

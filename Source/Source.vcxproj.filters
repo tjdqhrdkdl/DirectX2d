@@ -65,6 +65,9 @@
     <Filter Include="Component\Script">
       <UniqueIdentifier>{5bdaae5e-ccba-4d6c-9c87-43ffb38ec402}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Camera">
+      <UniqueIdentifier>{c2c0fed0-6857-44e0-8d50-5aa5aa8246ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaMath.cpp">
@@ -130,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="yaScript.cpp">
       <Filter>Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="yaCamera.cpp">
+      <Filter>Component\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="yaResources.h">
       <Filter>Resource\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="yaCamera.h">
+      <Filter>Component\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

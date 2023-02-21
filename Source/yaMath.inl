@@ -20,6 +20,7 @@ using namespace ya::math;
 //------------------------------------------------------------------------------
 // Rectangle operations
 //------------------------------------------------------------------------------
+
 inline Vector2 Rectangle::Location() const noexcept
 {
     return Vector2(float(x), float(y));
