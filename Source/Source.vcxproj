@@ -159,6 +159,7 @@
     <ClInclude Include="CommonInclude.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="yaApplication.h" />
+    <ClInclude Include="yaBaseRenderer.h" />
     <ClInclude Include="yaCamera.h" />
     <ClInclude Include="yaComponent.h" />
     <ClInclude Include="yaConstantBuffer.h" />
@@ -188,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaApplication.cpp" />
+    <ClCompile Include="yaBaseRenderer.cpp" />
     <ClCompile Include="yaCamera.cpp" />
     <ClCompile Include="yaComponent.cpp" />
     <ClCompile Include="yaConstantBuffer.cpp" />

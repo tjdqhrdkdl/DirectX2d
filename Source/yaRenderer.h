@@ -42,6 +42,10 @@ namespace	ya::renderer
 	extern ConstantBuffer* constantBuffers[];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[];
 
+	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerStates[];
+	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[];
+	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[];
+
 	void Initialize();
 	void Release();
 

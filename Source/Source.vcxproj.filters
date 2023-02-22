@@ -140,6 +140,9 @@
     <ClCompile Include="yaSpriteRenderer.cpp">
       <Filter>Component\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="yaBaseRenderer.cpp">
+      <Filter>Component\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -221,6 +224,9 @@
       <Filter>Component\Camera</Filter>
     </ClInclude>
     <ClInclude Include="yaSpriteRenderer.h">
+      <Filter>Component\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="yaBaseRenderer.h">
       <Filter>Component\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

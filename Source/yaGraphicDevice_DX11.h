@@ -17,7 +17,10 @@ namespace ya::graphics
 		bool CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader);
 		bool CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11PixelShader** ppPixelShader);
 		bool CreateSamplerState(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState);
-
+		bool CreateRasterizerState(const D3D11_RASTERIZER_DESC* pRasterizerDesc, ID3D11RasterizerState** ppRasterizerState);
+		bool CreateDepthStencilState(const D3D11_DEPTH_STENCIL_DESC * pDepthStencilDesc, ID3D11DepthStencilState** ppDepthStencilState);
+		bool CreateBlendState(const D3D11_BLEND_DESC* pBlendStateDesc,ID3D11BlendState** ppBlendState);
+			
 		void BindViewports(D3D11_VIEWPORT* pViewport);
 		void BindVertexBuffer(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets);
 		void BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT Format, UINT Offset);
@@ -26,6 +29,9 @@ namespace ya::graphics
 		void BindInputLayout(ID3D11InputLayout* pInputLayout);
 		void BindVertexShader(ID3D11VertexShader* pVertexShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances);
 		void BindPixelShader(ID3D11PixelShader* pPixelShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances);
+		void BindRasterizerState(ID3D11RasterizerState* pRasterizerState);
+		void BindDepthStencilState(ID3D11DepthStencilState* pDepthStencilState);
+		void BindBlendState(ID3D11BlendState* pBlendState);
 
 		ID3D11Device* GetID3D11Device() { return mDevice.Get(); }
 

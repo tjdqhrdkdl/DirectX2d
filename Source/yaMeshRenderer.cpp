@@ -5,7 +5,7 @@
 namespace ya
 {
 	MeshRenderer::MeshRenderer()
-		:Component(eComponentType::Mesh)
+		: BaseRenderer(eComponentType::MeshRenderer)
 	{
 	}
 
@@ -29,9 +29,12 @@ namespace ya
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		mMaterial->Bind();
-		mMesh->BindBuffer();
-		mMesh->Render();
-	}
+		GetMaterial()->Bind();
+		GetMesh()->BindBuffer();
 
+		GetMesh()->Render();
+
+		//다음 오브젝트에 매터리얼이 없을 수 있다.
+		GetMaterial()->Clear();
+	}
 }

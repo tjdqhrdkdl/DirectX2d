@@ -3,7 +3,8 @@
 #include "yaMeshRenderer.h"
 #include "yaRenderer.h"
 #include "yaResources.h"
-#include "yaTexture.h"
+#include "yaMaterial.h"
+#include "yaSpriteRenderer.h"
 #include "yaCamera.h"
 
 
@@ -27,28 +28,37 @@ namespace ya
 
 		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
 
-		//smile obj
-		GameObject* obj = new GameObject();
-		Transform* tr = new Transform();
-		tr->SetPosition(Vector3(0.f, 0.f, 20.0f));
-		obj->AddComponent(tr);
-
-		MeshRenderer* mr = new MeshRenderer();
-		obj->AddComponent(mr);
-
 		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
-		shared_ptr<Material> mateiral = Resources::Find<Material>(L"RectMaterial");
+		//smile obj
+		GameObject* smileObj = new GameObject();
+		Transform* smileTr = new Transform();
+		smileTr->SetPosition(Vector3(0, 0, 6.0f));
+		smileObj->AddComponent(smileTr);
+		MeshRenderer* smileMr = new MeshRenderer();
+		smileObj->AddComponent(smileMr);
+		shared_ptr<Material> smilematerial = Resources::Find<Material>(L"RectMaterial");
+		smileMr->SetMaterial(smilematerial);
+		smileMr->SetMesh(mesh);
 
-		Vector2 vec2(1.0f, 1.0f);
-		mateiral->SetData(eGPUParam::Vector2, &vec2);
+		mPlayScene->AddGameObject(smileObj, eLayerType::Player);
 
-		mr->SetMaterial(mateiral.get());
-		mr->SetMesh(mesh.get());
+		//Light Object
+		GameObject* lightObj = new GameObject();
+		Transform* lightTr = new Transform();
+		lightTr->SetPosition(Vector3(0.1, 0, 5.0f));
+		lightObj->AddComponent(lightTr);
 
-		shared_ptr<Texture> texture = Resources::Load<Texture>(L"SmileTexture", L"Smile.png");
-		texture->BindShader(eShaderStage::PS, 0);
+		SpriteRenderer* lightSr = new SpriteRenderer();
+		lightObj->AddComponent(lightSr);
+		shared_ptr<Material> material = Resources::Find<Material>(L"SpriteMaterial");
+		lightSr->SetMaterial(material);
+		lightSr->SetMesh(mesh);
+		
+		mPlayScene->AddGameObject(lightObj, eLayerType::Player);
 
-		mPlayScene->AddGameObject(obj, eLayerType::Player);
+
+	
+
 	}
 
 	void SceneManager::Update()

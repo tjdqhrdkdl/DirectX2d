@@ -2,7 +2,7 @@
 #include "yaResource.h"
 #include "yaGraphics.h"
 
-namespace ya
+namespace ya::graphics
 {
 	class Shader : public Resource
 	{
@@ -37,6 +37,10 @@ namespace ya
 		Microsoft::WRL::ComPtr<ID3D11DomainShader> mDS;
 		Microsoft::WRL::ComPtr<ID3D11GeometryShader> mGS;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> mPS;
+
+		eRSType mRSType;
+		eDSType mDSType;
+		eBSType mBSType;
 
 		Microsoft::WRL::ComPtr<ID3DBlob> mErrorBlob;
 	};

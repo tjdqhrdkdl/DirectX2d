@@ -5,7 +5,7 @@
 namespace ya
 {
 	SpriteRenderer::SpriteRenderer()
-		:Component(eComponentType::Mesh)
+		: BaseRenderer(eComponentType::SpriteRenderer)
 	{
 	}
 
@@ -29,9 +29,12 @@ namespace ya
 	{
 		GetOwner()->GetComponent<Transform>()->SetConstantBuffer();
 
-		mMaterial->Bind();
-		mMesh->BindBuffer();
-		mMesh->Render();
+		GetMaterial()->Bind();
+		GetMesh()->BindBuffer();
+
+		GetMesh()->Render();
+
+		GetMaterial()->Clear();
 	}
 
 }

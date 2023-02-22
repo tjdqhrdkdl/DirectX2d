@@ -23,7 +23,8 @@ namespace ya::enums
 		None,
 		Transform, // 위치 데이터 수정하는 컴포넌트
 		Camera,
-		Mesh,
+		MeshRenderer,
+		SpriteRenderer,
 		Collider,
 		//Collider2,
 		UI,

@@ -20,6 +20,8 @@ namespace ya
 		virtual HRESULT Load(const std::wstring& path) override;
 		void BindShader(graphics::eShaderStage stage, UINT slot);
 
+		void Clear();
+
 	private:
 		ScratchImage mImage;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> mTexture;
