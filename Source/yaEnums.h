@@ -8,6 +8,7 @@ namespace ya::enums
 		Camera,
 		Player,
 		Monster,
+		UI,
 		End,
 	};
 

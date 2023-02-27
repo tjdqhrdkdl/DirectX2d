@@ -12,6 +12,7 @@ namespace ya::renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)eDSType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)eBSType::End] = {};
 	
+	std::vector<Camera*> cameras;
 	void SetUpState()
 	{
 #pragma region InputLayout
@@ -266,6 +267,21 @@ namespace ya::renderer
 		LoadMaterial();
 
 	}
+
+	void Render()
+	{
+		for (Camera* cam : cameras)
+		{
+			if (cam == nullptr)
+				continue;
+
+			cam->Render();
+		}
+		cameras.clear();
+	}
+
+
+
 
 	void Release()
 	{

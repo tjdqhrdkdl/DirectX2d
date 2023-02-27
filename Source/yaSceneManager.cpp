@@ -18,15 +18,29 @@ namespace ya
 		mPlayScene = new Scene();
 		mPlayScene->Initialize();
 
-		// Camera Game Object
+		// Main Camera Game Object
 		GameObject* cameraObj = new GameObject();
 		Transform* cameraTr = new Transform();
 		cameraTr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		cameraObj->AddComponent(cameraTr);
 		Camera* cameraComp = new Camera();
+		cameraComp->RegisterCameraInRenderer();
 		cameraObj->AddComponent(cameraComp);
-
+		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
+
+
+
+		GameObject* cameraUIObj = new GameObject();
+		Transform* cameraUITr = new Transform();
+		cameraUITr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		cameraUIObj->AddComponent(cameraUITr);
+		Camera* cameraUIComp = new Camera();
+		cameraUIComp->SetProjectionType(Camera::eProjectionType::Orthographic);
+		cameraUIObj->AddComponent(cameraUIComp);
+		mPlayScene->AddGameObject(cameraUIObj, eLayerType::Camera);
+		cameraUIComp->DisableLayerMasks();
+		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
 
 		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
 		//smile obj

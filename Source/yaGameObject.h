@@ -35,9 +35,15 @@ namespace ya
 		template <typename T>
 		T* GetComponent()
 		{
-			T comp = {};
-			if (mvComponents[comp.GetOrder()].size() > 0)
-				return dynamic_cast<T*>(mvComponents[comp.GetOrder()][0]);
+			for (std::vector<Component*> componentVector : mvComponents)
+			{
+				for (Component* comp : componentVector)
+				{
+					T* ret = dynamic_cast<T*>(comp);
+					if (ret != nullptr)
+						return ret;
+				}
+			}
 			return nullptr;
 		}
 

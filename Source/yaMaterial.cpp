@@ -4,6 +4,7 @@ namespace ya
 {
 	Material::Material()
 		:Resource(eResourceType::Material)
+		,mMode(eRenderingMode::Opaque)
 	{
 	}
 

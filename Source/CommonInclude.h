@@ -15,6 +15,6 @@
 #include <algorithm>
 #include <limits>
 #include <memory>
-
+#include <bitset>
 
 #include "yaMath.h"

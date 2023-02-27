@@ -6,13 +6,13 @@
 #include "yaMesh.h"
 #include "yaShader.h"
 #include "yaConstantBuffer.h"
+#include "yaCamera.h"
 using namespace ya::math;
 using namespace ya::graphics;
 
 
 namespace	ya::renderer
 {
-
 	struct Vertex
 	{
 		Vector4 pos;
@@ -46,7 +46,10 @@ namespace	ya::renderer
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[];
 
+	extern std::vector<ya::Camera*> cameras;
 	void Initialize();
+	void Render();
 	void Release();
+
 
 }

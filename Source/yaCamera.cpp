@@ -2,8 +2,12 @@
 #include "yaGameObject.h"
 #include "yaTransform.h"
 #include "yaApplication.h"
+#include "yaSceneManager.h"
+#include "yaBaseRenderer.h"
+
 
 extern ya::Application application;
+
 namespace ya
 {
 	Matrix Camera::View = Matrix::Identity;
@@ -18,6 +22,7 @@ namespace ya
 		, mAspectRatio(1.0f)
 		, mYFOV(XM_PI / 3)
 	{
+		mLayerMasks.set();
 	}
 
 	Camera::~Camera()
@@ -34,15 +39,23 @@ namespace ya
 
 	void Camera::FixedUpdate()
 	{
-		View = mView;
-		Projection = mProjection;
 		CreateViewMatrix();
 		CreateProjectionMatrix();	
+
+		RegisterCameraInRenderer();
+
 	}
 
 	void Camera::Render()
 	{
+		View = mView;
+		Projection = mProjection;
 
+		sortGameObjects();
+
+		renderOpaque();
+		renderCutout();
+		renderTransparent();
 	}
 
 	void Camera::CreateViewMatrix()
@@ -103,6 +116,90 @@ namespace ya
 				0 ,	0 ,	 1, 0,
 				0 , 0 ,	0 , 1,
 			};
+		}
+	}
+	void Camera::RegisterCameraInRenderer()
+	{
+		renderer::cameras.push_back(this);
+	}
+	void Camera::TurnLayerMask(eLayerType layer, bool enable)
+	{
+		mLayerMasks.set((UINT)layer, enable);
+	}
+	void Camera::sortGameObjects()
+	{
+		mOpaqueGameObjects.clear();
+		mCutoutGameObjects.clear();
+		mTransparentGameObjects.clear();
+
+		Scene* scene = SceneManager::GetPlayScene();
+		for (size_t i = 0; i < (UINT)eLayerType::End; i++)
+		{
+			if (mLayerMasks[i] == true)
+			{
+				Layer& layer = scene->GetLayer((eLayerType)i);
+				std::vector<GameObject*> gameObjects = layer.GetGameObjects();
+				if (gameObjects.size() == 0)
+					continue;
+
+				for (GameObject* obj : gameObjects)
+
+				{
+					pushGameObjectToRenderingModes(obj);
+				}
+			}
+		}
+	}
+	void Camera::renderOpaque()
+	{
+		for (GameObject* obj : mOpaqueGameObjects)
+		{
+			if(obj != nullptr)
+				obj->Render();
+		}
+	}
+	void Camera::renderCutout()
+	{
+		for (GameObject* obj : mCutoutGameObjects)
+		{
+			if (obj != nullptr)
+				obj->Render();
+		}
+	}
+	void Camera::renderTransparent()
+	{
+		for (GameObject* obj : mTransparentGameObjects)
+		{
+			if (obj != nullptr)
+				obj->Render();
+		}
+	}
+	void Camera::pushGameObjectToRenderingModes(GameObject* gameObj)
+	{
+		BaseRenderer* renderer
+			= gameObj->GetComponent<BaseRenderer>();
+		if (renderer == nullptr)
+			return;
+
+		std::shared_ptr<Material> material = renderer->GetMaterial();
+		//if (material == nullptr)
+		//	continue;
+
+		eRenderingMode mode = material->GetRenderingMode();
+
+		switch (mode)
+		{
+		case ya::graphics::eRenderingMode::Opaque:
+			mOpaqueGameObjects.push_back(gameObj);
+			break;
+		case ya::graphics::eRenderingMode::CutOut:
+			mCutoutGameObjects.push_back(gameObj);
+			break;
+		case ya::graphics::eRenderingMode::Transparent:
+			mTransparentGameObjects.push_back(gameObj);
+			break;
+		default:
+			break;
 		}
 	}
 }

@@ -12,6 +12,9 @@ namespace ya
 		static void Render();
 
 		static void Release();
+
+		static Scene* GetPlayScene() { return mPlayScene; }
+
 	private:
 		static Scene* mPlayScene;
 	};

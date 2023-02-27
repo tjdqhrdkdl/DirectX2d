@@ -25,8 +25,21 @@ namespace ya
 		virtual void FixedUpdate() override;
 		virtual void Render() override;
 
+		void SetProjectionType(eProjectionType type) { mType = type; }
 		void CreateViewMatrix();
 		void CreateProjectionMatrix();
+
+		void RegisterCameraInRenderer();		
+		
+		void TurnLayerMask(eLayerType layer, bool enable = true);
+		void EnableLayerMasks() { mLayerMasks.set(); }
+		void DisableLayerMasks() { mLayerMasks.reset(); }
+	private:
+		void sortGameObjects();
+		void renderOpaque();
+		void renderCutout();
+		void renderTransparent();
+		void pushGameObjectToRenderingModes(GameObject* gameObj);
 
 
 	private:
@@ -45,6 +58,11 @@ namespace ya
 		float mScale;
 
 		eProjectionType mType;
+
+		std::bitset<(UINT)eLayerType::End> mLayerMasks;
+		std::vector<GameObject*> mOpaqueGameObjects;
+		std::vector<GameObject*> mCutoutGameObjects;
+		std::vector<GameObject*> mTransparentGameObjects;
 	};
 }
 
