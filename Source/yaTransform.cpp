@@ -13,7 +13,7 @@ namespace ya
 		, mScale(Vector3::One)
 		, mRotation(Vector3::Zero)
 		, mPosition(Vector3::One)
-
+		, mParent(nullptr)
 	{
 	}
 
@@ -27,6 +27,7 @@ namespace ya
 
 	void Transform::Update()
 	{
+
 	}
 
 	void Transform::FixedUpdate()
@@ -53,7 +54,10 @@ namespace ya
 		mUp = Vector3::Transform(Vector3::Up, rotation);
 		mRight = Vector3::Transform(Vector3::Right, rotation);
 
-
+		if (mParent != nullptr)
+		{
+			mWorldMatrix *= mParent->mWorldMatrix;
+		}
 
 	}
 

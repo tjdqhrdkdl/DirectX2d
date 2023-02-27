@@ -51,6 +51,12 @@ namespace ya::renderer
 			, spriteShader->GetVSBlobBufferPointer()
 			, spriteShader->GetVSBlobBufferSize()
 			, spriteShader->GetInputLayoutAddressOf());
+
+		std::shared_ptr<Shader> UIShader = Resources::Find<Shader>(L"UIShader");
+		GetDevice()->CreateInputLayout(arrLayoutDesc, 3
+			, UIShader->GetVSBlobBufferPointer()
+			, UIShader->GetVSBlobBufferSize()
+			, UIShader->GetInputLayoutAddressOf());
 #pragma endregion
 
 #pragma region SamplerState
@@ -112,7 +118,7 @@ namespace ya::renderer
 #pragma region Depth Stencil State
 		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
 		dsDesc.DepthEnable = true;
-		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		dsDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		dsDesc.StencilEnable = false;
 
@@ -218,6 +224,14 @@ namespace ya::renderer
 		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
 
 		Resources::Insert<Shader>(L"SpriteShader", spriteShader);
+
+		// Sprite
+		std::shared_ptr<Shader> UIShader = std::make_shared<Shader>();
+		UIShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "Main");
+		UIShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
+
+		Resources::Insert<Shader>(L"UIShader", UIShader);
+
 	}
 
 	void LoadMaterial()
@@ -240,6 +254,16 @@ namespace ya::renderer
 		spriteMaterial->SetShader(spriteShader);
 		spriteMaterial->SetTexture(spriteTexture);
 		Resources::Insert<Material>(L"SpriteMaterial", spriteMaterial);
+		
+		// UI
+		std::shared_ptr <Texture> UITexture = Resources::Load<Texture>(L"HPSprite", L"HPBar.png");
+		std::shared_ptr<Shader> UIShader = Resources::Find<Shader>(L"UIShader");
+		std::shared_ptr<Material> UIMaterial = std::make_shared<Material>();
+		UIMaterial->SetRenderingMode(eRenderingMode::Opaque);
+		UIMaterial->SetShader(UIShader);
+		UIMaterial->SetTexture(UITexture);
+		Resources::Insert<Material>(L"UIMaterial", UIMaterial);
+
 
 	}
 

@@ -29,6 +29,8 @@ namespace ya
 		void SetRotation(Vector3 rotation) { mRotation = rotation; };
 		void SetScale(Vector3 scale) { mScale = scale; };
 
+		void SetParent(Transform* tr) { mParent = tr; }
+		Transform* GetParent() { return mParent; }
 	private:
 		Vector3 mForward;
 		Vector3 mUp;
@@ -39,6 +41,6 @@ namespace ya
 		Vector3 mScale;
 
 		Matrix mWorldMatrix;
-
+		Transform* mParent;
 	};
 }
