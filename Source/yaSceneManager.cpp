@@ -142,8 +142,6 @@ namespace ya
 		hpsr->SetMaterial(hpspriteMaterial);
 		mPlayScene->AddGameObject(hpBar, eLayerType::UI);
 
-		//Fade In Out
-		GameObject* CamEffect
 
 	}
 
