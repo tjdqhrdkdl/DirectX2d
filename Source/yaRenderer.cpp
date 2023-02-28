@@ -63,6 +63,12 @@ namespace ya::renderer
 			, GridShader->GetVSBlobBufferPointer()
 			, GridShader->GetVSBlobBufferSize()
 			, GridShader->GetInputLayoutAddressOf());
+
+		std::shared_ptr<Shader> CamEffectShader = Resources::Find<Shader>(L"CamEffectShader");
+		GetDevice()->CreateInputLayout(arrLayoutDesc, 3
+			, CamEffectShader->GetVSBlobBufferPointer()
+			, CamEffectShader->GetVSBlobBufferSize()
+			, CamEffectShader->GetInputLayoutAddressOf());
 #pragma endregion
 
 #pragma region SamplerState
@@ -232,19 +238,26 @@ namespace ya::renderer
 
 		Resources::Insert<Shader>(L"SpriteShader", spriteShader);
 
-		// Sprite
+		// UI
 		std::shared_ptr<Shader> UIShader = std::make_shared<Shader>();
 		UIShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "Main");
 		UIShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
 
 		Resources::Insert<Shader>(L"UIShader", UIShader);
 
-		// Sprite
+		// Grid
 		std::shared_ptr<Shader> GridShader = std::make_shared<Shader>();
 		GridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "Main");
 		GridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "Main");
 
 		Resources::Insert<Shader>(L"GridShader", GridShader);
+
+		// CamEffect
+		std::shared_ptr<Shader> CamEffectShader = std::make_shared<Shader>();
+		CamEffectShader->Create(eShaderStage::VS, L"FadeVS.hlsl", "main");
+		CamEffectShader->Create(eShaderStage::PS, L"FadePS.hlsl", "main");
+
+		Resources::Insert<Shader>(L"CamEffectShader", CamEffectShader);
 
 	}
 
@@ -284,6 +297,13 @@ namespace ya::renderer
 		GridMaterial->SetRenderingMode(eRenderingMode::Opaque);
 		GridMaterial->SetShader(GridShader);
 		Resources::Insert<Material>(L"GridMaterial", GridMaterial);
+
+		// CamEffect
+		std::shared_ptr<Shader> CamEffectShader = Resources::Find<Shader>(L"CamEffectShader");
+		std::shared_ptr<Material> CamEffectMaterial = std::make_shared<Material>();
+		CamEffectMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		CamEffectMaterial->SetShader(CamEffectShader);
+		Resources::Insert<Material>(L"CamEffectMaterial", CamEffectMaterial);
 
 
 	}

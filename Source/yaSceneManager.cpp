@@ -8,6 +8,7 @@
 #include "yaCamera.h"
 #include "cameraScript.h"
 #include "yaGridScript.h"
+#include "yaCamEffectScript.h"
 namespace ya
 {
 	using namespace std;
@@ -49,6 +50,8 @@ namespace ya
 
 		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
 
+
+		//UI Camer Game Object
 		GameObject* cameraUIObj = new GameObject();
 		Transform* cameraUITr = new Transform();
 		cameraUITr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
@@ -142,6 +145,22 @@ namespace ya
 		hpsr->SetMaterial(hpspriteMaterial);
 		mPlayScene->AddGameObject(hpBar, eLayerType::UI);
 
+		// Camera Effect
+		GameObject* camEffect = new GameObject();
+		camEffect->SetName(L"CameraEffect");
+		Transform* camEffectTR = new Transform();
+		camEffectTR->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		camEffect->AddComponent(camEffectTR);
+		SpriteRenderer* camEffectsr = new SpriteRenderer();
+		camEffect->AddComponent(camEffectsr);
+		std::shared_ptr<Mesh> camEffectmesh = Resources::Find<Mesh>(L"RectMesh");
+		std::shared_ptr<Material> camEffectspriteMaterial = Resources::Find<Material>(L"CamEffectMaterial");
+		camEffectsr->SetMesh(camEffectmesh);
+		camEffectsr->SetMaterial(camEffectspriteMaterial);
+		CamEffectScript* ceScript = new CamEffectScript();
+		camEffect->AddComponent(ceScript);
+
+		mPlayScene->AddGameObject(camEffect, eLayerType::UI);
 
 	}
 

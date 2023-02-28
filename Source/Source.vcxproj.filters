@@ -141,10 +141,11 @@
       <Filter>Component\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="cameraScript.cpp" />
-    <ClCompile Include="yaGraphicDevice_DX11.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="yaGridScript.cpp" />
+    <ClCompile Include="yaGraphicDevice_DX11.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="yaCamEffectScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -233,6 +234,7 @@
     </ClInclude>
     <ClInclude Include="cameraScript.h" />
     <ClInclude Include="yaGridScript.h" />
+    <ClInclude Include="yaCamEffectScript.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">
