@@ -27,7 +27,7 @@ namespace ya
 		shared_ptr<Texture> GetTexture() { return mTexture; }
 
 		eRenderingMode GetRenderingMode() { return mMode; }
-		void SetRenderingMode(eRenderingMode mode) { mMode = mode; }
+		void SetRenderingMode(eRenderingMode mode) { mMode = mode;}
 
 		void Clear();
 	private:

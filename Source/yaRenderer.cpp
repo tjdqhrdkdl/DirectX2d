@@ -57,6 +57,12 @@ namespace ya::renderer
 			, UIShader->GetVSBlobBufferPointer()
 			, UIShader->GetVSBlobBufferSize()
 			, UIShader->GetInputLayoutAddressOf());
+
+		std::shared_ptr<Shader> GridShader = Resources::Find<Shader>(L"GridShader");
+		GetDevice()->CreateInputLayout(arrLayoutDesc, 3
+			, GridShader->GetVSBlobBufferPointer()
+			, GridShader->GetVSBlobBufferSize()
+			, GridShader->GetInputLayoutAddressOf());
 #pragma endregion
 
 #pragma region SamplerState
@@ -150,6 +156,7 @@ namespace ya::renderer
 			, depthstencilStates[(UINT)eDSType::None].GetAddressOf());
 
 #pragma endregion
+
 #pragma region Blend State
 
 		blendStates[(UINT)eBSType::Default] = nullptr;
@@ -232,6 +239,13 @@ namespace ya::renderer
 
 		Resources::Insert<Shader>(L"UIShader", UIShader);
 
+		// Sprite
+		std::shared_ptr<Shader> GridShader = std::make_shared<Shader>();
+		GridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "Main");
+		GridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "Main");
+
+		Resources::Insert<Shader>(L"GridShader", GridShader);
+
 	}
 
 	void LoadMaterial()
@@ -263,6 +277,13 @@ namespace ya::renderer
 		UIMaterial->SetShader(UIShader);
 		UIMaterial->SetTexture(UITexture);
 		Resources::Insert<Material>(L"UIMaterial", UIMaterial);
+
+		// Grid
+		std::shared_ptr<Shader> GridShader = Resources::Find<Shader>(L"GridShader");
+		std::shared_ptr<Material> GridMaterial = std::make_shared<Material>();
+		GridMaterial->SetRenderingMode(eRenderingMode::Opaque);
+		GridMaterial->SetShader(GridShader);
+		Resources::Insert<Material>(L"GridMaterial", GridMaterial);
 
 
 	}

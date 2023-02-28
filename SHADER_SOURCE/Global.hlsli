@@ -1,19 +1,4 @@
 
-struct VTX_IN
-{
-    float4 vPos : POSITION;
-    float4 vColor : COLOR;
-    float2 vUV : TEXCOORD;
-	
-};
-
-struct VTX_OUT
-{
-    float4 vPos : SV_Position;
-    float4 vColor : COLOR;
-    float2 vUV : TEXCOORD;
-	
-};
 cbuffer Transform : register(b0)
 {
     row_major matrix worldMatrix;

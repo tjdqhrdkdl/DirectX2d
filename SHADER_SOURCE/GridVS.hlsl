@@ -11,9 +11,7 @@ struct VTX_IN
 struct VTX_OUT
 {
     float4 vPos : SV_Position;
-    float4 vColor : COLOR;
-    float2 vUV : TEXCOORD;
-	
+    
 };
 VTX_OUT Main(VTX_IN _in)
 {
@@ -25,8 +23,6 @@ VTX_OUT Main(VTX_IN _in)
 
 
     output.vPos = projectionPosition;
-    output.vColor = _in.vColor;
-    output.vUV = _in.vUV;
 
     return output;
 }

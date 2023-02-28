@@ -17,7 +17,7 @@ namespace ya
 		:Component(eComponentType::Camera)
 		, mType(eProjectionType::Perspective)
 		, mNear(1.0f)
-		, mFar(1000.0f)
+		, mFar(100.0f)
 		, mScale(1.0f)
 		, mAspectRatio(1.0f)
 		, mYFOV(XM_PI / 3)
@@ -35,6 +35,8 @@ namespace ya
 
 	void Camera::Update()
 	{
+
+		RegisterCameraInRenderer();
 	}
 
 	void Camera::FixedUpdate()
@@ -42,7 +44,6 @@ namespace ya
 		CreateViewMatrix();
 		CreateProjectionMatrix();	
 
-		RegisterCameraInRenderer();
 
 	}
 
@@ -107,16 +108,14 @@ namespace ya
 		{
 			// z축 영향이 없다 = 절두체나 소실점 개념이 없다. 그냥 가져오되, 정규화만 해준다.
 			// 원근 나누기가 나중에 들어가니까 w를 1로 맞춰야함.
-			//mFar = 1;
-			//mNear = 0;
-			//mProjection =
-			//{
-			//	2 / width / 100.0f, 0 , 0 , 0,
-			//	0 , 2 / height / 100.0f, 0 , 0,
-			//	0 ,	0 ,	 1, 0,
-			//	0 , 0 ,	0 , 1,
-			//};
-			mProjection = Matrix::CreateOrthographic(width/100.0f, height/100.0f, mNear, mFar);
+
+			mProjection =
+			{
+				2 / width *100, 0 , 0 , 0,
+				0 , 2 / height *100, 0 , 0,
+				0 ,	0 ,			 1 / (mFar- mNear)      , 0,
+				0 , 0 ,		mNear / (mNear-mFar)    , 1,
+			};
 
 		}
 	}

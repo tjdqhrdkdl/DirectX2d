@@ -6,8 +6,8 @@
 #include "yaMaterial.h"
 #include "yaSpriteRenderer.h"
 #include "yaCamera.h"
-
-
+#include "cameraScript.h"
+#include "yaGridScript.h"
 namespace ya
 {
 	using namespace std;
@@ -18,6 +18,23 @@ namespace ya
 		mPlayScene = new Scene();
 		mPlayScene->Initialize();
 
+		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
+
+
+
+		// Grid Camera Game Object
+		GameObject* gridCameraObj = new GameObject();
+		Transform* gridCameraTr = new Transform();
+		gridCameraTr->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		gridCameraObj->AddComponent(gridCameraTr);
+		Camera* gridCameraComp = new Camera();
+		gridCameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
+		gridCameraObj->AddComponent(gridCameraComp);
+		gridCameraComp->DisableLayerMasks();
+		gridCameraComp->TurnLayerMask(eLayerType::None, true);
+
+		mPlayScene->AddGameObject(gridCameraObj, eLayerType::Camera);
+
 		// Main Camera Game Object
 		GameObject* cameraObj = new GameObject();
 		Transform* cameraTr = new Transform();
@@ -26,6 +43,9 @@ namespace ya
 		Camera* cameraComp = new Camera();
 		cameraObj->AddComponent(cameraComp);
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
+		cameraComp->TurnLayerMask(eLayerType::None, false);
+		cameraScript* camScript = new cameraScript();
+		cameraObj->AddComponent(camScript);
 
 		mPlayScene->AddGameObject(cameraObj, eLayerType::Camera);
 
@@ -41,8 +61,25 @@ namespace ya
 		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
 
 
+		//grid Object
+		GameObject* gridObj = new GameObject();
+		gridObj->SetName(L"Grid");
+		Transform* gridTr = new Transform();
+		gridTr->SetPosition(Vector3(0.0f, 0.0f, 999.0f));
+		gridTr->SetScale(Vector3(20.0f, 10.0f, 0));
+		GridScript* gscript = new GridScript();
+		gridObj->AddComponent(gscript);
+		SpriteRenderer* gridSr = new SpriteRenderer();
+		shared_ptr<Material> gridMaterial = Resources::Find<Material>(L"GridMaterial");
 
-		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
+		gridSr->SetMesh(mesh);
+		gridSr->SetMaterial(gridMaterial);
+
+		gridObj->AddComponent(gridTr);
+		gridObj->AddComponent(gridSr);
+
+		mPlayScene->AddGameObject(gridObj, eLayerType::None);
+
 		//smile obj
 		GameObject* smileObj = new GameObject();
 		Transform* smileTr = new Transform();
@@ -105,6 +142,8 @@ namespace ya
 		hpsr->SetMaterial(hpspriteMaterial);
 		mPlayScene->AddGameObject(hpBar, eLayerType::UI);
 
+		//Fade In Out
+		GameObject* CamEffect
 
 	}
 

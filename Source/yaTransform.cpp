@@ -2,7 +2,7 @@
 #include "yaRenderer.h"
 #include "yaGameObject.h"
 #include "yaCamera.h"
-
+#include "yaMaterial.h"
 namespace ya
 {
 	Transform::Transform()
@@ -76,7 +76,8 @@ namespace ya
 
 		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];
 		cb->Bind(&trCb);
-		cb->SetPipline(eShaderStage::VS);
+		cb->SetPipline(eShaderStage::VS);		
+		
 	}
 
 

@@ -73,9 +73,6 @@
     <ClCompile Include="yaMath.cpp">
       <Filter>Common\Math</Filter>
     </ClCompile>
-    <ClCompile Include="yaGraphicDevice_DX11.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="yaApplication.cpp">
       <Filter>High Level Interface</Filter>
     </ClCompile>
@@ -143,6 +140,11 @@
     <ClCompile Include="yaBaseRenderer.cpp">
       <Filter>Component\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="cameraScript.cpp" />
+    <ClCompile Include="yaGraphicDevice_DX11.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="yaGridScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -229,6 +231,8 @@
     <ClInclude Include="yaBaseRenderer.h">
       <Filter>Component\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="cameraScript.h" />
+    <ClInclude Include="yaGridScript.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">
