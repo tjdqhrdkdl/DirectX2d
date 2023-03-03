@@ -12,7 +12,7 @@ namespace ya
 		void Update();
 		void FixedUpdate();
 		void Render();
-		
+
 		void AddGameObject(GameObject* gameobject);
 
 		std::vector<GameObject*> GetGameObjects() { return mObjects; }

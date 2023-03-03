@@ -26,6 +26,14 @@ namespace ya
 		void AddComponent(Component* comp);
 
 		template <typename T>
+		T* AddComponent()
+		{
+			T* comp = new T();
+			AddComponent(comp);
+			return comp;
+
+		}
+		template <typename T>
 		std::vector<Component*> GetComponents()
 		{
 			T comp = {};

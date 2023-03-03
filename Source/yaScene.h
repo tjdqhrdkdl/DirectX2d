@@ -8,10 +8,10 @@ namespace ya
 	public:
 		Scene();
 		virtual ~Scene();
-		void Initialize();
-		void Update();
-		void FixedUpdate();
-		void Render();
+		virtual void Initialize();
+		virtual void Update();
+		virtual void FixedUpdate();
+		virtual void Render();
 	
 		void AddGameObject(GameObject* gameobject, enums::eLayerType layerIndex);
 

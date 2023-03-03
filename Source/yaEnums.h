@@ -46,4 +46,11 @@ namespace ya::enums
 		Script,
 		End,
 	};
+
+	enum class eSceneType
+	{
+		Title,
+		Play,
+		End,
+	};
 }

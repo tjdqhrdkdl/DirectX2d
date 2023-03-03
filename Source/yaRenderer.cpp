@@ -103,7 +103,7 @@ namespace ya::renderer
 #pragma region RasterizerState
 		D3D11_RASTERIZER_DESC rsDesc = {};
 		rsDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
-		rsDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
+		rsDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 
 		GetDevice()->CreateRasterizerState(&rsDesc
 			, rasterizerStates[(UINT)eRSType::SolidBack].GetAddressOf());
@@ -310,11 +310,11 @@ namespace ya::renderer
 
 	void Initialize()
 	{
-		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.5f,1.0f);
+		vertexes[0].pos = Vector4(-0.5f, -0.5f, 2.0f,1.0f);
 		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		vertexes[0].uv = Vector2(0.f, 0.f);
 
-		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.5f,1.0f);
+		vertexes[1].pos = Vector4(0.5f, -0.5f, 2.0f,1.0f);
 		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		vertexes[1].uv = Vector2(1.0f, 0.0f);
 

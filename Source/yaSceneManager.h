@@ -16,6 +16,7 @@ namespace ya
 		static Scene* GetPlayScene() { return mPlayScene; }
 
 	private:
+		static std::vector<Scene*> mScenes;
 		static Scene* mPlayScene;
 	};
 }

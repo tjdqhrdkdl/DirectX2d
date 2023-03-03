@@ -68,6 +68,18 @@
     <Filter Include="Component\Renderer">
       <UniqueIdentifier>{39f04c9a-4599-4865-830b-545a1407f97f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\Layer">
+      <UniqueIdentifier>{379b0174-ebf5-41f3-911c-98f328d33c3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Base">
+      <UniqueIdentifier>{2585fde9-6b5e-47f7-a2ec-c38cc8dc6048}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Manager">
+      <UniqueIdentifier>{a5befe43-c033-4896-9842-6b9b2a5779f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{e184ed32-1000-441b-9cec-3f7bdeabd0c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaMath.cpp">
@@ -87,15 +99,6 @@
     </ClCompile>
     <ClCompile Include="yaGameObject.cpp">
       <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="yaScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="yaSceneManager.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="yaLayer.cpp">
-      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="yaShader.cpp">
       <Filter>Resource\Shader</Filter>
@@ -124,7 +127,6 @@
     <ClCompile Include="yaMeshRenderer.cpp">
       <Filter>Component\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="yaConstantBuffer.cpp" />
     <ClCompile Include="yaTexture.cpp">
       <Filter>Resource\Texture</Filter>
     </ClCompile>
@@ -146,6 +148,27 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="yaCamEffectScript.cpp" />
+    <ClCompile Include="yaLayer.cpp">
+      <Filter>Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="yaScene.cpp">
+      <Filter>Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="yaSceneManager.cpp">
+      <Filter>Scene\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="yaPlayScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="yaTitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="yaPlayer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="yaConstantBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -180,15 +203,6 @@
     <ClInclude Include="yaGameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="yaScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="yaSceneManager.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="yaLayer.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="yaShader.h">
       <Filter>Resource\Shader</Filter>
     </ClInclude>
@@ -213,7 +227,6 @@
     <ClInclude Include="yaMeshRenderer.h">
       <Filter>Component\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="yaConstantBuffer.h" />
     <ClInclude Include="yaTexture.h">
       <Filter>Resource\Texture</Filter>
     </ClInclude>
@@ -235,6 +248,30 @@
     <ClInclude Include="cameraScript.h" />
     <ClInclude Include="yaGridScript.h" />
     <ClInclude Include="yaCamEffectScript.h" />
+    <ClInclude Include="yaObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="yaLayer.h">
+      <Filter>Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="yaScene.h">
+      <Filter>Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="yaSceneManager.h">
+      <Filter>Scene\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="yaPlayScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="yaTitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="yaPlayer.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="yaConstantBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">
