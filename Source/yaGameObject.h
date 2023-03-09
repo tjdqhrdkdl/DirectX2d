@@ -54,9 +54,9 @@ namespace ya
 			}
 			return nullptr;
 		}
-
+	protected:
+		std::vector<std::vector<Component*>> mvComponents;
 	private:
 		eState mState;
-		std::vector<std::vector<Component*>> mvComponents;
 	};
 }
