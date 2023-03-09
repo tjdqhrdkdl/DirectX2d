@@ -35,7 +35,6 @@ namespace ya
 
 	void Camera::Update()
 	{
-
 		RegisterCameraInRenderer();
 	}
 
@@ -43,8 +42,6 @@ namespace ya
 	{
 		CreateViewMatrix();
 		CreateProjectionMatrix();	
-
-
 	}
 
 	void Camera::Render()

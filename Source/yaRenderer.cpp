@@ -103,7 +103,7 @@ namespace ya::renderer
 #pragma region RasterizerState
 		D3D11_RASTERIZER_DESC rsDesc = {};
 		rsDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
-		rsDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+		rsDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
 
 		GetDevice()->CreateRasterizerState(&rsDesc
 			, rasterizerStates[(UINT)eRSType::SolidBack].GetAddressOf());
@@ -197,10 +197,26 @@ namespace ya::renderer
 
 	}
 
-	void LoadBuffer()
+	void LoadMesh()
 	{
 		shared_ptr<Mesh> mesh = make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"RectMesh", mesh);
+
+		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
+		vertexes[0].uv = Vector2(0.f, 0.f);
+
+		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
+		vertexes[1].uv = Vector2(1.0f, 0.0f);
+
+		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
+		vertexes[2].uv = Vector2(1.0f, 1.0f);
+
+		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[3].color = Vector4(0.f, 0.f, 1.f, 1.f);
+		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
 		mesh->CreateVertexBuffer(vertexes, 4);
 
@@ -210,11 +226,57 @@ namespace ya::renderer
 		indexes.push_back(2);
 
 		indexes.push_back(0);
-		indexes.push_back(2);	
+		indexes.push_back(2);
 		indexes.push_back(3);
 
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
+		//¿ø
+		shared_ptr<Mesh> circleMesh = make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"CircleMesh", circleMesh);
+
+		std::vector<Vertex> circleVtxes;
+		Vertex center = {};
+		center.pos = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		center.uv = Vector2(0.5f, 0.5f);
+
+		circleVtxes.push_back(center);
+
+		int iSlice = 40;
+		float fRadius = 0.5;
+		float fTheta = XM_2PI / iSlice;
+		
+		for (size_t i = 0; i < iSlice; i++)
+		{
+			Vertex vtx = {};
+			vtx.pos = Vector4(
+				fRadius * cosf(fTheta * i)
+				, fRadius * sinf(fTheta * i)
+				, 0
+				, 1
+			);
+			vtx.uv = Vector2(
+				0.5 * cosf(fTheta * i) + 0.5 
+				, 0.5 - 0.5 * sinf(fTheta * i) 
+			);
+			circleVtxes.push_back(vtx);
+		}
+		indexes.clear();
+		for (size_t i = 0; i < iSlice -2; i++)
+		{
+			indexes.push_back(0);
+			indexes.push_back(i + 2);
+			indexes.push_back(i + 1);
+		}
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(iSlice-1);
+		circleMesh->CreateVertexBuffer(circleVtxes.data(), circleVtxes.size());
+		circleMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+	}
+	void LoadBuffer()
+	{
 
 		constantBuffers[(UINT)eCBType::Transform] = new ConstantBuffer(eCBType::Transform);
 		constantBuffers[(UINT)eCBType::Transform]->Create(sizeof(TransformCB));
@@ -310,22 +372,7 @@ namespace ya::renderer
 
 	void Initialize()
 	{
-		vertexes[0].pos = Vector4(-0.5f, -0.5f, 2.0f,1.0f);
-		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
-		vertexes[0].uv = Vector2(0.f, 0.f);
-
-		vertexes[1].pos = Vector4(0.5f, -0.5f, 2.0f,1.0f);
-		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
-		vertexes[1].uv = Vector2(1.0f, 0.0f);
-
-		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
-		vertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
-		vertexes[2].uv = Vector2(1.0f, 1.0f);
-
-		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
-		vertexes[3].color = Vector4(0.f, 0.f, 1.f, 1.f);
-		vertexes[3].uv = Vector2(0.0f, 1.0f);
-
+		LoadMesh();
 		LoadShader();
 		SetUpState();
 		LoadBuffer();

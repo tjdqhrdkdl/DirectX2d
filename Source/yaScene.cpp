@@ -42,6 +42,14 @@ namespace ya
 		}
 	}
 
+	void Scene::OnExit()
+	{
+	}
+
+	void Scene::OnEnter()
+	{
+	}
+
 	void Scene::AddGameObject(GameObject* gameobject, enums::eLayerType layerIndex)
 	{
 		mLayers[(UINT)layerIndex].AddGameObject(gameobject);

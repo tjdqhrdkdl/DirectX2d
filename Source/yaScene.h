@@ -13,6 +13,9 @@ namespace ya
 		virtual void FixedUpdate();
 		virtual void Render();
 	
+		virtual void OnExit();
+		virtual void OnEnter();
+
 		void AddGameObject(GameObject* gameobject, enums::eLayerType layerIndex);
 
 		Layer& GetLayer(eLayerType type) { return mLayers[(UINT)type]; }

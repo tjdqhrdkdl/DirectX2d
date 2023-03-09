@@ -27,7 +27,7 @@ namespace ya
 		Input::Initialize();
 
 		renderer::Initialize();
-		SceneManager::Initalize();
+		SceneManager::Initialize();
 	}
 
 	// 게임 로직 캐릭터 이동 등등 

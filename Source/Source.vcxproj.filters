@@ -254,9 +254,6 @@
     <ClInclude Include="yaLayer.h">
       <Filter>Scene\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="yaScene.h">
-      <Filter>Scene\Base</Filter>
-    </ClInclude>
     <ClInclude Include="yaSceneManager.h">
       <Filter>Scene\Manager</Filter>
     </ClInclude>
@@ -271,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="yaConstantBuffer.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="yaScene.h">
+      <Filter>Scene\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

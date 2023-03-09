@@ -7,7 +7,7 @@ namespace ya
 
 	Scene* SceneManager::mPlayScene = nullptr;
 	std::vector<Scene*> SceneManager::mScenes;
-	void SceneManager::Initalize()
+	void SceneManager::Initialize()
 	{
 
 		mScenes.resize((UINT)eSceneType::End);
@@ -44,6 +44,13 @@ namespace ya
 	void SceneManager::Release()
 	{
 		delete mPlayScene;
+	}
+
+	void SceneManager::LoadScene(eSceneType type)
+	{
+		mPlayScene->OnExit();
+		mPlayScene = mScenes[(UINT)type];
+		mPlayScene->OnEnter();
 	}
 
 }

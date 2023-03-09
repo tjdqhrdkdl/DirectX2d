@@ -32,4 +32,12 @@ namespace ya
 		Scene::Render();
 	}
 
+	void PlayScene::OnEnter()
+	{
+	}
+
+	void PlayScene::OnExit()
+	{
+	}
+
 }

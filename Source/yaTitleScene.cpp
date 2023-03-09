@@ -24,7 +24,8 @@ namespace ya
 
 	void TitleScene::Initialize()
 	{
-		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
+		shared_ptr<Mesh> circleMesh = Resources::Find<Mesh>(L"CircleMesh");
+		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
 		// Grid Camera Game Object
 
 		GameObject* gridCameraObj = object::Instantiate<GameObject>(eLayerType::Camera);
@@ -35,7 +36,7 @@ namespace ya
 
 		// Main Camera Game Object
 		GameObject* cameraObj = object::Instantiate<GameObject>(eLayerType::Camera);
-		Camera* cameraComp = cameraObj->AddComponent<Camera>();
+		Camera* cameraComp = cameraObj->AddComponent<Camera>();	
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		cameraComp->TurnLayerMask(eLayerType::None, false);
 		cameraScript* camScript = cameraObj->AddComponent<cameraScript>();
@@ -69,7 +70,7 @@ namespace ya
 		MeshRenderer* smileMr = smileObj->AddComponent<MeshRenderer>();
 		shared_ptr<Material> smilematerial = Resources::Find<Material>(L"RectMaterial");
 		smileMr->SetMaterial(smilematerial);
-		smileMr->SetMesh(mesh);
+		smileMr->SetMesh(circleMesh);
 
 		//smile Child obj
 		GameObject* childObj = object::Instantiate<GameObject>(eLayerType::Player);
@@ -79,7 +80,7 @@ namespace ya
 		MeshRenderer* childMr = childObj->AddComponent<MeshRenderer>();
 		shared_ptr<Material> childmaterial = Resources::Find<Material>(L"RectMaterial");
 		childMr->SetMaterial(childmaterial);
-		childMr->SetMesh(mesh);
+		childMr->SetMesh(circleMesh);
 
 		//Light Object
 		GameObject* lightObj = object::Instantiate<GameObject>(eLayerType::Player);
@@ -89,7 +90,7 @@ namespace ya
 		SpriteRenderer* lightSr = lightObj->AddComponent<SpriteRenderer>();
 		shared_ptr<Material> material = Resources::Find<Material>(L"SpriteMaterial");
 		lightSr->SetMaterial(material);
-		lightSr->SetMesh(mesh);
+		lightSr->SetMesh(circleMesh);
 
 		// HPBAR
 		GameObject* hpBar = object::Instantiate<GameObject>(eLayerType::UI);
@@ -99,9 +100,8 @@ namespace ya
 		hpBarTR->SetScale(Vector3(1.0f, 1.0f, 1.0f));
 
 		SpriteRenderer* hpsr = hpBar->AddComponent<SpriteRenderer>();
-		std::shared_ptr<Mesh> hpmesh = Resources::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> hpspriteMaterial = Resources::Find<Material>(L"UIMaterial");
-		hpsr->SetMesh(hpmesh);
+		hpsr->SetMesh(mesh);
 		hpsr->SetMaterial(hpspriteMaterial);
 
 		// Camera Effect
@@ -112,7 +112,7 @@ namespace ya
 		SpriteRenderer* camEffectsr = camEffect->AddComponent<SpriteRenderer>();
 		std::shared_ptr<Mesh> camEffectmesh = Resources::Find<Mesh>(L"RectMesh");
 		std::shared_ptr<Material> camEffectspriteMaterial = Resources::Find<Material>(L"CamEffectMaterial");
-		camEffectsr->SetMesh(camEffectmesh);
+		camEffectsr->SetMesh(circleMesh);
 		camEffectsr->SetMaterial(camEffectspriteMaterial);
 		CamEffectScript* ceScript = camEffect->AddComponent<CamEffectScript>();
 
@@ -133,6 +133,14 @@ namespace ya
 	void TitleScene::Render()
 	{
 		Scene::Render();
+	}
+
+	void TitleScene::OnEnter()
+	{
+	}
+
+	void TitleScene::OnExit()
+	{
 	}
 
 }
