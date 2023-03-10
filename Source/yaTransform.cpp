@@ -70,8 +70,8 @@ namespace ya
 		// bind는 한번 해줘야하는데, 버퍼 정보는 카메라와 트랜스폼에 나누어져 있음.
 		renderer::TransformCB trCb = {};
 		trCb.world = mWorldMatrix;
-		trCb.view = Camera::GetViewMatrix();
-		trCb.projection = Camera::GetProjectionMatrix();
+		trCb.view = Camera::GetGpuViewMatrix();
+		trCb.projection = Camera::GetGpuProjectionMatrix();
 
 
 		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Transform];

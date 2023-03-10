@@ -34,6 +34,7 @@ namespace ya
 		gridCameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
 		gridCameraComp->DisableLayerMasks();
 		gridCameraComp->TurnLayerMask(eLayerType::None, true);
+		renderer::orthographicCamera = gridCameraComp;
 
 		// Main Camera Game Object
 		GameObject* cameraObj = object::Instantiate<GameObject>(eLayerType::Camera);
@@ -41,6 +42,7 @@ namespace ya
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		cameraComp->TurnLayerMask(eLayerType::None, false);
 		cameraScript* camScript = cameraObj->AddComponent<cameraScript>();
+		renderer::mainCamera = cameraComp;
 
 
 		//UI Camer Game Object
@@ -51,17 +53,6 @@ namespace ya
 		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
 
 
-		//grid Object
-		GameObject* gridObj = object::Instantiate<GameObject>(eLayerType::None);
-		gridObj->SetName(L"Grid");
-		Transform* gridTr = gridObj->GetComponent<Transform>();
-		gridTr->SetPosition(Vector3(0.0f, .4f, 999.0f));
-		gridTr->SetScale(Vector3(20.0f, 10.0f, 0));
-		GridScript* gscript = gridObj->AddComponent<GridScript>();
-		SpriteRenderer* gridSr = gridObj->AddComponent<SpriteRenderer>();
-		shared_ptr<Material> gridMaterial = Resources::Find<Material>(L"GridMaterial");
-		gridSr->SetMesh(mesh);
-		gridSr->SetMaterial(gridMaterial);
 
 		//smile obj
 		GameObject* smileObj = object::Instantiate<GameObject>(eLayerType::Player);

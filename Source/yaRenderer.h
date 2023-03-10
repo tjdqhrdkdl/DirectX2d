@@ -47,6 +47,8 @@ namespace	ya::renderer
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[];
 
 	extern std::vector<ya::Camera*> cameras[];
+	extern Camera* mainCamera;
+	extern Camera* orthographicCamera;
 	extern std::vector<DebugMesh> debugMeshes;
 
 	void Initialize();

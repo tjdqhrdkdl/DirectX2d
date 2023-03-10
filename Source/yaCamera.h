@@ -16,8 +16,10 @@ namespace ya
 		Camera();
 		~Camera();
 
-		static Matrix& GetViewMatrix() { return View; }
-		static Matrix& GetProjectionMatrix() { return Projection; }
+		__forceinline static Matrix& GetGpuViewMatrix() { return View; }
+		__forceinline static Matrix& GetGpuProjectionMatrix() { return Projection; }
+		__forceinline static void SetGpuViewMatrix(Matrix view) { View = view; }
+		__forceinline static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
 
 
 		virtual void Initialize() override;
@@ -34,6 +36,9 @@ namespace ya
 		void TurnLayerMask(eLayerType layer, bool enable = true);
 		void EnableLayerMasks() { mLayerMasks.set(); }
 		void DisableLayerMasks() { mLayerMasks.reset(); }
+		Matrix& GetViewMatrix() { return mView; }
+		Matrix& GetProjectionMatrix() { return mProjection; }
+
 	private:
 		void sortGameObjects();
 		void renderOpaque();

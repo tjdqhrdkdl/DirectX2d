@@ -16,6 +16,7 @@ namespace ya::renderer
 	std::vector<Camera*> cameras[(UINT)eSceneType::End];
 
 	Camera* mainCamera = nullptr;
+	Camera* orthographicCamera = nullptr;
 	std::vector<DebugMesh> debugMeshes;
 
 	void SetUpState()
@@ -301,8 +302,6 @@ namespace ya::renderer
 		//Debug Circle Mesh
 		shared_ptr<Mesh> DebugCircleMesh = make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"DebugCircleMesh", DebugCircleMesh);
-
-
 		indexes.clear();
 		for (size_t i = 0; i < iSlice - 1; i++)
 		{
@@ -311,6 +310,8 @@ namespace ya::renderer
 		indexes.push_back(1);
 		DebugCircleMesh->CreateVertexBuffer(circleVtxes.data(), circleVtxes.size());
 		DebugCircleMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+
+
 	}
 	void LoadBuffer()
 	{
