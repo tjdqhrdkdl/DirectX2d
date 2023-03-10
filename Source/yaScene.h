@@ -6,7 +6,7 @@ namespace ya
 	class Scene
 	{
 	public:
-		Scene();
+		Scene(eSceneType type);
 		virtual ~Scene();
 		virtual void Initialize();
 		virtual void Update();
@@ -19,7 +19,10 @@ namespace ya
 		void AddGameObject(GameObject* gameobject, enums::eLayerType layerIndex);
 
 		Layer& GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
+
+		eSceneType GetSceneType() { return mType; }
 	private:
 		std::vector<Layer> mLayers;
+		eSceneType mType;
 	};
 }

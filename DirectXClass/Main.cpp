@@ -9,7 +9,7 @@
 
 #include "Source/yaApplication.h"
 #include "yaEditor.h"
-
+#include "Source/yaSceneManager.h"
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -73,6 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             application.Present();
         }
     }
+
+    ya::SceneManager::Release();
     application.Release();
     editor.Release();
 

@@ -3,6 +3,7 @@
 namespace ya
 {
 	PlayScene::PlayScene()
+		:Scene(eSceneType::Play)
 	{
 	}
 

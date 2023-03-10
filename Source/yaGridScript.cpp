@@ -3,6 +3,7 @@
 #include "yaGameObject.h"
 #include "yaTransform.h"
 #include "yaResources.h"
+#include "yaSceneManager.h"
 namespace ya
 {
 	GridScript::GridScript()
@@ -24,9 +25,10 @@ namespace ya
 	void GridScript::FixedUpdate()
 	{
 		shared_ptr<Material>  material = Resources::Find<Material>(L"GridMaterial");
+		eSceneType type = SceneManager::GetPlayScene()->GetSceneType();
 		if (material)
 		{
-			GameObject* camera = renderer::cameras[1]->GetOwner();
+			GameObject* camera = renderer::cameras[(UINT)type][1]->GetOwner();
 			Transform* tr = camera->GetComponent<Transform>();
 			int depth = tr->GetPosition().z;
 			

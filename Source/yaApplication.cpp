@@ -66,7 +66,6 @@ namespace ya
 	}
 	void Application::Release()
 	{
-		SceneManager::Release();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
