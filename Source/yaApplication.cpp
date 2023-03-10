@@ -56,7 +56,6 @@ namespace ya
 		renderer::Render();
 
 		//graphicDevice->Render();
-		graphicDevice->Present();
 	}
 	// Running main engine loop
 	void Application::Run()

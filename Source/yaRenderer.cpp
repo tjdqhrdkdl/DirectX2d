@@ -13,6 +13,9 @@ namespace ya::renderer
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)eBSType::End] = {};
 	
 	std::vector<Camera*> cameras;
+
+	Camera* mainCamera = nullptr;
+	std::vector<DebugMesh> debugMeshes;
 	void SetUpState()
 	{
 #pragma region InputLayout
@@ -69,6 +72,12 @@ namespace ya::renderer
 			, CamEffectShader->GetVSBlobBufferPointer()
 			, CamEffectShader->GetVSBlobBufferSize()
 			, CamEffectShader->GetInputLayoutAddressOf());
+
+		std::shared_ptr<Shader> DebugShader = Resources::Find<Shader>(L"DebugShader");
+		GetDevice()->CreateInputLayout(arrLayoutDesc, 3
+			, DebugShader->GetVSBlobBufferPointer()
+			, DebugShader->GetVSBlobBufferSize()
+			, DebugShader->GetInputLayoutAddressOf());
 #pragma endregion
 
 #pragma region SamplerState
@@ -199,25 +208,25 @@ namespace ya::renderer
 
 	void LoadMesh()
 	{
-		shared_ptr<Mesh> mesh = make_shared<Mesh>();
-		Resources::Insert<Mesh>(L"RectMesh", mesh);
-
-		vertexes[0].pos = Vector4(-0.5f, 0.5f, 0.5f, 1.0f);
+		//RectMesh
+		vertexes[0].pos = Vector4(-0.5f, 0.5f, -0.0f, 1.0f);
 		vertexes[0].color = Vector4(0.f, 1.f, 0.f, 1.f);
 		vertexes[0].uv = Vector2(0.f, 0.f);
 
-		vertexes[1].pos = Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+		vertexes[1].pos = Vector4(0.5f, 0.5f, -0.0f, 1.0f);
 		vertexes[1].color = Vector4(1.f, 1.f, 1.f, 1.f);
 		vertexes[1].uv = Vector2(1.0f, 0.0f);
 
-		vertexes[2].pos = Vector4(0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[2].pos = Vector4(0.5f, -0.5f, -0.0f, 1.0f);
 		vertexes[2].color = Vector4(1.f, 0.f, 0.f, 1.f);
 		vertexes[2].uv = Vector2(1.0f, 1.0f);
 
-		vertexes[3].pos = Vector4(-0.5f, -0.5f, 0.5f, 1.0f);
+		vertexes[3].pos = Vector4(-0.5f, -0.5f, -0.0f, 1.0f);
 		vertexes[3].color = Vector4(0.f, 0.f, 1.f, 1.f);
 		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
+		shared_ptr<Mesh> mesh = make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"RectMesh", mesh);
 		mesh->CreateVertexBuffer(vertexes, 4);
 
 		std::vector<UINT> indexes;
@@ -231,14 +240,26 @@ namespace ya::renderer
 
 		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
-		//¿ø
+		//Debug Rect Mesh (Line Only)
+		shared_ptr<Mesh> debugMesh = make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"DebugRectMesh", debugMesh);
+		debugMesh->CreateVertexBuffer(vertexes, 4);
+		indexes.clear();
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(2);
+		indexes.push_back(3);
+		debugMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+
+
+		//Cirle Rect
 		shared_ptr<Mesh> circleMesh = make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"CircleMesh", circleMesh);
 
 		std::vector<Vertex> circleVtxes;
 		Vertex center = {};
-		center.pos = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
-		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		center.pos = Vector4(0.0f, 0.0f, -0.0f, 1.0f);
+		center.color = Vector4(0.0f, 1.0f, -0.0f, 1.0f);
 		center.uv = Vector2(0.5f, 0.5f);
 
 		circleVtxes.push_back(center);
@@ -253,7 +274,7 @@ namespace ya::renderer
 			vtx.pos = Vector4(
 				fRadius * cosf(fTheta * i)
 				, fRadius * sinf(fTheta * i)
-				, 0
+				, -0.0f
 				, 1
 			);
 			vtx.uv = Vector2(
@@ -274,6 +295,20 @@ namespace ya::renderer
 		indexes.push_back(iSlice-1);
 		circleMesh->CreateVertexBuffer(circleVtxes.data(), circleVtxes.size());
 		circleMesh->CreateIndexBuffer(indexes.data(), indexes.size());
+
+		//Debug Circle Mesh
+		shared_ptr<Mesh> DebugCircleMesh = make_shared<Mesh>();
+		Resources::Insert<Mesh>(L"DebugCircleMesh", DebugCircleMesh);
+
+
+		indexes.clear();
+		for (size_t i = 0; i < iSlice - 1; i++)
+		{
+			indexes.push_back(i + 1);
+		}
+		indexes.push_back(1);
+		DebugCircleMesh->CreateVertexBuffer(circleVtxes.data(), circleVtxes.size());
+		DebugCircleMesh->CreateIndexBuffer(indexes.data(), indexes.size());
 	}
 	void LoadBuffer()
 	{
@@ -321,6 +356,14 @@ namespace ya::renderer
 
 		Resources::Insert<Shader>(L"CamEffectShader", CamEffectShader);
 
+		// Debug
+		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
+		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
+		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
+
+		Resources::Insert<Shader>(L"DebugShader", debugShader);
+
+
 	}
 
 	void LoadMaterial()
@@ -367,6 +410,12 @@ namespace ya::renderer
 		CamEffectMaterial->SetShader(CamEffectShader);
 		Resources::Insert<Material>(L"CamEffectMaterial", CamEffectMaterial);
 
+		// Debug
+		std::shared_ptr<Shader> debugShader = Resources::Find<Shader>(L"DebugShader");
+		std::shared_ptr<Material> debugMaterial = std::make_shared<Material>();
+		debugMaterial->SetRenderingMode(eRenderingMode::Transparent);
+		debugMaterial->SetShader(debugShader);
+		Resources::Insert<Material>(L"DebugMaterial", debugMaterial);
 
 	}
 

@@ -8,17 +8,28 @@
     <Filter Include="Editor">
       <UniqueIdentifier>{eab58a29-a253-4265-82e4-b73ee8f3101b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{2ab79fbe-2aba-4dc5-89d7-e3dd8048bacb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXClass.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="yaDebugObject.h" />
     <ClInclude Include="yaEditorObject.h" />
     <ClInclude Include="yaWidget.h" />
     <ClInclude Include="yaEditor.h">
       <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXClass.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -35,12 +46,14 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="yaDebugObject.cpp" />
     <ClCompile Include="yaEditorObject.cpp" />
     <ClCompile Include="yaWidget.cpp" />
     <ClCompile Include="yaEditor.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

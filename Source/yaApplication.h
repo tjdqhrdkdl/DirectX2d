@@ -26,6 +26,7 @@ namespace ya
 		UINT GetWidth() { return mWidth; }
 		UINT GetHeight() { return mHeight; }
 
+		void Present(){graphicDevice->Present();}
 	private:
 		bool initialized = false;
 		std::unique_ptr<graphics::GraphicDevice_DX11> graphicDevice;
