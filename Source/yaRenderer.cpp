@@ -252,10 +252,11 @@ namespace ya::renderer
 		indexes.push_back(1);
 		indexes.push_back(2);
 		indexes.push_back(3);
+		indexes.push_back(0);
 		debugMesh->CreateIndexBuffer(indexes.data(), indexes.size());
 
 
-		//Cirle Rect
+		//Cirle Mesh
 		shared_ptr<Mesh> circleMesh = make_shared<Mesh>();
 		Resources::Insert<Mesh>(L"CircleMesh", circleMesh);
 
@@ -363,7 +364,7 @@ namespace ya::renderer
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(eShaderStage::VS, L"DebugVS.hlsl", "main");
 		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
-
+		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		Resources::Insert<Shader>(L"DebugShader", debugShader);
 
 

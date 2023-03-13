@@ -4,7 +4,7 @@
 #include "yaInput.h"
 #include "yaSceneManager.h"
 #include "yaResources.h"
-
+#include "yaCollisionManager.h"
 namespace ya
 {
 	using namespace graphics;
@@ -28,6 +28,7 @@ namespace ya
 
 		renderer::Initialize();
 		SceneManager::Initialize();
+		CollisionManager::Initialize();
 	}
 
 	// 게임 로직 캐릭터 이동 등등 
@@ -38,6 +39,8 @@ namespace ya
 		Input::Update();
 
 		SceneManager::Update();
+		CollisionManager::Update();
+
 	}
 
 	// GPU update

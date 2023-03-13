@@ -105,10 +105,10 @@ namespace ya
 		{
 			delete obj;
 			obj = nullptr;
-		}/*
+		}
 
 		delete mDebugObjects[(UINT)eColliderType::Rect];
-		delete mDebugObjects[(UINT)eColliderType::Circle];*/
+		delete mDebugObjects[(UINT)eColliderType::Circle];
 	}
 
 	void Editor::DebugRender(graphics::DebugMesh& mesh)
@@ -123,8 +123,10 @@ namespace ya
 		if (mesh.type == eColliderType::Rect)
 			tr->SetScale(mesh.scale);
 		else
-			tr->SetScale(Vector3(mesh.radius));
-
+			tr->SetScale(Vector3(mesh.radius * 2)); 
+		// 여기서 라디우스를 스케일로 설정해줌.
+		// 원 메시를 만들때 반지름을 0.5로 설정했기 때문에, 실제 원의 반지름은 0.5다.
+		// 만들때 반지름 1로 만들어라 ㅇㅇ;
 		BaseRenderer* renderer = debugObj->GetComponent<BaseRenderer>();
 
 		tr->FixedUpdate();

@@ -60,6 +60,23 @@ namespace ya
 			return mMousePosition;
 		}
 
+
+		static __forceinline bool GetKey(eKeyCode keyCode)
+		{
+			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::PRESSED;
+		}
+
+		static __forceinline bool GetKeyDown(eKeyCode keyCode)
+		{
+			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::DOWN;
+		}
+
+		static __forceinline bool GetKeyUp(eKeyCode keyCode)
+		{
+			return mKeys[static_cast<UINT>(keyCode)].eState == eKeyState::UP;
+		}
+
+
 	private:
 		Input() = delete;
 		~Input() = delete;

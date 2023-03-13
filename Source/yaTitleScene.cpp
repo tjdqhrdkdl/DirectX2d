@@ -10,7 +10,9 @@
 #include "yaGridScript.h"
 #include "yaCamEffectScript.h"
 #include "yaObject.h"
-
+#include "yaCollider2D.h"
+#include "yaPlayerScript.h"
+#include "yaCollisionManager.h"
 
 namespace ya
 {
@@ -25,6 +27,8 @@ namespace ya
 
 	void TitleScene::Initialize()
 	{
+		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Player, true);
+
 		shared_ptr<Mesh> circleMesh = Resources::Find<Mesh>(L"CircleMesh");
 		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
 		// Grid Camera Game Object
@@ -57,22 +61,27 @@ namespace ya
 		//smile obj
 		GameObject* smileObj = object::Instantiate<GameObject>(eLayerType::Player);
 		Transform* smileTr = smileObj->GetComponent<Transform>();
-		smileTr->SetPosition(Vector3(3, 2, 5));
+		smileTr->SetPosition(Vector3(3, 2, 10));
 		smileTr->SetRotation(Vector3(0.0f, 0.0f, 0));
 		MeshRenderer* smileMr = smileObj->AddComponent<MeshRenderer>();
 		shared_ptr<Material> smilematerial = Resources::Find<Material>(L"RectMaterial");
 		smileMr->SetMaterial(smilematerial);
 		smileMr->SetMesh(circleMesh);
+		Collider2D* smileCol = smileObj->AddComponent<Collider2D>();
+		smileCol->SetType(eColliderType::Rect);
+		smileObj->AddComponent<PlayerScript>();
 
 		//smile Child obj
 		GameObject* childObj = object::Instantiate<GameObject>(eLayerType::Player);
 		Transform* childTr = childObj->GetComponent<Transform>();
-		childTr->SetPosition(Vector3(3, 0, 5));
-		childTr->SetParent(smileTr);
+		childTr->SetPosition(Vector3(6, 0, 10));
 		MeshRenderer* childMr = childObj->AddComponent<MeshRenderer>();
 		shared_ptr<Material> childmaterial = Resources::Find<Material>(L"RectMaterial");
 		childMr->SetMaterial(childmaterial);
 		childMr->SetMesh(circleMesh);
+		Collider2D* otherCol = childObj->AddComponent<Collider2D>();
+		otherCol->SetType(eColliderType::Circle);
+
 
 		//Light Object
 		GameObject* lightObj = object::Instantiate<GameObject>(eLayerType::Player);
@@ -96,17 +105,17 @@ namespace ya
 		hpsr->SetMesh(mesh);
 		hpsr->SetMaterial(hpspriteMaterial);
 
-		// Camera Effect
-		GameObject* camEffect = object::Instantiate<GameObject>(eLayerType::UI);
-		camEffect->SetName(L"CameraEffect");
-		Transform* camEffectTR = camEffect->GetComponent<Transform>();
-		camEffectTR->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		SpriteRenderer* camEffectsr = camEffect->AddComponent<SpriteRenderer>();
-		std::shared_ptr<Mesh> camEffectmesh = Resources::Find<Mesh>(L"RectMesh");
-		std::shared_ptr<Material> camEffectspriteMaterial = Resources::Find<Material>(L"CamEffectMaterial");
-		camEffectsr->SetMesh(circleMesh);
-		camEffectsr->SetMaterial(camEffectspriteMaterial);
-		CamEffectScript* ceScript = camEffect->AddComponent<CamEffectScript>();
+		//// Camera Effect
+		//GameObject* camEffect = object::Instantiate<GameObject>(eLayerType::UI);
+		//camEffect->SetName(L"CameraEffect");
+		//Transform* camEffectTR = camEffect->GetComponent<Transform>();
+		//camEffectTR->SetPosition(Vector3(0.0f, 0.0f, 0.0f));5
+		//SpriteRenderer* camEffectsr = camEffect->AddComponent<SpriteRenderer>();
+		//std::shared_ptr<Mesh> camEffectmesh = Resources::Find<Mesh>(L"RectMesh");
+		//std::shared_ptr<Material> camEffectspriteMaterial = Resources::Find<Material>(L"CamEffectMaterial");
+		//camEffectsr->SetMesh(circleMesh);
+		//camEffectsr->SetMaterial(camEffectspriteMaterial);
+		//CamEffectScript* ceScript = camEffect->AddComponent<CamEffectScript>();
 
 		Scene::Initialize();
 	}

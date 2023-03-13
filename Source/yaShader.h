@@ -15,6 +15,8 @@ namespace ya::graphics
 		void Create(graphics::eShaderStage stage, const std::wstring& file, const std::string& funcName);
 		void Binds();
 
+		void SetTopology(D3D11_PRIMITIVE_TOPOLOGY type) { mTopology = type; }
+
 		ID3D11InputLayout* GetInputLayout() { return mInputLayout.Get(); }
 		ID3D11InputLayout** GetInputLayoutAddressOf() { return mInputLayout.GetAddressOf(); }
 

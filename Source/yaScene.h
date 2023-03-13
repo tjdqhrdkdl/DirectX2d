@@ -18,8 +18,9 @@ namespace ya
 
 		void AddGameObject(GameObject* gameobject, enums::eLayerType layerIndex);
 
+		std::vector<GameObject*> GetGameObjects(eLayerType type) { return mLayers[(UINT)type].GetGameObjects(); }
+		
 		Layer& GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
-
 		eSceneType GetSceneType() { return mType; }
 	private:
 		std::vector<Layer> mLayers;

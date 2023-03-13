@@ -31,6 +31,7 @@ namespace ya
 
 		void SetParent(Transform* tr) { mParent = tr; }
 		Transform* GetParent() { return mParent; }
+		Matrix GetWorldMatrix() { return mWorldMatrix; }
 	private:
 		Vector3 mForward;
 		Vector3 mUp;

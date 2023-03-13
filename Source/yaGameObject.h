@@ -33,11 +33,17 @@ namespace ya
 			return comp;
 
 		}
+
 		template <typename T>
-		std::vector<Component*> GetComponents()
+		std::vector<T*> GetComponents()
 		{
 			T comp = {};
-			return mvComponents[comp.GetOrder()];
+			std::vector<T*> ret = {};
+			for (Component* c:mvComponents[comp.GetOrder()])
+			{
+				ret.push_back(dynamic_cast<T*>(c));
+			}
+			return ret;
 		}
 
 		template <typename T>
@@ -54,6 +60,8 @@ namespace ya
 			}
 			return nullptr;
 		}
+
+		eState GetState() { return mState; }
 	protected:
 		std::vector<std::vector<Component*>> mvComponents;
 	private:

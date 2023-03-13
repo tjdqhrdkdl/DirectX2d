@@ -80,6 +80,15 @@
     <Filter Include="Player">
       <UniqueIdentifier>{e184ed32-1000-441b-9cec-3f7bdeabd0c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Collider">
+      <UniqueIdentifier>{2738e940-c148-453f-811c-ab9cb1d8e47e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider\2D">
+      <UniqueIdentifier>{6941a36a-d566-470e-97e4-506d9a7490b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Collider\Manager">
+      <UniqueIdentifier>{405ac1d4-ed49-4407-b3d0-949ff8ad7415}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaMath.cpp">
@@ -169,6 +178,16 @@
     <ClCompile Include="yaConstantBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="yaCollider.cpp">
+      <Filter>Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="yaCollider2D.cpp">
+      <Filter>Component\Collider\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="yaCollisionManager.cpp">
+      <Filter>Component\Collider\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="yaPlayerScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -272,6 +291,16 @@
     <ClInclude Include="yaScene.h">
       <Filter>Scene\Base</Filter>
     </ClInclude>
+    <ClInclude Include="yaCollider.h">
+      <Filter>Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="yaCollider2D.h">
+      <Filter>Component\Collider\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="yaCollisionManager.h">
+      <Filter>Component\Collider\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="yaPlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">
