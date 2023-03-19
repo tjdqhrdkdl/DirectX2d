@@ -22,41 +22,39 @@ namespace ya
 	{
 
 		Transform* tr = GetOwner()->GetComponent<Transform>();
-		//Vector3 rot = tr->GetRotation();
-		//rot.z += 10.0f * Time::DeltaTime();
-		//tr->SetRotation(rot);
 
-		if (Input::GetKeyState(eKeyCode::R) == eKeyState::PRESSED)
-		{
-			Vector3 rot = tr->GetRotation();
-			rot.z += 10.0f * Time::DeltaTime();
-			tr->SetRotation(rot);
-		}
+		//if (Input::GetKeyState(eKeyCode::R) == eKeyState::PRESSED)
+		//{
+		//	Vector3 rot = tr->GetRotation();
+		//	rot.z += 10.0f * Time::DeltaTime();
+		//	tr->SetRotation(rot);
+		//}
 
 
-		if (Input::GetKey(eKeyCode::RIGHT))
+		if (Input::GetKey(eKeyCode::D))
 		{
 			Vector3 pos = tr->GetPosition();
 			pos.x += 6.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
 		}
-		if (Input::GetKey(eKeyCode::LEFT))
+		if (Input::GetKey(eKeyCode::A))
 		{
 			Vector3 pos = tr->GetPosition();
 			pos.x -= 6.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
 		}
 
-		if (Input::GetKey(eKeyCode::DOWN))
-		{
-			Vector3 pos = tr->GetPosition();
-			pos.y -= 6.0f * Time::DeltaTime();
-			tr->SetPosition(pos);
-		}
-		if (Input::GetKey(eKeyCode::UP))
+		if (Input::GetKey(eKeyCode::W))
 		{
 			Vector3 pos = tr->GetPosition();
 			pos.y += 6.0f * Time::DeltaTime();
+			tr->SetPosition(pos);
+		}
+
+		if (Input::GetKey(eKeyCode::S))
+		{
+			Vector3 pos = tr->GetPosition();
+			pos.y -= 6.0f * Time::DeltaTime();
 			tr->SetPosition(pos);
 		}
 	}

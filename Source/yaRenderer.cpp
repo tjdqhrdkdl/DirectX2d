@@ -323,6 +323,9 @@ namespace ya::renderer
 		constantBuffers[(UINT)eCBType::Material] = new ConstantBuffer(eCBType::Material);
 		constantBuffers[(UINT)eCBType::Material]->Create(sizeof(MaterialCB));
 
+		constantBuffers[(UINT)eCBType::Animator] = new ConstantBuffer(eCBType::Animator);
+		constantBuffers[(UINT)eCBType::Animator]->Create(sizeof(AnimatorCB));
+
 	}
 	;
 	void LoadShader()

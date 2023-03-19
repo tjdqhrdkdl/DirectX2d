@@ -22,27 +22,27 @@ void ya::cameraScript::Update()
 
 	Vector3 pos = tr->GetPosition();
 
-	if (Input::GetKeyState(eKeyCode::D) == eKeyState::PRESSED)
+	if (Input::GetKeyState(eKeyCode::NUM_6) == eKeyState::PRESSED)
 	{
 		pos += 10.0f * tr->Right() * Time::DeltaTime();
 	}
-	else if (Input::GetKeyState(eKeyCode::A) == eKeyState::PRESSED)
+	else if (Input::GetKeyState(eKeyCode::NUM_4) == eKeyState::PRESSED)
 	{
 		pos += 10.0f * -tr->Right() * Time::DeltaTime();
 	}
-	else if (Input::GetKeyState(eKeyCode::W) == eKeyState::PRESSED)
+	else if (Input::GetKeyState(eKeyCode::NUM_8) == eKeyState::PRESSED)
 	{
 		pos += 10.0f * tr->Forward() * Time::DeltaTime();
 	}
-	else if (Input::GetKeyState(eKeyCode::S) == eKeyState::PRESSED)
+	else if (Input::GetKeyState(eKeyCode::NUM_2) == eKeyState::PRESSED)
 	{
 		pos += 10.0f * -tr->Forward() * Time::DeltaTime();
 	}
-	else if (Input::GetKeyState(eKeyCode::Q) == eKeyState::PRESSED)
+	else if (Input::GetKeyState(eKeyCode::NUM_7) == eKeyState::PRESSED)
 	{
 		pos += 10.0f * tr->Up() * Time::DeltaTime();
 	}
-	else if (Input::GetKeyState(eKeyCode::E) == eKeyState::PRESSED)
+	else if (Input::GetKeyState(eKeyCode::NUM_9) == eKeyState::PRESSED)
 	{
 		pos += 10.0f * -tr->Up() * Time::DeltaTime();
 	}

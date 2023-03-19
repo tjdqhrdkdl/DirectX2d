@@ -67,6 +67,7 @@ namespace ya
 		GetDevice()->SetShaderResource(eShaderStage::HS, 0, &srv);
 		GetDevice()->SetShaderResource(eShaderStage::CS, 0, &srv);
 		GetDevice()->SetShaderResource(eShaderStage::PS, 0, &srv);
+	
 	}
 
 }

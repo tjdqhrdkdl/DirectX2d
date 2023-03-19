@@ -17,6 +17,16 @@ cbuffer MaterialData : register(b1)
     matrix cbMatrix;
 };
 
+cbuffer AnimatorData : register(b2)
+{
+    float2 leftTop;
+    float2 spriteSize;
+    float2 offset;
+    float2 atlasSize;
+
+    uint animationType;
+};
+
 Texture2D defaultTexture : register(t0);
 //
 SamplerState PointSampler : register(s0);

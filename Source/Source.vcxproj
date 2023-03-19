@@ -159,6 +159,8 @@
     <ClInclude Include="cameraScript.h" />
     <ClInclude Include="CommonInclude.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="yaAnimation.h" />
+    <ClInclude Include="yaAnimator.h" />
     <ClInclude Include="yaApplication.h" />
     <ClInclude Include="yaBaseRenderer.h" />
     <ClInclude Include="yaCamEffectScript.h" />
@@ -200,6 +202,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cameraScript.cpp" />
+    <ClCompile Include="yaAnimation.cpp" />
+    <ClCompile Include="yaAnimator.cpp" />
     <ClCompile Include="yaApplication.cpp" />
     <ClCompile Include="yaBaseRenderer.cpp" />
     <ClCompile Include="yaCamEffectScript.cpp" />

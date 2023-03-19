@@ -176,10 +176,7 @@ namespace ya
 
 	bool CollisionManager::Intersect(Collider2D* left, Collider2D* right)
 	{
-		// Rect vs Rect 
-		// 0 --- 1
-		// |     |
-		// 3 --- 2
+		// Rect vs Rect
 		
 		static const Vector3 arrLocalPos[4] =
 		{
@@ -253,36 +250,5 @@ namespace ya
 
 			return true;
 		}
-		/*
-		else if (left->GetColliderType() != right->GetColliderType())
-		{
-			Matrix mat;
-			float radius;
-			if (left->GetColliderType() == eColliderType::Rect)
-			{
-				mat = leftTr->GetWorldMatrix();
-				radius = right->GetRadius();
-			}
-			else
-			{
-				mat = rightTr->GetWorldMatrix();
-				radius = left->GetRadius();
-			}
-			Vector3 points[4];
-			for (size_t i = 0; i < 4; i++)
-			{
-				points[i] = Vector3::Transform(arrLocalPos[i], mat);
-			}
-			for (size_t i = 4; i == 0; i++)
-			{
-
-				if (points[i + 1].x < points[i].x)
-					std::swap(points[i + 1], points[i]);
-
-			}
-
-			
-			
-		}*/
 	}
 }

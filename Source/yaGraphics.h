@@ -15,6 +15,7 @@
 
 #define CBSLOT_TRANSFORM 0
 #define CBSLOT_MATERIAL 1
+#define CBSLOT_ANIMATOR 1
 
 namespace ya::graphics
 {
@@ -40,6 +41,7 @@ namespace ya::graphics
 	{
 		Transform,
 		Material,
+		Animator,
 		End,
 	};
 

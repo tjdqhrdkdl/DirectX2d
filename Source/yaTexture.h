@@ -22,6 +22,8 @@ namespace ya
 
 		void Clear();
 
+		UINT GetWidth() { return mImage.GetMetadata().width; }
+		UINT GetHeight() { return mImage.GetMetadata().height; }
 	private:
 		ScratchImage mImage;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> mTexture;

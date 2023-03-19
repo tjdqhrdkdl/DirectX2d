@@ -18,6 +18,12 @@ namespace ya
 		virtual void OnCollisionExit(Collider2D* collider) override;
 
 	private:
+		float mHp;
+		float mSpeed;
+		float mDamage;
+		float mSize;
+
 		float mFadeTime;
+
 	};
 }

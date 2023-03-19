@@ -19,8 +19,19 @@ struct VTX_OUT
 float4 Main(VTX_OUT _in) : SV_Target
 {
     float4 color = (float) 0.0f;
+        
+    if (animationType == 1) // 2D
+    {
+        
+        float2 UV = (leftTop - offset) + spriteSize*_in.vUV;
+        
+        color = defaultTexture.Sample(PointSampler, UV);
+    }
+    else
+    {
+        color = defaultTexture.Sample(AnisotropicSampler, _in.vUV);
+    }
     
-    color = defaultTexture.Sample(LinearSampler, _in.vUV);
     
     return color;
 }

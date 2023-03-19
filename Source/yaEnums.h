@@ -28,6 +28,7 @@ namespace ya::enums
 		SpriteRenderer,
 		Collider,
 		//Collider2,
+		Animator,
 		UI,
 		Script,
 		End,
@@ -61,6 +62,15 @@ namespace ya::enums
 		Circle,
 		Box,
 		Sphere,
+		End,
+	};
+
+
+	enum class eAnimationType
+	{
+		None,
+		SecondDimension,
+		ThirdDimension,
 		End,
 	};
 }
