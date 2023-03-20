@@ -49,6 +49,8 @@ namespace ya
 
 		void Binds();
 		void Clear();
+
+		Animation* GetPlayAnimation() { return mPlayAnimation; }
 		std::function<void()>& GetStartEvent(const std::wstring& name);
 		std::function<void()>& GetCompleteEvent(const std::wstring& name);
 		std::function<void()>& GetEndEvent(const std::wstring& name);
