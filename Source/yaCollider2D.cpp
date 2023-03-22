@@ -15,6 +15,7 @@ namespace ya
 		, mbTrigger(false)
 		, mID(0)
 		, mRadius(0.5f)
+		, mbJumpBox(true)
 	{
 		mID = ColliderNumber++;	
 	}
@@ -30,10 +31,6 @@ namespace ya
 
 	void Collider2D::Update()
 	{
-	}
-
-	void Collider2D::FixedUpdate()
-	{
 		Vector3 scale = mTransform->GetScale();
 		scale *= Vector3(mSize.x, mSize.y, 1.0f);
 
@@ -42,6 +39,7 @@ namespace ya
 		Vector3 position = mTransform->GetPosition();
 		Vector3 colliderPos = position + Vector3(mCenter.x, mCenter.y, 0.0f);
 		mPosition = colliderPos;
+		mScale = scale;
 
 		Matrix scaleMatrix = Matrix::CreateScale(scale);
 		Matrix rotationMatrix;
@@ -62,6 +60,10 @@ namespace ya
 		meshAttribute.type = mType;
 
 		renderer::debugMeshes.push_back(meshAttribute);
+	}
+
+	void Collider2D::FixedUpdate()
+	{
 	}
 
 	void Collider2D::Render()

@@ -73,7 +73,7 @@ namespace ya
 
 
 		animation = new Animation();
-		animation->Create(name, atlas, leftTop, size, offset, spriteLegth, duration);
+		animation->Create(name, atlas, leftTop, size, offset, spriteLegth, duration, this);
 		if (animation)
 		{
 			mAnimations.insert(std::make_pair(name, animation));

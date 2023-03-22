@@ -27,12 +27,16 @@ namespace ya
 		void SetSize(Vector2 size) { mSize = size; }
 		void SetCenter(Vector2 center) { mCenter = center; }
 		void SetRadius(float radius) { mRadius = radius; }
+		void SetJumpBox(bool isJumpBox) { mbJumpBox = isJumpBox; }
 		bool IsTriiger() { return mbTrigger; }
 
 		float GetRadius() { return mRadius; }
 		UINT GetID() { return mID; }
 		eColliderType GetColliderType() { return mType; }
 		Vector3 GetPosition() { return mPosition; }
+		Vector2 GetSize() { return mSize; }
+		Vector3 GetScale() { return mScale; }
+		bool isJumpBox() { return mbJumpBox; }
 
 	private:
 		static UINT ColliderNumber;
@@ -43,7 +47,9 @@ namespace ya
 		Vector2 mSize;
 		Vector2 mCenter;
 		Vector3 mPosition;
+		Vector3 mScale;
 		float mRadius;
 		bool mbTrigger;
+		bool mbJumpBox;
 	};
 }

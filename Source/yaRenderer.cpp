@@ -14,6 +14,8 @@ namespace ya::renderer
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)eBSType::End] = {};
 	
 	std::vector<Camera*> cameras[(UINT)eSceneType::End];
+	std::vector<LightAttribute> lights;
+	StructuredBuffer* lightsBuffer;
 
 	Camera* mainCamera = nullptr;
 	Camera* orthographicCamera = nullptr;
@@ -326,6 +328,13 @@ namespace ya::renderer
 		constantBuffers[(UINT)eCBType::Animator] = new ConstantBuffer(eCBType::Animator);
 		constantBuffers[(UINT)eCBType::Animator]->Create(sizeof(AnimatorCB));
 
+		constantBuffers[(UINT)eCBType::Light] = new ConstantBuffer(eCBType::Light);
+		constantBuffers[(UINT)eCBType::Light]->Create(sizeof(LightCB));
+
+		//Structed buffer
+		lightsBuffer = new StructuredBuffer();
+		lightsBuffer->Create(sizeof(LightAttribute), 128, eSRVType::None, nullptr);
+
 	}
 	;
 	void LoadShader()
@@ -438,6 +447,8 @@ namespace ya::renderer
 
 	void Render()
 	{
+		BindLights();
+	
 		eSceneType type = SceneManager::GetPlayScene()->GetSceneType();
 
 		for (Camera* cam : cameras[(UINT)type])
@@ -448,6 +459,8 @@ namespace ya::renderer
 			cam->Render();
 		}
 		cameras[(UINT)type].clear();
+		renderer::lights.clear();
+
 	}
 
 
@@ -460,6 +473,27 @@ namespace ya::renderer
 			delete constantBuffers[i];
 			constantBuffers[i] = nullptr;
 		}
+
+		delete lightsBuffer;
 	}
 
+	void PushLightAttribute(LightAttribute lightAttribute)
+	{
+		lights.push_back(lightAttribute);
+	}
+
+	void BindLights()
+	{
+		lightsBuffer->Bind(lights.data(), lights.size());
+		lightsBuffer->SetPipeline(eShaderStage::VS, 12);
+		lightsBuffer->SetPipeline(eShaderStage::PS, 12);
+
+		renderer::LightCB trCb = {};
+		trCb.numberOfLight = lights.size();
+
+		ConstantBuffer* cb = renderer::constantBuffers[(UINT)eCBType::Light];
+		cb->Bind(&trCb);
+		cb->SetPipline(eShaderStage::VS);
+		cb->SetPipline(eShaderStage::PS);
+	}
 }

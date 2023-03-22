@@ -15,7 +15,8 @@
 
 #define CBSLOT_TRANSFORM 0
 #define CBSLOT_MATERIAL 1
-#define CBSLOT_ANIMATOR 1
+#define CBSLOT_ANIMATOR 2
+#define CBSLOT_Light 3
 
 namespace ya::graphics
 {
@@ -42,6 +43,7 @@ namespace ya::graphics
 		Transform,
 		Material,
 		Animator,
+		Light,
 		End,
 	};
 
@@ -78,7 +80,11 @@ namespace ya::graphics
 		OneOne,
 		End,
 	};
-
+	enum class eSRVType
+	{
+		None,
+		End,
+	};
 	enum class eRenderingMode
 	{
 		Opaque,
@@ -122,5 +128,19 @@ namespace ya::graphics
 		float radius;
 		float duration;
 		float time;
+	};
+
+	struct LightAttribute
+	{
+		math::Vector4 diffuse;
+		math::Vector4 specular;
+		math::Vector4 ambient;
+		math::Vector4 position;
+		math::Vector4 direction;
+
+		enums::eLightType type;
+		float radius;
+		float angle;
+		int padding;
 	};
 }

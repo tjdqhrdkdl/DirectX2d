@@ -73,8 +73,15 @@ namespace ya
 						continue;
 					if (lObj == rObj)
 						continue;
-
-					ColliderCollision(lObj->GetComponent<Collider2D>(), rObj->GetComponent<Collider2D>());
+					std::vector<Collider2D*>lCols = lObj->GetComponents<Collider2D>();
+					std::vector<Collider2D*>rCols = rObj->GetComponents<Collider2D>();
+					for (UINT l = 0;  l < lCols.size();  l++)
+					{
+						for (UINT r = 0; r < rCols.size(); r++)
+						{
+							ColliderCollision(lCols[l], rCols[r]);
+						}
+					}
 				}
 			}
 			
@@ -97,8 +104,15 @@ namespace ya
 						continue;
 					if (lObj == rObj)
 						continue;
-
-					ColliderCollision(lObj->GetComponent<Collider2D>(), rObj->GetComponent<Collider2D>());
+					std::vector<Collider2D*>lCols = lObj->GetComponents<Collider2D>();
+					std::vector<Collider2D*>rCols = rObj->GetComponents<Collider2D>();
+					for (UINT l = 0; l < lCols.size(); l++)
+					{
+						for (UINT r = 0; r < rCols.size(); r++)
+						{
+							ColliderCollision(lCols[l], rCols[r]);
+						}
+					}
 				}
 
 			}
@@ -213,6 +227,14 @@ namespace ya
 
 			Vector3 vc = left->GetPosition() - right->GetPosition();
 			vc.z = 0.0f;
+
+			Vector3 leftScale = Vector3(left->GetSize().x, left->GetSize().y, 1.0f);
+			Axis[0] = Axis[0] * leftScale;
+			Axis[1] = Axis[1] * leftScale;
+
+			Vector3 rightScale = Vector3(right->GetSize().x, right->GetSize().y, 1.0f);
+			Axis[2] = Axis[2] * rightScale;
+			Axis[3] = Axis[3] * rightScale;
 
 			Vector3 centerDir = vc;
 			for (size_t i = 0; i < 4; i++)

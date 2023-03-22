@@ -1,21 +1,17 @@
 #include "yaTitleScene.h"
 #include "yaTransform.h"
-#include "yaMeshRenderer.h"
-#include "yaRenderer.h"
 #include "yaResources.h"
-#include "yaMaterial.h"
 #include "yaSpriteRenderer.h"
 #include "yaCamera.h"
 #include "cameraScript.h"
-#include "yaGridScript.h"
-#include "yaCamEffectScript.h"
 #include "yaObject.h"
 #include "yaCollider2D.h"
 #include "yaPlayerScript.h"
 #include "yaCollisionManager.h"
 #include "yaInput.h"
-#include "yaPlayer.h"
-
+#include "yaLight.h"
+#include "yaGroundScript.h"
+#include "yaRigidBody.h"
 namespace ya
 {
 	TitleScene::TitleScene()
@@ -29,7 +25,24 @@ namespace ya
 
 	void TitleScene::Initialize()
 	{
-		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Player, true);
+		{
+			GameObject* directionalLight = object::Instantiate<GameObject>(eLayerType::Player);
+			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+			Light* lightComp = directionalLight->AddComponent<Light>();
+			lightComp->SetType(eLightType::Directional);
+			lightComp->SetDiffuse(Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+		}
+
+		{
+			GameObject* pointLight = object::Instantiate<GameObject>(eLayerType::Player);
+			pointLight->GetComponent<Transform>()->SetPosition(Vector3(3.0f, 0.0f, 5.0f));
+			Light* lightComp = pointLight->AddComponent<Light>();
+			lightComp->SetType(eLightType::Point);
+			lightComp->SetRadius(10.0f);
+			lightComp->SetDiffuse(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+		}
+
+		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Ground, true);
 
 		shared_ptr<Mesh> circleMesh = Resources::Find<Mesh>(L"CircleMesh");
 		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -45,6 +58,7 @@ namespace ya
 		// Main Camera Game Object
 		GameObject* cameraObj = object::Instantiate<GameObject>(eLayerType::Camera);
 		Camera* cameraComp = cameraObj->AddComponent<Camera>();	
+		cameraComp->SetProjectionType(Camera::eProjectionType::Orthographic);
 		cameraComp->TurnLayerMask(eLayerType::UI, false);
 		cameraComp->TurnLayerMask(eLayerType::None, false);
 		cameraScript* camScript = cameraObj->AddComponent<cameraScript>();
@@ -61,22 +75,14 @@ namespace ya
 
 
 		//smile obj
-		object::Instantiate<Player>(eLayerType::Player);
+		GameObject* player =  object::Instantiate<GameObject>(eLayerType::Player);
+		player->AddComponent<PlayerScript>();
 
-
-
-		// HPBAR
-		GameObject* hpBar = object::Instantiate<GameObject>(eLayerType::UI);
-		hpBar->SetName(L"HPBAR");
-		Transform* hpBarTR = hpBar->GetComponent<Transform>();
-		hpBarTR->SetPosition(Vector3(-0.5, 3.0f, 12.0f));
-		hpBarTR->SetScale(Vector3(1.0f, 1.0f, 1.0f));
-
-		SpriteRenderer* hpsr = hpBar->AddComponent<SpriteRenderer>();
-		std::shared_ptr<Material> hpspriteMaterial = Resources::Find<Material>(L"UIMaterial");
-		hpsr->SetMesh(mesh);
-		hpsr->SetMaterial(hpspriteMaterial);
-
+		//Ground
+		GameObject* ground = object::Instantiate<GameObject>(eLayerType::Ground);
+		ground->AddComponent<GroundScript>();
+		Transform* tr = ground->GetComponent<Transform>();
+		tr->SetPosition(Vector3(0, -1, 0));
 		//// Camera Effect
 		//GameObject* camEffect = object::Instantiate<GameObject>(eLayerType::UI);
 		//camEffect->SetName(L"CameraEffect");

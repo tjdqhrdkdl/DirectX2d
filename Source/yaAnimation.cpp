@@ -1,4 +1,5 @@
 #include "yaAnimation.h"
+#include "yaAnimator.h"
 #include "yaTime.h"
 #include "yaRenderer.h"
 namespace ya
@@ -50,10 +51,11 @@ namespace ya
 
 	void Animation::Create(const std::wstring& name, std::shared_ptr<Texture> atlas
 							, Vector2 leftTop, Vector2 size, Vector2 offset
-							, UINT spriteLegth, float duration)
+							, UINT spriteLegth, float duration, Animator* owner)
 	{
 		mAnimationName = name;
 		mAtlas = atlas;
+		mAnimator = owner;
 
 		float width = (float)atlas->GetWidth();
 		float height = (float)atlas->GetHeight();
@@ -66,7 +68,6 @@ namespace ya
 			sprite.size = Vector2(size.x / width, size.y / height);
 			sprite.offset = offset;
 			sprite.duration = duration;
-			sprite.atlasSize = Vector2( width,height);
 
 			mSpriteSheet.push_back(sprite);
 		}
@@ -85,7 +86,7 @@ namespace ya
 
 		renderer::AnimatorCB info = {};
 
-		info.atlasSize = mSpriteSheet[mIndex].atlasSize;
+		info.reversed = mAnimator->isReversed();
 		info.leftTop = mSpriteSheet[mIndex].leftTop;
 		info.offset = mSpriteSheet[mIndex].offset;
 		info.size = mSpriteSheet[mIndex].size;

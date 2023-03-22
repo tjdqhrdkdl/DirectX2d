@@ -6,6 +6,7 @@
 #include "yaMesh.h"
 #include "yaShader.h"
 #include "yaConstantBuffer.h"
+#include "yaStructuredBuffer.h"
 #include "yaCamera.h"
 using namespace ya::math;
 using namespace ya::graphics;
@@ -43,9 +44,14 @@ namespace	ya::renderer
 		Vector2 leftTop;
 		Vector2 size;
 		Vector2 offset;
-		Vector2 atlasSize;
+		bool reversed;
 
 		UINT type;
+	};
+
+	CBUFFER(LightCB, CBSLOT_ANIMATOR)
+	{
+		UINT numberOfLight;
 	};
 
 	extern Vertex vertexes[4];
@@ -60,10 +66,14 @@ namespace	ya::renderer
 	extern Camera* mainCamera;
 	extern Camera* orthographicCamera;
 	extern std::vector<DebugMesh> debugMeshes;
+	extern std::vector<LightAttribute> lights;
+	extern StructuredBuffer* lightsBuffer;
 
 	void Initialize();
 	void Render();
 	void Release();
+	void PushLightAttribute(LightAttribute lightAttribute);
+	void BindLights();
 
 
 }

@@ -49,17 +49,21 @@ namespace ya
 
 		void Binds();
 		void Clear();
+		void SetReverse(bool reverse) { mbReverse = reverse; }
 
 		Animation* GetPlayAnimation() { return mPlayAnimation; }
+		bool isReversed() { return mbReverse; }
+
 		std::function<void()>& GetStartEvent(const std::wstring& name);
 		std::function<void()>& GetCompleteEvent(const std::wstring& name);
 		std::function<void()>& GetEndEvent(const std::wstring& name);
 		std::function<void()>& GetEvent(const std::wstring& name, UINT index);
+
 	private:
 		std::map<std::wstring, Animation*> mAnimations;
 		std::map<std::wstring, Events*> mEvents;
 		Animation* mPlayAnimation;
 		bool mbLoop;
-		
+		bool mbReverse;
 	};
 }

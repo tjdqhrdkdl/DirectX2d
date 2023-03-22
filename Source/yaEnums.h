@@ -6,6 +6,7 @@ namespace ya::enums
 	{
 		None,
 		Camera,
+		Ground,
 		Player,
 		Monster,
 		UI,
@@ -26,9 +27,11 @@ namespace ya::enums
 		Camera,
 		MeshRenderer,
 		SpriteRenderer,
+		Rigidbody,
 		Collider,
 		//Collider2,
 		Animator,
+		Light,
 		UI,
 		Script,
 		End,
@@ -71,6 +74,14 @@ namespace ya::enums
 		None,
 		SecondDimension,
 		ThirdDimension,
+		End,
+	};
+
+	enum class eLightType
+	{
+		Directional,
+		Point,
+		Spot,
 		End,
 	};
 }

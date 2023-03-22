@@ -62,9 +62,12 @@ namespace ya
 		}
 
 		eState GetState() { return mState; }
+		eLayerType GetLayerType() { return mLayerType; }
 	protected:
 		std::vector<std::vector<Component*>> mvComponents;
+
 	private:
 		eState mState;
+		eLayerType mLayerType;
 	};
 }

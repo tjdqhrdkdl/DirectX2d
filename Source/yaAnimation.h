@@ -5,6 +5,7 @@
 namespace ya
 {
 	using namespace math;
+	class Animator;
 	class Animation : public Entity
 	{
 	public:
@@ -13,14 +14,12 @@ namespace ya
 			Vector2 leftTop;
 			Vector2 size;
 			Vector2 offset;
-			Vector2 atlasSize;
 			float duration;
 
 			Sprite()
 				: leftTop(0.0f, 0.0f)
 				, size(0.0f, 0.0f)
 				, offset(0.0f, 0.0f)
-				, atlasSize(0.0f)
 				, duration(0.1f)
 			{
 
@@ -36,7 +35,7 @@ namespace ya
 		void Reset();
 		void Create(const std::wstring& name, std::shared_ptr<Texture> atlas
 					, Vector2 leftTop, Vector2 size, Vector2 offset
-					, UINT spriteLegth, float duration);
+					, UINT spriteLegth, float duration, Animator* owner);
 
 		void BindShader();
 		void Clear();
@@ -47,7 +46,7 @@ namespace ya
 	
 
 	private:
-		class Animator* mAnimator;
+		Animator* mAnimator;
 		std::wstring mAnimationName;
 		std::shared_ptr<Texture> mAtlas;
 		std::vector<Sprite> mSpriteSheet;

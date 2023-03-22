@@ -33,17 +33,17 @@ namespace ya
 		renderer->SetMesh(circleMesh);
 
 		// Grid Object
-		EditorObject* gridObject = new EditorObject();
-		gridObject->SetProjectionType(EditorObject::eProjectionType::Orthographic);
-		MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>();
-		gridMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		gridMr->SetMaterial(Resources::Find<Material>(L"GridMaterial"));
-		GridScript* gridScript = gridObject->AddComponent<GridScript>();
+		//EditorObject* gridObject = new EditorObject();
+		//gridObject->SetProjectionType(EditorObject::eProjectionType::Orthographic);
+		//MeshRenderer* gridMr = gridObject->AddComponent<MeshRenderer>();
+		//gridMr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//gridMr->SetMaterial(Resources::Find<Material>(L"GridMaterial"));
+		//GridScript* gridScript = gridObject->AddComponent<GridScript>();
 
-		Transform* gridTr = gridObject->GetComponent<Transform>();
-		gridTr->SetPosition(Vector3(0.0f, .4f, 999.0f));
-		gridTr->SetScale(Vector3(20.0f, 10.0f, 0));
-		mEditorObjects.push_back(gridObject);
+		//Transform* gridTr = gridObject->GetComponent<Transform>();
+		//gridTr->SetPosition(Vector3(0.0f, .4f, 999.0f));
+		//gridTr->SetScale(Vector3(20.0f, 10.0f, 0));
+		//mEditorObjects.push_back(gridObject);
 
 	}
 

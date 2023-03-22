@@ -92,11 +92,17 @@
     <Filter Include="Contents\Player">
       <UniqueIdentifier>{e184ed32-1000-441b-9cec-3f7bdeabd0c1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Player\Script">
-      <UniqueIdentifier>{b912fe2f-015d-46fc-9135-99d43ff1efcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Component\Animator">
       <UniqueIdentifier>{98b19e43-cb24-4764-88f5-61c3c5fbbf0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Light">
+      <UniqueIdentifier>{b2678b8d-beaf-4ff2-b1fa-98a897c57c9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Ground">
+      <UniqueIdentifier>{f49f5527-4444-4634-8037-093617bf3d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\RigidBody">
+      <UniqueIdentifier>{5737df80-d475-4d07-b968-837c4c895cc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +187,7 @@
     <ClCompile Include="yaTitleScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="yaPlayer.cpp">
+    <ClCompile Include="yaPlayerScript.cpp">
       <Filter>Contents\Player</Filter>
     </ClCompile>
     <ClCompile Include="yaConstantBuffer.cpp">
@@ -196,14 +202,23 @@
     <ClCompile Include="yaCollisionManager.cpp">
       <Filter>Component\Collider\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="yaPlayerScript.cpp">
-      <Filter>Contents\Player\Script</Filter>
-    </ClCompile>
     <ClCompile Include="yaAnimation.cpp">
       <Filter>Component\Animator</Filter>
     </ClCompile>
     <ClCompile Include="yaAnimator.cpp">
       <Filter>Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="yaLight.cpp">
+      <Filter>Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="yaStructuredBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="yaGroundScript.cpp">
+      <Filter>Contents\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="yaRigidBody.cpp">
+      <Filter>Component\RigidBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -299,7 +314,7 @@
     <ClInclude Include="yaTitleScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="yaPlayer.h">
+    <ClInclude Include="yaPlayerScript.h">
       <Filter>Contents\Player</Filter>
     </ClInclude>
     <ClInclude Include="yaConstantBuffer.h">
@@ -317,14 +332,23 @@
     <ClInclude Include="yaCollisionManager.h">
       <Filter>Component\Collider\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="yaPlayerScript.h">
-      <Filter>Contents\Player\Script</Filter>
-    </ClInclude>
     <ClInclude Include="yaAnimation.h">
       <Filter>Component\Animator</Filter>
     </ClInclude>
     <ClInclude Include="yaAnimator.h">
       <Filter>Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="yaLight.h">
+      <Filter>Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="yaStructuredBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="yaGroundScript.h">
+      <Filter>Contents\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="yaRigidBody.h">
+      <Filter>Component\RigidBody</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

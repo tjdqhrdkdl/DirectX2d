@@ -127,6 +127,14 @@ namespace ya::graphics
 
 	}
 
+	void GraphicDevice_DX11::BindBuffer(ID3D11Buffer* buffer, void* data, UINT size)
+	{
+			D3D11_MAPPED_SUBRESOURCE sub = {};
+			mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
+			memcpy(sub.pData, data, size);
+			mContext->Unmap(buffer, 0);
+	}
+
 	void GraphicDevice_DX11::BindViewports(D3D11_VIEWPORT* pViewport)
 	{
 		mContext->RSSetViewports(1, pViewport);
@@ -335,6 +343,13 @@ namespace ya::graphics
 			return false;
 
 		return true;
+	}
+
+	bool GraphicDevice_DX11::CreateShaderResourceView(ID3D11Resource* pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc, ID3D11ShaderResourceView** ppSRView)
+	{
+		if (FAILED(mDevice->CreateShaderResourceView(pResource, pDesc, ppSRView)))
+			return false;
+		return false;
 	}
 
 	void GraphicDevice_DX11::BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
