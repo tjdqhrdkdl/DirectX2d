@@ -2,6 +2,8 @@
 #include "yaResources.h"
 #include "yaMaterial.h"
 #include "yaSceneManager.h"
+#include "yaComputeShader.h"
+
 namespace ya::renderer
 {
 	using namespace std;

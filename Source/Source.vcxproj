@@ -169,6 +169,7 @@
     <ClInclude Include="yaCollider2D.h" />
     <ClInclude Include="yaCollisionManager.h" />
     <ClInclude Include="yaComponent.h" />
+    <ClInclude Include="yaComputeShader.h" />
     <ClInclude Include="yaConstantBuffer.h" />
     <ClInclude Include="yaEntity.h" />
     <ClInclude Include="yaEnums.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="yaCollider2D.cpp" />
     <ClCompile Include="yaCollisionManager.cpp" />
     <ClCompile Include="yaComponent.cpp" />
+    <ClCompile Include="yaComputeShader.cpp" />
     <ClCompile Include="yaConstantBuffer.cpp" />
     <ClCompile Include="yaEntity.cpp" />
     <ClCompile Include="yaGameObject.cpp" />

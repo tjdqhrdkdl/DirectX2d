@@ -220,6 +220,7 @@
     <ClCompile Include="yaRigidBody.cpp">
       <Filter>Component\RigidBody</Filter>
     </ClCompile>
+    <ClCompile Include="yaComputeShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -350,6 +351,7 @@
     <ClInclude Include="yaRigidBody.h">
       <Filter>Component\RigidBody</Filter>
     </ClInclude>
+    <ClInclude Include="yaComputeShader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">

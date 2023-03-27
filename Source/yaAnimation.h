@@ -2,6 +2,7 @@
 #include "yaEntity.h"
 #include "yaTexture.h"
 
+using namespace ya::graphics;
 namespace ya
 {
 	using namespace math;

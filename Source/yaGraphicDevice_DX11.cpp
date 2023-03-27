@@ -1,12 +1,15 @@
 #include "yaGraphicDevice_DX11.h"
 #include "yaApplication.h"
 #include "yaRenderer.h"
+#include "yaTexture.h"
 extern ya::Application application;
 
 namespace ya::graphics
 {
 	GraphicDevice_DX11::GraphicDevice_DX11(ValidationMode validationMode)
 	{		
+
+		graphics::GetDevice() = this;
 		/// <summary>
 		/// 1. Device 와 SwapChain 생성한다.
 		/// 2. 백버퍼에 실제로 렌더링할 렌더타겟 뷰를 생성해야한다.
@@ -49,11 +52,13 @@ namespace ya::graphics
 		if (!CreateSwapChain(&swapChainDesc))
 			return;
 
+		mRenderTargetTexture = std::make_shared<Texture>();
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget;
 		//스왑체인으로부터 버퍼를 가져온다.
-		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)mRenderTarget.GetAddressOf());
+		hr = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf());
 		
 		//디바이스에서 버퍼뷰를 create한다.
-		hr = mDevice->CreateRenderTargetView(mRenderTarget.Get(), nullptr, mRenderTargetView.GetAddressOf());
+		mRenderTargetTexture->Create(renderTarget);
 
 		D3D11_TEXTURE2D_DESC depthBufferDesc = {};
 		depthBufferDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
@@ -73,11 +78,16 @@ namespace ya::graphics
 		depthBufferDesc.MipLevels = 0;
 		depthBufferDesc.MiscFlags = 0;
 
-		if (!CreateTexture(&depthBufferDesc, mDepthStencilBuffer.GetAddressOf()))
+		mDepthStencilBufferTexture = std::make_shared<Texture>();
+		mDepthStencilBufferTexture->Create(1600, 900, DXGI_FORMAT_D24_UNORM_S8_UINT, D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL);
+
+		// Depth Stencil Buffer
+		if (!CreateTexture(&depthBufferDesc, mDepthStencilBufferTexture->GetTexture().GetAddressOf()))
 			return;
 
 		// Depth Stencil Buffer View
-		if (FAILED(mDevice->CreateDepthStencilView(mDepthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf())))
+		if (FAILED(mDevice->CreateDepthStencilView
+		(mDepthStencilBufferTexture->GetTexture().Get(), nullptr, mDepthStencilBufferTexture->GetDSV().GetAddressOf())))
 			return;
 
 		RECT winRect;
@@ -85,7 +95,8 @@ namespace ya::graphics
 
 		mViewPort = {0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f, 1.0f};
 		BindViewports(&mViewPort);
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+		mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
+
 		
 	}
 
@@ -155,48 +166,36 @@ namespace ya::graphics
 		return true;
 	}
 
-	bool GraphicDevice_DX11::CreateShader()
+	bool GraphicDevice_DX11::CreateRenderTargetView(ID3D11Resource* pResource, const D3D11_RENDER_TARGET_VIEW_DESC* pDesc, ID3D11RenderTargetView** ppRTView)
 	{
-		//ID3DBlob* errorBlob = nullptr;
+		if (FAILED(mDevice->CreateRenderTargetView(pResource, pDesc, ppRTView)))
+			return false;
 
-		//std::filesystem::path shaderPath = std::filesystem::current_path().parent_path();
-		//shaderPath += "\\SHADER_SOURCE\\";
+		return true;
+	}
 
-		////vertex shader
-		//std::wstring vsPath(shaderPath.c_str());
-		//vsPath += L"TriangleVS.hlsl";
-		//D3DCompileFromFile(vsPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-		//	, "VS_Test", "vs_5_0", 0, 0, renderer::triangleVSBlob.GetAddressOf(), &errorBlob);
+	bool GraphicDevice_DX11::CreateComputeShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11ComputeShader** ppComputeShader)
+	{
+		if (FAILED(mDevice->CreateComputeShader(pShaderBytecode, BytecodeLength, pClassLinkage, ppComputeShader)))
+			return false;
 
-		//if (errorBlob)
-		//{
-		//	OutputDebugStringA((char*)errorBlob->GetBufferPointer());
-		//	errorBlob->Release();
-		//	errorBlob = nullptr;
-		//}
+		return true;
+	}
 
-		//mDevice->CreateVertexShader(renderer::triangleVSBlob->GetBufferPointer()
-		//	, renderer::triangleVSBlob->GetBufferSize()
-		//	, nullptr, renderer::triangleVS.GetAddressOf());
+	bool GraphicDevice_DX11::CreateUnorderedAccessView(ID3D11Resource* pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc, ID3D11UnorderedAccessView** ppUAView)
+	{
+		if (FAILED(mDevice->CreateUnorderedAccessView(pResource, pDesc, ppUAView)))
+			return false;
 
-		////pixel shader
-		//std::wstring psPath(shaderPath.c_str());
-		//psPath += L"TrianglePS.hlsl";
-		//D3DCompileFromFile(psPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-		//	, "PS_Test", "ps_5_0", 0, 0, renderer::trianglePSBlob.GetAddressOf(), &errorBlob);
-		//if (errorBlob)
-		//{
-		//	OutputDebugStringA((char*)errorBlob->GetBufferPointer());
-		//	errorBlob->Release();
-		//	errorBlob = nullptr;
-		//}
+		return true;	
+	}
 
-		//mDevice->CreatePixelShader(renderer::trianglePSBlob->GetBufferPointer()
-		//	, renderer::trianglePSBlob->GetBufferSize()
-		//	, nullptr, renderer::trianglePS.GetAddressOf());
+	bool GraphicDevice_DX11::CreateDepthStencilView(ID3D11Resource* pResource, const D3D11_DEPTH_STENCIL_VIEW_DESC* pDesc, ID3D11DepthStencilView** ppDepthStencilView)
+	{
+		if (FAILED(mDevice->CreateDepthStencilView(pResource, pDesc, ppDepthStencilView)))
+			return false;
 
-
-		return false;
+		return true;
 	}
 
 	void GraphicDevice_DX11::BindVertexBuffer(UINT StartSlot, UINT NumBuffers, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets)
@@ -207,6 +206,17 @@ namespace ya::graphics
 	void GraphicDevice_DX11::BindIndexBuffer(ID3D11Buffer* pIndexBuffer, DXGI_FORMAT Format, UINT Offset)
 	{
 		mContext->IASetIndexBuffer(pIndexBuffer, Format, Offset);
+	}
+
+	void GraphicDevice_DX11::BindComputeShader(ID3D11ComputeShader* pComputeShader, ID3D11ClassInstance* const* ppClassInstances, UINT NumClassInstances)
+	{
+		mContext->CSSetShader(pComputeShader, ppClassInstances, NumClassInstances);
+
+	}
+
+	void GraphicDevice_DX11::Dispatch(UINT ThreadGroupCountX, UINT ThreadGroupCountY, UINT ThreadGroupCountZ)
+	{
+		mContext->Dispatch(ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ);
 	}
 
 	void GraphicDevice_DX11::BindConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
@@ -283,19 +293,19 @@ namespace ya::graphics
 	void GraphicDevice_DX11::Clear()
 	{
 		//화면 지워주기
-		FLOAT backgroundFloat[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
-		mContext->ClearRenderTargetView(mRenderTargetView.Get(), backgroundFloat);
-		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, (UINT8)0);
+		FLOAT backgroundColor[4] = { 0.2f, 0.2f, 0.2f, 1.0f };
+		mContext->ClearRenderTargetView(mRenderTargetTexture->GetRTV().Get(), backgroundColor);
+		mContext->ClearDepthStencilView(mDepthStencilBufferTexture->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 	}
 
 	void GraphicDevice_DX11::AdjustViewPorts()
 	{//뷰포트 설정 , 렌더타겟 설정
-		
-		RECT winRect = {};
+
+		RECT winRect;
 		GetClientRect(application.GetHwnd(), &winRect);
-		mViewPort = { 0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f,1.0f };
+		mViewPort = { 0.0f, 0.0f, FLOAT(winRect.right - winRect.left), FLOAT(winRect.bottom - winRect.top), 0.0f, 1.0f };
 		BindViewports(&mViewPort);
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+		mContext->OMSetRenderTargets(1, mRenderTargetTexture->GetRTV().GetAddressOf(), mDepthStencilBufferTexture->GetDSV().Get());
 	}
 
 	bool GraphicDevice_DX11::CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11ClassLinkage* pClassLinkage, ID3D11VertexShader** ppVertexShader)
@@ -385,6 +395,10 @@ namespace ya::graphics
 	void GraphicDevice_DX11::BindBlendState(ID3D11BlendState* pBlendState)
 	{
 		mContext->OMSetBlendState(pBlendState, nullptr, 0xffffffff);
+	}
+	void GraphicDevice_DX11::BindUnorderdAccessView(UINT startSlot, UINT NumUAVs, ID3D11UnorderedAccessView* const* ppUnorderedAccessViews, const UINT* pUAVInitialCounts)
+	{
+		mContext->CSSetUnorderedAccessViews(startSlot, NumUAVs, ppUnorderedAccessViews, pUAVInitialCounts);
 	}
 	void GraphicDevice_DX11::Draw()
 	{

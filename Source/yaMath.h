@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <limits>
 #include <Windows.h>
+#include <memory>
 
 
 #if __has_include("DirectXMath.h")
