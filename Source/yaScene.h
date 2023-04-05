@@ -1,6 +1,7 @@
 #pragma once
 #include "yaLayer.h"
 
+using namespace ya::math;
 namespace ya
 {
 	class Scene
@@ -19,11 +20,17 @@ namespace ya
 		void AddGameObject(GameObject* gameobject, enums::eLayerType layerIndex);
 
 		std::vector<GameObject*> GetGameObjects(eLayerType type) { return mLayers[(UINT)type].GetGameObjects(); }
-		
+		std::vector<GameObject*>* GetGameObjectsPtr(eLayerType type) { return mLayers[(UINT)type].GetGameObjectsPtr(); }
+
 		Layer& GetLayer(eLayerType type) { return mLayers[(UINT)type]; }
 		eSceneType GetSceneType() { return mType; }
+
+		void SetMousePos(Vector2 pos) { mMousePos = pos; }
+		Vector2 GetMousePos() { return mMousePos; }
+
 	private:
 		std::vector<Layer> mLayers;
 		eSceneType mType;
+		Vector2 mMousePos;
 	};
 }

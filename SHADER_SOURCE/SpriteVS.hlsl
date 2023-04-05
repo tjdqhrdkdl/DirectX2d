@@ -16,7 +16,8 @@ struct VTX_OUT
 	
     float3 vWorldPos : POSITION;
 };
-VTX_OUT Main(VTX_IN _in)
+
+VTX_OUT main(VTX_IN _in)
 {
     VTX_OUT output = (VTX_OUT) 0.f;
 

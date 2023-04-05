@@ -1,12 +1,12 @@
 #pragma once
-#include "yaScript.h"
+#include "yaGameObject.h"
 namespace ya
 {
-	class GroundScript: public Script
+	class Ground: public GameObject
 	{
 	public:
-		GroundScript();
-		~GroundScript();
+		Ground();
+		~Ground();
 
 		virtual void Initialize() override;
 		virtual void Update() override;

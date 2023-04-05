@@ -79,7 +79,8 @@ namespace ya
 					{
 						for (UINT r = 0; r < rCols.size(); r++)
 						{
-							ColliderCollision(lCols[l], rCols[r]);
+							if(lCols[l]->isOn() && rCols[r]->isOn())
+								ColliderCollision(lCols[l], rCols[r]);
 						}
 					}
 				}
@@ -110,7 +111,8 @@ namespace ya
 					{
 						for (UINT r = 0; r < rCols.size(); r++)
 						{
-							ColliderCollision(lCols[l], rCols[r]);
+							if (lCols[l]->isOn() && rCols[r]->isOn())
+								ColliderCollision(lCols[l], rCols[r]);
 						}
 					}
 				}

@@ -85,6 +85,12 @@ namespace ya::renderer
 			, DebugShader->GetVSBlobBufferPointer()
 			, DebugShader->GetVSBlobBufferSize()
 			, DebugShader->GetInputLayoutAddressOf());
+
+		std::shared_ptr<Shader> SkyShader = Resources::Find<Shader>(L"SkyShader");
+		GetDevice()->CreateInputLayout(arrLayoutDesc, 3
+			, SkyShader->GetVSBlobBufferPointer()
+			, SkyShader->GetVSBlobBufferSize()
+			, SkyShader->GetInputLayoutAddressOf());
 #pragma endregion
 
 #pragma region SamplerState
@@ -343,27 +349,27 @@ namespace ya::renderer
 	{
 		std::shared_ptr<Shader> shader = std::make_shared<Shader>();
 		Resources::Insert<Shader>(L"RectShader", shader);
-		shader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "Main");
-		shader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
+		shader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		shader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 
 		// Sprite
 		std::shared_ptr<Shader> spriteShader = std::make_shared<Shader>();
-		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "Main");
-		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
+		spriteShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		spriteShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 
 		Resources::Insert<Shader>(L"SpriteShader", spriteShader);
 
 		// UI
 		std::shared_ptr<Shader> UIShader = std::make_shared<Shader>();
-		UIShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "Main");
-		UIShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "Main");
+		UIShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		UIShader->Create(eShaderStage::PS, L"SpritePS.hlsl", "main");
 
 		Resources::Insert<Shader>(L"UIShader", UIShader);
 
 		// Grid
 		std::shared_ptr<Shader> GridShader = std::make_shared<Shader>();
-		GridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "Main");
-		GridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "Main");
+		GridShader->Create(eShaderStage::VS, L"GridVS.hlsl", "main");
+		GridShader->Create(eShaderStage::PS, L"GridPS.hlsl", "main");
 
 		Resources::Insert<Shader>(L"GridShader", GridShader);
 
@@ -380,6 +386,11 @@ namespace ya::renderer
 		debugShader->Create(eShaderStage::PS, L"DebugPS.hlsl", "main");
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 		Resources::Insert<Shader>(L"DebugShader", debugShader);
+		// Debug
+		std::shared_ptr<Shader> skyShader = std::make_shared<Shader>();
+		skyShader->Create(eShaderStage::VS, L"SpriteVS.hlsl", "main");
+		skyShader->Create(eShaderStage::PS, L"SkyPS.hlsl", "main");
+		Resources::Insert<Shader>(L"SkyShader", skyShader);
 
 
 	}
@@ -434,6 +445,13 @@ namespace ya::renderer
 		debugMaterial->SetRenderingMode(eRenderingMode::Transparent);
 		debugMaterial->SetShader(debugShader);
 		Resources::Insert<Material>(L"DebugMaterial", debugMaterial);
+
+		// Debug
+		std::shared_ptr<Shader> SkyShader = Resources::Find<Shader>(L"SkyShader");
+		std::shared_ptr<Material> SkyMaterial = std::make_shared<Material>();
+		SkyMaterial->SetRenderingMode(eRenderingMode::Opaque);
+		SkyMaterial->SetShader(SkyShader);
+		Resources::Insert<Material>(L"SkyMaterial", SkyMaterial);
 
 	}
 

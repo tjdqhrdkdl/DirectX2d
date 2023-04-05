@@ -7,6 +7,7 @@ namespace ya::enums
 		None,
 		Camera,
 		Ground,
+		PlayerProjectTile,
 		Player,
 		Monster,
 		UI,

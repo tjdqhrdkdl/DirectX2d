@@ -73,4 +73,26 @@ namespace ya::object
 		return gameObj;
 	}
 
+	static __forceinline void Release()
+	{
+		Scene* scene = SceneManager::GetPlayScene();
+		for (size_t y = 0; y < (UINT)eLayerType::End; y++)
+		{
+			std::vector<GameObject*>* objs = scene->GetGameObjectsPtr((eLayerType)y);
+			for (std::vector<GameObject*>::iterator iter = objs->begin()
+				; iter !=objs->end();)
+			{
+				if ((*iter)->isDead() == true)
+				{
+					GameObject* obj = *iter;
+					iter = objs->erase(iter);
+					delete obj;
+					obj = nullptr;
+					continue;
+				}
+				++iter;
+			}
+		}
+	}
+
 }

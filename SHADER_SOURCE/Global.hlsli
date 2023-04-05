@@ -43,7 +43,7 @@ SamplerState LinearSampler : register(s1);
 SamplerState AnisotropicSampler : register(s2);
 
 //
-void CalculateLight(in out LightColor pLightColor, float3 position, int idx)
+void CalculateLight(in out LightColor pLightColor, float3 position,bool transparency, int idx)
 {
     if (0 == lightAttributes[idx].type)
     {
@@ -51,6 +51,34 @@ void CalculateLight(in out LightColor pLightColor, float3 position, int idx)
     }
     else if (1 == lightAttributes[idx].type)
     {
+        if(position.z < lightAttributes[idx].position.z&& transparency == false)
+            return;
+        float length = distance(lightAttributes[idx].position.xyz, position.xyz);
+        
+        if (length < lightAttributes[idx].radius)
+        {
+            float ratio = 1.0f - (length / lightAttributes[idx].radius);
+            pLightColor.diffuse += lightAttributes[idx].color.diffuse * ratio;
+
+        }
+        
+    }
+    else
+    {
+        
+    }
+}
+void CalculateLightNoZ(in out LightColor pLightColor, float3 position, bool transparency, int idx)
+{
+    if (0 == lightAttributes[idx].type)
+    {
+        pLightColor.diffuse += lightAttributes[idx].color.diffuse;
+    }
+    else if (1 == lightAttributes[idx].type)
+    {
+        
+        if (position.z < lightAttributes[idx].position.z && !transparency)
+            return;
         float length = distance(lightAttributes[idx].position.xy, position.xy);
         
         if (length < lightAttributes[idx].radius)

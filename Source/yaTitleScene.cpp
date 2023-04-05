@@ -6,12 +6,18 @@
 #include "cameraScript.h"
 #include "yaObject.h"
 #include "yaCollider2D.h"
-#include "yaPlayerScript.h"
 #include "yaCollisionManager.h"
 #include "yaInput.h"
 #include "yaLight.h"
-#include "yaGroundScript.h"
 #include "yaRigidBody.h"
+
+#include "yaPlayerScript.h"
+#include "yaGroundScript.h"
+#include "yaMouseCursor.h"
+#include "yaMagicBall.h"
+#include "yaMonster.h"
+#include "yaBackSky.h"
+
 namespace ya
 {
 	TitleScene::TitleScene()
@@ -30,19 +36,24 @@ namespace ya
 			directionalLight->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 			Light* lightComp = directionalLight->AddComponent<Light>();
 			lightComp->SetType(eLightType::Directional);
-			lightComp->SetDiffuse(Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+			lightComp->SetDiffuse(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
-		{
-			GameObject* pointLight = object::Instantiate<GameObject>(eLayerType::Player);
-			pointLight->GetComponent<Transform>()->SetPosition(Vector3(3.0f, 0.0f, 5.0f));
-			Light* lightComp = pointLight->AddComponent<Light>();
-			lightComp->SetType(eLightType::Point);
-			lightComp->SetRadius(10.0f);
-			lightComp->SetDiffuse(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-		}
+		//{
+		//	GameObject* pointLight = object::Instantiate<GameObject>(eLayerType::Player);
+		//	pointLight->GetComponent<Transform>()->SetPosition(Vector3(3.0f, 0.0f, 5.0f));
+		//	Light* lightComp = pointLight->AddComponent<Light>();
+		//	lightComp->SetType(eLightType::Point);
+		//	lightComp->SetRadius(10.0f);
+		//	lightComp->SetDiffuse(Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+		//}
 
 		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Ground, true);
+		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::PlayerProjectTile, true);
+		CollisionManager::CollisionLayerCheck(eLayerType::Monster, eLayerType::Ground, true);
+		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Monster, true);
+		CollisionManager::CollisionLayerCheck(eLayerType::Monster, eLayerType::PlayerProjectTile, true);
+
 
 		shared_ptr<Mesh> circleMesh = Resources::Find<Mesh>(L"CircleMesh");
 		std::shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -73,28 +84,35 @@ namespace ya
 		cameraUIComp->TurnLayerMask(eLayerType::UI, true);
 
 
+		{
+			//Player
+			Player* player = object::Instantiate<Player>(eLayerType::Player);
 
-		//smile obj
-		GameObject* player =  object::Instantiate<GameObject>(eLayerType::Player);
-		player->AddComponent<PlayerScript>();
+			//Ground
+			Ground* ground = object::Instantiate<Ground>(eLayerType::Ground);
+			Transform* tr = ground->GetComponent<Transform>();
+			tr->SetPosition(Vector3(0, -1, 0));
 
-		//Ground
-		GameObject* ground = object::Instantiate<GameObject>(eLayerType::Ground);
-		ground->AddComponent<GroundScript>();
-		Transform* tr = ground->GetComponent<Transform>();
-		tr->SetPosition(Vector3(0, -1, 0));
-		//// Camera Effect
-		//GameObject* camEffect = object::Instantiate<GameObject>(eLayerType::UI);
-		//camEffect->SetName(L"CameraEffect");
-		//Transform* camEffectTR = camEffect->GetComponent<Transform>();
-		//camEffectTR->SetPosition(Vector3(0.0f, 0.0f, 0.0f));5
-		//SpriteRenderer* camEffectsr = camEffect->AddComponent<SpriteRenderer>();
-		//std::shared_ptr<Mesh> camEffectmesh = Resources::Find<Mesh>(L"RectMesh");
-		//std::shared_ptr<Material> camEffectspriteMaterial = Resources::Find<Material>(L"CamEffectMaterial");
-		//camEffectsr->SetMesh(circleMesh);
-		//camEffectsr->SetMaterial(camEffectspriteMaterial);
-		//CamEffectScript* ceScript = camEffect->AddComponent<CamEffectScript>();
+			//MagicBall
+			MagicBall* ball = object::Instantiate<MagicBall>(eLayerType::PlayerProjectTile);
+			ball->SetPlayer(player);
+			player->SetHeadBall(ball);
 
+			//MagicBall
+			object::Instantiate<MouseCursor>(eLayerType::UI);
+
+			//monster
+			object::Instantiate<Monster>(eLayerType::Monster);
+
+			//BackSky
+			object::Instantiate<BackSky>(eLayerType::None);
+
+
+		}
+
+
+
+		
 		Scene::Initialize();
 	}
 

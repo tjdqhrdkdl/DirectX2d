@@ -1,60 +1,65 @@
 #include "yaPlayerScript.h"
-#include "yaGameObject.h"
+#include "yaTransform.h"
 #include "yaSpriteRenderer.h"
 #include "yaResources.h"
 #include "yaAnimator.h"
+#include "yaRigidBody.h"
+#include "yaCollider2D.h"
+
 #include "yaTime.h"
 #include "yaInput.h"
-#include "yaRigidBody.h"
+
+#include "yaMagicBall.h"
+
 #define STATE_HAVE(STATE) (mState & STATE) == STATE
 #define ADD_STATE(STATE) mState |= STATE
 #define RM_STATE(STATE) mState &= ~STATE
 namespace ya
 {
-	PlayerScript::PlayerScript()
+	Player::Player()
 	{
 	}
 
-	PlayerScript::~PlayerScript()
+	Player::~Player()
 	{
 	}
 
-	void PlayerScript::Initialize()
+	void Player::Initialize()
 	{	
-		
-		Transform* playerTr = GetOwner()->GetComponent<Transform>();
+		mBaseScale = Vector3(2, 2, 1);
+		Transform* playerTr = GetComponent<Transform>();
 		playerTr->SetPosition(Vector3(0, 3, 10));
 		playerTr->SetScale(Vector3(2, 2, 1));
 
-		SpriteRenderer* playerSr = GetOwner()->AddComponent<SpriteRenderer>();
+		SpriteRenderer* playerSr = AddComponent<SpriteRenderer>();
 		shared_ptr<Mesh> playerMesh = Resources::Find<Mesh>(L"RectMesh");
 		shared_ptr<Material> playerMtr = Resources::Find<Material>(L"RectMaterial");
 		playerSr->SetMaterial(playerMtr);
 		playerSr->SetMesh(playerMesh);
 		
-		Collider2D* bodyCol = GetOwner()->AddComponent<Collider2D>();
+		Collider2D* bodyCol = AddComponent<Collider2D>();
 		bodyCol->SetType(eColliderType::Rect);
 		bodyCol->SetSize(Vector2(0.2, 0.45));
-		bodyCol->SetCenter(Vector2(0,0.05));
+		bodyCol->SetCenter(Vector2(0,0));
 		bodyCol->SetJumpBox(false);
 		bodyCol->Initialize();
 
-		Collider2D* jumpCol = GetOwner()->AddComponent<Collider2D>();
+		Collider2D* jumpCol = AddComponent<Collider2D>();
 		jumpCol->SetType(eColliderType::Rect);
 		jumpCol->SetSize(Vector2(0.05, 0.05));
 		jumpCol->SetCenter(Vector2(0, -0.4));
 		bodyCol->SetJumpBox(true);
 		jumpCol->Initialize();
 
-		mRigidbody = GetOwner()->AddComponent<Rigidbody>();
+		mRigidbody = AddComponent<Rigidbody>();
 
-		mAnimator = GetOwner()->AddComponent<Animator>();
-		shared_ptr<Texture> baseTexture1 = Resources::Load<Texture>(L"playerBaseTexture1", L"20.01a - Character Base 2.5b//char_a_p1//char_a_p1_0bas_humn_v00.png");
-		shared_ptr<Texture> baseTexture2 = Resources::Load<Texture>(L"playerBaseTexture2", L"20.01a - Character Base 2.5b//char_a_p2//char_a_p2_0bas_humn_v00.png");
-		shared_ptr<Texture> baseTexture3 = Resources::Load<Texture>(L"playerBaseTexture3", L"20.01a - Character Base 2.5b//char_a_p3//char_a_p3_0bas_humn_v00.png");
-		shared_ptr<Texture> baseTexture4 = Resources::Load<Texture>(L"playerBaseTexture4", L"20.01a - Character Base 2.5b//char_a_p4//char_a_p4_0bas_humn_v00.png");
+		mAnimator = AddComponent<Animator>();
+		shared_ptr<Texture> baseTexture1 = Resources::Load<Texture>(L"playerBaseTexture1", L"Character//20.01a - Character Base 2.5b//char_a_p1//char_a_p1_0bas_humn_v00.png");
+		shared_ptr<Texture> baseTexture2 = Resources::Load<Texture>(L"playerBaseTexture2", L"Character//20.01a - Character Base 2.5b//char_a_p2//char_a_p2_0bas_humn_v00.png");
+		shared_ptr<Texture> baseTexture3 = Resources::Load<Texture>(L"playerBaseTexture3", L"Character//20.01a - Character Base 2.5b//char_a_p3//char_a_p3_0bas_humn_v00.png");
+		shared_ptr<Texture> baseTexture4 = Resources::Load<Texture>(L"playerBaseTexture4", L"Character//20.01a - Character Base 2.5b//char_a_p4//char_a_p4_0bas_humn_v00.png");
 		
-		shared_ptr<Texture> attackTexture = Resources::Load<Texture>(L"attackTexture", L"21.07b - Sword & Shield Combat 2.3//char_a_pONE3//char_a_pONE3_0bas_humn_v00.png");
+		shared_ptr<Texture> attackTexture = Resources::Load<Texture>(L"attackTexture", L"Character//21.07b - Sword & Shield Combat 2.3//char_a_pONE3//char_a_pONE3_0bas_humn_v01.png");
 
 		mAnimator->Create(L"Idle", baseTexture4, Vector2(64, 256), Vector2(64, 64), Vector2::Zero, 2, 0.3f);
 		mAnimator->Create(L"Walk", baseTexture1, Vector2(0, 384), Vector2(64, 64), Vector2::Zero, 6, 0.1f);
@@ -64,36 +69,36 @@ namespace ya
 		mAnimator->Create(L"Attack", attackTexture, Vector2(0, 64*2), Vector2(64, 64), Vector2::Zero, 4, 0.1f);
 
 
-		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&PlayerScript::AttackCompleteEvent, this);
+		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&Player::AttackCompleteEvent, this);
 
 		mAnimator->Play(L"Idle", true);
 
-		Script::Initialize();
+		GameObject::Initialize();
 	}
 
-	void PlayerScript::Update()
+	void Player::Update()
 	{
 		SetState();
 		SetAnimation();
 		Move();
 		Attack();
 		Jump();
-		Script::Update();
+		GameObject::Update();
 	}
 
-	void PlayerScript::FixedUpdate()
+	void Player::FixedUpdate()
 	{
-		Script::FixedUpdate();
+		GameObject::FixedUpdate();
 	}
 
-	void PlayerScript::Render()
+	void Player::Render()
 	{
-		Script::Render();
+		GameObject::Render();
 	}
 
-	void PlayerScript::SetState()
+	void Player::SetState()
 	{
-		if (Input::GetKey(eKeyCode::LEFT))
+		if (Input::GetKey(eKeyCode::A))
 		{
 			if (!(STATE_HAVE(PlayerState_Attack)))
 			{
@@ -101,12 +106,12 @@ namespace ya
 				ADD_STATE(PlayerState_Walk);
 			}
 		}
-		if (Input::GetKeyUp(eKeyCode::LEFT))
+		if (Input::GetKeyUp(eKeyCode::A))
 		{
 			RM_STATE(PlayerState_Walk);
 			RM_STATE(PlayerState_Run);
 		}
-		if (Input::GetKey(eKeyCode::RIGHT))
+		if (Input::GetKey(eKeyCode::D))
 		{
 			if (!(STATE_HAVE(PlayerState_Attack)))
 			{
@@ -114,7 +119,7 @@ namespace ya
 				ADD_STATE(PlayerState_Walk);
 			}
 		}
-		if (Input::GetKeyUp(eKeyCode::RIGHT))
+		if (Input::GetKeyUp(eKeyCode::D))
 		{
 			RM_STATE(PlayerState_Walk);
 			RM_STATE(PlayerState_Run);
@@ -135,7 +140,7 @@ namespace ya
 				{
 					ADD_STATE(PlayerState_Jump);
 
-					Rigidbody* rb = GetOwner()->GetComponent<Rigidbody>();
+					Rigidbody* rb = GetComponent<Rigidbody>();
 					rb->SetGround(false);
 					rb->AddForce(Vector3(0, 8, 0));
 				}
@@ -156,11 +161,16 @@ namespace ya
 
 		if (Input::GetKeyDown(eKeyCode::T))
 		{
-			GetOwner()->GetComponent<Transform>()->SetPosition(Vector3(0, 2, 0));
+			GetComponent<Transform>()->SetPosition(Vector3(0, 2, 0));
+		}
+
+		if (Input::GetKeyDown(eKeyCode::LBTN))
+		{
+			mHeadBall->Shoot();
 		}
 	}
 
-	void PlayerScript::SetAnimation()
+	void Player::SetAnimation()
 	{
 		std::wstring prevName = mAnimator->GetPlayAnimation()->GetAnimationName();
 		std::wstring animName;
@@ -188,9 +198,9 @@ namespace ya
 			mAnimator->Play(animName,loop);
 	}
 
-	void PlayerScript::Move()
+	void Player::Move()
 	{
-		Transform* tr = GetOwner()->GetComponent<Transform>();
+		Transform* tr = GetComponent<Transform>();
 		if (STATE_HAVE(PlayerState_Walk))
 		{
 			if (STATE_HAVE(PlayerState_LookRight))
@@ -225,36 +235,36 @@ namespace ya
 
 	}
 
-	void PlayerScript::Attack()
+	void Player::Attack()
 	{
 	}
 
-	void PlayerScript::Jump()
+	void Player::Jump()
 	{
 		if (mRigidbody->isGround())
 			RM_STATE(PlayerState_Jump);
 	}
 
-	void PlayerScript::Fall()
+	void Player::Fall()
 	{
 		mRigidbody->SetGround(false);
 		ADD_STATE(PlayerState_Jump);
 	}
 
-	void PlayerScript::AttackCompleteEvent()
+	void Player::AttackCompleteEvent()
 	{
 		RM_STATE(PlayerState_Attack);
 	}
 
-	void PlayerScript::OnCollisionEnter(Collider2D* collider)
+	void Player::OnCollisionEnter(Collider2D* collider)
 	{
 	}
 
-	void PlayerScript::OnCollisionStay(Collider2D* collider)
+	void Player::OnCollisionStay(Collider2D* collider)
 	{
 	}
 
-	void PlayerScript::OnCollisionExit(Collider2D* collider)
+	void Player::OnCollisionExit(Collider2D* collider)
 	{
 	}
 

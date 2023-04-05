@@ -37,7 +37,8 @@ namespace ya
 		Vector2 GetSize() { return mSize; }
 		Vector3 GetScale() { return mScale; }
 		bool isJumpBox() { return mbJumpBox; }
-
+		bool isOn() { return mbOn; }
+		void SetOn(bool on) { mbOn = on; }
 	private:
 		static UINT ColliderNumber;
 		UINT mID;
@@ -51,5 +52,7 @@ namespace ya
 		float mRadius;
 		bool mbTrigger;
 		bool mbJumpBox;
+
+		bool mbOn;
 	};
 }

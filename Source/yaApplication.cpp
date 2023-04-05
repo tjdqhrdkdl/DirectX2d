@@ -5,6 +5,7 @@
 #include "yaSceneManager.h"
 #include "yaResources.h"
 #include "yaCollisionManager.h"
+#include "yaObject.h"
 namespace ya
 {
 	using namespace graphics;
@@ -47,6 +48,8 @@ namespace ya
 	void Application::FixedUpdate()
 	{
 		SceneManager::FixedUpdate();
+
+		object::Release();
 	}
 
 	void Application::Render()

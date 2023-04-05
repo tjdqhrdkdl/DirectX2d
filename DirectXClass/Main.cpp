@@ -134,6 +134,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    application.SetWindow(hWnd, 1600, 900);
    application.Initialize();
    editor.Initialize();
+   ShowCursor(false);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 

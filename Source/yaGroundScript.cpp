@@ -6,35 +6,42 @@
 #include "yaPlayerScript.h"
 namespace ya
 {
-	GroundScript::GroundScript()
+	Ground::Ground()
 	{
 	}
 
-	GroundScript::~GroundScript()
+	Ground::~Ground()
 	{
 	}
 
-	void GroundScript::Initialize()
+	void Ground::Initialize()
 	{
-		Collider2D* col = GetOwner()->AddComponent<Collider2D>();
+		Collider2D* col = AddComponent<Collider2D>();
 		col->Initialize();
 		col->SetType(eColliderType::Rect);
 		col->SetSize(Vector2(10, 1));
+		GameObject::Initialize();
 	}
 
-	void GroundScript::Update()
+	void Ground::Update()
 	{
+		GameObject::Update();
+
 	}
 
-	void GroundScript::FixedUpdate()
+	void Ground::FixedUpdate()
 	{
+		GameObject::FixedUpdate();
+
 	}
 
-	void GroundScript::Render()
+	void Ground::Render()
 	{
+		GameObject::Render();
+
 	}
 
-	void GroundScript::OnCollisionEnter(Collider2D* collider)
+	void Ground::OnCollisionEnter(Collider2D* collider)
 	{
 		GameObject* colObj = collider->GetOwner();
 		Rigidbody* rb = colObj->GetComponent<Rigidbody>();
@@ -42,28 +49,43 @@ namespace ya
 		{
 			rb->SetGround(true);
 			Transform* rbTr = colObj->GetComponent<Transform>();
-			Transform* grTr = GetOwner()->GetComponent<Transform>();
+			Transform* grTr = GetComponent<Transform>();
 			Vector3 rbPos = rbTr->GetPosition();
 			Vector3 grPos = grTr->GetPosition();
 
-			rbPos.y = grPos.y + colObj->GetComponent<Collider2D>()->GetScale().y;
+			rbPos.y = grPos.y + colObj->GetComponent<Collider2D>()->GetScale().y/2 + GetComponent<Collider2D>()->GetScale().y/2;
 
 			rbTr->SetPosition(rbPos);
 			
 		}
 	}
 
-	void GroundScript::OnCollisionStay(Collider2D* collider)
+	void Ground::OnCollisionStay(Collider2D* collider)
 	{
+		GameObject* colObj = collider->GetOwner();
+		Rigidbody* rb = colObj->GetComponent<Rigidbody>();
+		if (collider->isJumpBox() && rb && rb->isGround())
+		{
+			Transform* rbTr = colObj->GetComponent<Transform>();
+			Transform* grTr = GetComponent<Transform>();
+			Vector3 rbPos = rbTr->GetPosition();
+			Vector3 grPos = grTr->GetPosition();
+
+			rbPos.y = grPos.y + colObj->GetComponent<Collider2D>()->GetScale().y / 2 + GetComponent<Collider2D>()->GetScale().y / 2;
+
+			rbTr->SetPosition(rbPos);
+
+		}
 	}
 
-	void GroundScript::OnCollisionExit(Collider2D* collider)
+	void Ground::OnCollisionExit(Collider2D* collider)
 	{
 		Rigidbody* rb = collider->GetOwner()->GetComponent<Rigidbody>();
 		if (collider->isJumpBox() && rb)
 		{
-			if (rb->GetOwner()->GetComponent<PlayerScript>())
-				rb->GetOwner()->GetComponent<PlayerScript>()->Fall();
+			rb->SetGround(false);
+			if (rb->GetOwner()->GetComponent<Player>())
+				rb->GetOwner()->GetComponent<Player>()->Fall();
 		}
 	}
 

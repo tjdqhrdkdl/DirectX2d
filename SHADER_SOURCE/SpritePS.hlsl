@@ -17,7 +17,7 @@ struct VTX_OUT
     float3 vWorldPos : POSITION;
 };
 
-float4 Main(VTX_OUT _in) : SV_Target
+float4 main(VTX_OUT _in) : SV_Target
 {
     float4 color = (float) 0.0f;
         
@@ -34,9 +34,13 @@ float4 Main(VTX_OUT _in) : SV_Target
     }
     
     LightColor lightColor = (LightColor) 0.0f;
+    bool transparency = true;
+    
+    if(color.w == 1.0f)
+        transparency = false;
     for (int i = 0; i < numberOfLight; i++)
     {
-        CalculateLight(lightColor, _in.vWorldPos.xyz, i);
+        CalculateLightNoZ(lightColor, _in.vWorldPos.xyz, transparency,i);
     }
     
     color *= lightColor.diffuse;

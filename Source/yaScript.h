@@ -15,14 +15,6 @@ namespace ya
 		virtual void FixedUpdate() override;
 		virtual void Render() override;
 
-		virtual void OnCollisionEnter(Collider2D* col) {};
-		virtual void OnCollisionStay(Collider2D* col) {};
-		virtual void OnCollisionExit(Collider2D* col) {};
-
-
-		virtual void OnTriggerEnter(Collider2D* col) {};
-		virtual void OnTriggerStay(Collider2D* col) {};
-		virtual void OnTriggerExit(Collider2D* col) {};
 	private:
 
 	};

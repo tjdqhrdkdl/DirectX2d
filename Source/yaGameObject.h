@@ -2,9 +2,10 @@
 #include "yaEntity.h"
 #include "yaComponent.h"
 
-
+using namespace ya::math;
 namespace ya
 {
+	class Collider2D;
 	class GameObject : public Entity
 	{
 	public:
@@ -23,6 +24,24 @@ namespace ya
 		virtual void FixedUpdate();
 		virtual void Render();
 
+		void Restore();
+
+		eState GetState() { return mState; }
+		eLayerType GetLayerType() { return mLayerType; }
+		void SetDead() { mState = eState::Dead; }
+		bool isDead() { return mState == eState::Dead; }
+
+		void SetSize(float size);
+		float GetSize() { return mSize; }
+
+		virtual void OnCollisionEnter(Collider2D* col) {};
+		virtual void OnCollisionStay(Collider2D* col) {};
+		virtual void OnCollisionExit(Collider2D* col) {};
+
+
+		virtual void OnTriggerEnter(Collider2D* col) {};
+		virtual void OnTriggerStay(Collider2D* col) {};
+		virtual void OnTriggerExit(Collider2D* col) {};
 		void AddComponent(Component* comp);
 
 		template <typename T>
@@ -61,11 +80,22 @@ namespace ya
 			return nullptr;
 		}
 
-		eState GetState() { return mState; }
-		eLayerType GetLayerType() { return mLayerType; }
 	protected:
 		std::vector<std::vector<Component*>> mvComponents;
+		float mHp;
+		float mSize;
+		float mDamage;
+		float mSpeed;
 
+		float mMinSize;
+		float mMaxSize;
+		float mTransTime;
+		float mTransTimeChecker;
+		bool mbTransed;
+		
+		Vector3 mBaseScale;
+
+		
 	private:
 		eState mState;
 		eLayerType mLayerType;

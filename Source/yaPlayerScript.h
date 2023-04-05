@@ -1,11 +1,12 @@
 #pragma once
-#include "yaScript.h"
+#include "yaGameObject.h"
 
 namespace ya 
 {
 	class Animator;
 	class Rigidbody;
-	class PlayerScript: public Script
+	class MagicBall;
+	class Player: public GameObject
 	{
 	public:
 		enum ePlayerState
@@ -19,8 +20,8 @@ namespace ya
 
 
 		};
-		PlayerScript();
-		~PlayerScript();
+		Player();
+		~Player();
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -39,17 +40,19 @@ namespace ya
 
 		void Fall();
 		void AttackCompleteEvent();
-	
+
+		void SetHeadBall(MagicBall* ball) { mHeadBall = ball; }
 	private:
-		float mHp;
-		float mSpeed;
-		float mDamage;
-		float mSize;
 
 		float mFadeTime;
 
 		Animator* mAnimator;
 		Rigidbody* mRigidbody;
 		int mState;
+
+		MagicBall* mHeadBall;
+		std::vector<MagicBall*> mBalls;
+		UINT mHeadNum;
+
 	};
 }

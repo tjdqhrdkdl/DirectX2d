@@ -44,7 +44,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableUnitySupport>false</EnableUnitySupport>
+    <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -162,6 +162,7 @@
     <ClInclude Include="yaAnimation.h" />
     <ClInclude Include="yaAnimator.h" />
     <ClInclude Include="yaApplication.h" />
+    <ClInclude Include="yaBackSky.h" />
     <ClInclude Include="yaBaseRenderer.h" />
     <ClInclude Include="yaCamEffectScript.h" />
     <ClInclude Include="yaCamera.h" />
@@ -181,10 +182,14 @@
     <ClInclude Include="yaInput.h" />
     <ClInclude Include="yaLayer.h" />
     <ClInclude Include="yaLight.h" />
+    <ClInclude Include="yaMagicBall.h" />
+    <ClInclude Include="yaMagicBullet.h" />
     <ClInclude Include="yaMaterial.h" />
     <ClInclude Include="yaMath.h" />
     <ClInclude Include="yaMesh.h" />
     <ClInclude Include="yaMeshRenderer.h" />
+    <ClInclude Include="yaMonster.h" />
+    <ClInclude Include="yaMouseCursor.h" />
     <ClInclude Include="yaObject.h" />
     <ClInclude Include="yaPlayerScript.h" />
     <ClInclude Include="yaPlayScene.h" />
@@ -209,6 +214,7 @@
     <ClCompile Include="yaAnimation.cpp" />
     <ClCompile Include="yaAnimator.cpp" />
     <ClCompile Include="yaApplication.cpp" />
+    <ClCompile Include="yaBackSky.cpp" />
     <ClCompile Include="yaBaseRenderer.cpp" />
     <ClCompile Include="yaCamEffectScript.cpp" />
     <ClCompile Include="yaCamera.cpp" />
@@ -226,10 +232,14 @@
     <ClCompile Include="yaInput.cpp" />
     <ClCompile Include="yaLayer.cpp" />
     <ClCompile Include="yaLight.cpp" />
+    <ClCompile Include="yaMagicBall.cpp" />
+    <ClCompile Include="yaMagicBullet.cpp" />
     <ClCompile Include="yaMaterial.cpp" />
     <ClCompile Include="yaMath.cpp" />
     <ClCompile Include="yaMesh.cpp" />
     <ClCompile Include="yaMeshRenderer.cpp" />
+    <ClCompile Include="yaMonster.cpp" />
+    <ClCompile Include="yaMouseCursor.cpp" />
     <ClCompile Include="yaPlayerScript.cpp" />
     <ClCompile Include="yaPlayScene.cpp" />
     <ClCompile Include="yaRenderer.cpp" />

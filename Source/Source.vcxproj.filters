@@ -104,6 +104,21 @@
     <Filter Include="Component\RigidBody">
       <UniqueIdentifier>{5737df80-d475-4d07-b968-837c4c895cc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Contents\MagicBall">
+      <UniqueIdentifier>{4e966d92-f7f9-40da-aa03-38d963bf000d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\MouseCursor">
+      <UniqueIdentifier>{e0ed5041-951b-4c54-be53-d86390f13d2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Monster">
+      <UniqueIdentifier>{ceb76c1c-03ee-49ef-af3e-19f3ffb81447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Background">
+      <UniqueIdentifier>{2c787347-22cf-45f9-8bec-94b912238f74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Background\Sky">
+      <UniqueIdentifier>{44ceaf5c-0af9-4228-b685-66ba3b488d21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="yaMath.cpp">
@@ -221,6 +236,21 @@
       <Filter>Component\RigidBody</Filter>
     </ClCompile>
     <ClCompile Include="yaComputeShader.cpp" />
+    <ClCompile Include="yaMagicBall.cpp">
+      <Filter>Contents\MagicBall</Filter>
+    </ClCompile>
+    <ClCompile Include="yaMagicBullet.cpp">
+      <Filter>Contents\MagicBall</Filter>
+    </ClCompile>
+    <ClCompile Include="yaMouseCursor.cpp">
+      <Filter>Contents\MouseCursor</Filter>
+    </ClCompile>
+    <ClCompile Include="yaMonster.cpp">
+      <Filter>Contents\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="yaBackSky.cpp">
+      <Filter>Contents\Background\Sky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonInclude.h" />
@@ -352,6 +382,21 @@
       <Filter>Component\RigidBody</Filter>
     </ClInclude>
     <ClInclude Include="yaComputeShader.h" />
+    <ClInclude Include="yaMagicBall.h">
+      <Filter>Contents\MagicBall</Filter>
+    </ClInclude>
+    <ClInclude Include="yaMagicBullet.h">
+      <Filter>Contents\MagicBall</Filter>
+    </ClInclude>
+    <ClInclude Include="yaMouseCursor.h">
+      <Filter>Contents\MouseCursor</Filter>
+    </ClInclude>
+    <ClInclude Include="yaMonster.h">
+      <Filter>Contents\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="yaBackSky.h">
+      <Filter>Contents\Background\Sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="yaMath.inl">
