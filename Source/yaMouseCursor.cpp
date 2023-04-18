@@ -26,7 +26,7 @@ namespace ya
 		tr->SetScale(Vector3(1.0, 1.0, 1));
 
 		SpriteRenderer* sr = AddComponent<SpriteRenderer>();
-		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"CircleMesh");
+		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
 		shared_ptr<Material> material = Resources::Find<Material>(L"RectMaterial");
 		sr->SetMaterial(material);
 		sr->SetMesh(mesh);

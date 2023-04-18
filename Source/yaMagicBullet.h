@@ -9,8 +9,9 @@ namespace ya
 		enum class eMagicBulletType
 		{
 			None,
-			Red,
-			Blue,
+			XBall,
+			YBall,
+			ZBall,
 		};
 
 		MagicBullet();
@@ -26,8 +27,10 @@ namespace ya
 		virtual void OnCollisionExit(Collider2D* col) ;
 
 		void SetDir(Vector3 dir) { mDir = dir; }
+		void SetType(eMagicBulletType type);
 
 	private:
+		eMagicBulletType mType;
 		float mSpeed;
 		Vector3 mDir;
 

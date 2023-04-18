@@ -28,6 +28,7 @@ namespace ya
 
 		eState GetState() { return mState; }
 		eLayerType GetLayerType() { return mLayerType; }
+		void SetLayerType(eLayerType type) { mLayerType = type; }
 		void SetDead() { mState = eState::Dead; }
 		bool isDead() { return mState == eState::Dead; }
 

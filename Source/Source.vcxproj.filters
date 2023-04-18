@@ -202,7 +202,7 @@
     <ClCompile Include="yaTitleScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="yaPlayerScript.cpp">
+    <ClCompile Include="yaPlayer.cpp">
       <Filter>Contents\Player</Filter>
     </ClCompile>
     <ClCompile Include="yaConstantBuffer.cpp">
@@ -345,7 +345,7 @@
     <ClInclude Include="yaTitleScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="yaPlayerScript.h">
+    <ClInclude Include="yaPlayer.h">
       <Filter>Contents\Player</Filter>
     </ClInclude>
     <ClInclude Include="yaConstantBuffer.h">

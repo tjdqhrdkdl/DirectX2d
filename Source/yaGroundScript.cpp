@@ -3,7 +3,7 @@
 #include "yaGameObject.h"
 #include "yaTransform.h"
 #include "yaCollider2D.h"
-#include "yaPlayerScript.h"
+#include "yaPlayer.h"
 namespace ya
 {
 	Ground::Ground()
@@ -45,18 +45,28 @@ namespace ya
 	{
 		GameObject* colObj = collider->GetOwner();
 		Rigidbody* rb = colObj->GetComponent<Rigidbody>();
+		Transform* colTr = colObj->GetComponent<Transform>();
+		Transform* grTr = GetComponent<Transform>();
+		Vector3 colPos = colTr->GetPosition();
+		Vector3 grPos = grTr->GetPosition();
+		Collider2D* grCol = GetComponent<Collider2D>();
 		if (collider->isJumpBox() && rb && rb->isFalling())
 		{
-			rb->SetGround(true);
-			Transform* rbTr = colObj->GetComponent<Transform>();
-			Transform* grTr = GetComponent<Transform>();
-			Vector3 rbPos = rbTr->GetPosition();
-			Vector3 grPos = grTr->GetPosition();
+			if (colPos.y + colObj->GetComponent<Collider2D>()->GetScale().y / 2  < grPos.y + grCol->GetScale().y / 2)
+			{
+				if (colPos.x < grPos.x)
+					colPos.x = grPos.x - grCol->GetScale().x / 2 - colObj->GetComponent<Collider2D>()->GetScale().x/2 - 0.05;
+				else
+					colPos.x = grPos.x + grCol->GetScale().x / 2 + colObj->GetComponent<Collider2D>()->GetScale().x / 2 + 0.05;
 
-			rbPos.y = grPos.y + colObj->GetComponent<Collider2D>()->GetScale().y/2 + GetComponent<Collider2D>()->GetScale().y/2;
+			}
+			else
+			{
+				rb->SetGround(true);
+				colPos.y = grPos.y + colObj->GetComponent<Collider2D>()->GetScale().y / 2 + grCol->GetScale().y / 2;
+			}
 
-			rbTr->SetPosition(rbPos);
-			
+			colTr->SetPosition(colPos);
 		}
 	}
 
@@ -76,6 +86,20 @@ namespace ya
 			rbTr->SetPosition(rbPos);
 
 		}
+		else if (collider->isJumpBox() && rb && !(rb->isGround()))
+		{
+
+			Transform* colTr = colObj->GetComponent<Transform>();
+			Transform* grTr = GetComponent<Transform>();
+			Vector3 colPos = colTr->GetPosition();
+			Vector3 grPos = grTr->GetPosition();
+			Collider2D* grCol = GetComponent<Collider2D>();
+			if (colPos.y + colObj->GetComponent<Collider2D>()->GetScale().y / 2 < grPos.y + grCol->GetScale().y / 2)
+			{
+				if (colPos.x < grPos.x)
+					colPos.x -= 0.01;
+			}
+		}
 	}
 
 	void Ground::OnCollisionExit(Collider2D* collider)
@@ -84,8 +108,8 @@ namespace ya
 		if (collider->isJumpBox() && rb)
 		{
 			rb->SetGround(false);
-			if (rb->GetOwner()->GetComponent<Player>())
-				rb->GetOwner()->GetComponent<Player>()->Fall();
+			if (rb->GetOwner()->GetLayerType()== eLayerType::Player)
+				dynamic_cast<Player*>(rb->GetOwner())->Fall();
 		}
 	}
 

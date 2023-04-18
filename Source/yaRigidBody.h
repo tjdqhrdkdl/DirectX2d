@@ -23,10 +23,14 @@ namespace ya
 			void SetVelocity(Vector3 velocity) { mVelocity = velocity; }
 			void SetGravity(Vector3 gravity) { mGravity = gravity; }
 
+			void PushX(float x) { mForce.x += x; mbPushed = true; }
+			void PushY(float y) { mForce.y += y; mbPushed = true; }
+
 		private:
 			// 힘과 마찰력을 이용한 이동
 			float mMass;
 			float mFriction;
+
 			//float mMoveFriction;
 			Vector3 mForce;
 			Vector3 mVelocity;
@@ -34,6 +38,7 @@ namespace ya
 
 			// 중력 이용한 점프
 			Vector3 mGravity;
+			bool mbPushed;
 			bool mbGround;
 			Vector3 mLimitVelocity;
 

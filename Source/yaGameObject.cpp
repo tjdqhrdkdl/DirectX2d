@@ -7,7 +7,7 @@ namespace ya
 	GameObject::GameObject()
 		: mState(eState::Active)
 		, mSize(1.0f)
-		, mMinSize(0.5f)
+		, mMinSize(0.3f)
 		, mMaxSize(2)
 		, mbTransed(false)
 		, mTransTime(5.0f)

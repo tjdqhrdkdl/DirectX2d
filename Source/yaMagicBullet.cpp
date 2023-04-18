@@ -1,11 +1,13 @@
 #include "yaMagicBullet.h"
 #include "yaTransform.h"
 #include "yaSpriteRenderer.h"
-#include "yaResources.h"
 #include "yaAnimator.h"
 #include "yaCollider2D.h"
-
+#include "yaRigidBody.h"
 #include "yaLight.h"
+
+
+#include "yaResources.h"
 #include "yaTime.h"
 #include "yaObject.h"
 
@@ -34,11 +36,15 @@ namespace ya
 		sr->SetMesh(mesh);
 
 		Animator* animator = AddComponent<Animator>();
-		shared_ptr<Texture> atlas = Resources::Load<Texture>(L"ElectricBall", L"ElectricBall//ElectricBall.png");
+		shared_ptr<Texture> atlasBlue = Resources::Find<Texture>(L"ElectricBallBlue");
+		shared_ptr<Texture> atlasRed =  Resources::Find<Texture>(L"ElectricBallRed");
+		shared_ptr<Texture> atlasYellow= Resources::Find<Texture>(L"ElectricBallYellow");
 
-		animator->Create(L"Idle", atlas, Vector2(0, 0), Vector2(50, 50), Vector2::Zero, 1, 0.3f);
+		animator->Create(L"BlueIdle", atlasBlue, Vector2(0, 0), Vector2(50, 50), Vector2::Zero, 1, 0.3f);
+		animator->Create(L"RedIdle", atlasRed, Vector2(0, 0), Vector2(50, 50), Vector2::Zero, 1, 0.3f);
+		animator->Create(L"YellowIdle", atlasYellow, Vector2(0, 0), Vector2(50, 50), Vector2::Zero, 1, 0.3f);
 
-		animator->Play(L"Idle", false);
+		animator->Play(L"BlueIdle", false);
 
 		Light* lightComp = AddComponent<Light>();
 		lightComp->SetType(eLightType::Point);
@@ -85,7 +91,21 @@ namespace ya
 		}
 		else
 		{
-			colObj->SetSize(colObj->GetSize() - 0.3f);
+			Rigidbody* colRb = colObj->GetComponent<Rigidbody>();
+			switch (mType)
+			{
+			case eMagicBulletType::XBall:
+				colRb->PushX(20);
+				break;
+			case eMagicBulletType::YBall:
+				colRb->PushY(10);
+				break;
+			case eMagicBulletType::ZBall:
+				colObj->SetSize(colObj->GetSize() - 1.0f);
+				break;
+			default:
+				break;
+			}
 			SetDead();
 		}
 	}
@@ -96,6 +116,28 @@ namespace ya
 
 	void MagicBullet::OnCollisionExit(Collider2D* col)
 	{
+	}
+
+	void MagicBullet::SetType(eMagicBulletType type)
+	{
+		Animator* animator = GetComponent<Animator>();
+		mType = type;
+		switch (mType)
+		{
+		case ya::MagicBullet::eMagicBulletType::None:
+			break;
+		case ya::MagicBullet::eMagicBulletType::XBall:
+			animator->Play(L"RedIdle", false);
+			break;
+		case ya::MagicBullet::eMagicBulletType::YBall:
+			animator->Play(L"YellowIdle", false);
+			break;
+		case ya::MagicBullet::eMagicBulletType::ZBall:
+			animator->Play(L"BlueIdle", false);
+			break;
+		default:
+			break;
+		}
 	}
 
 }

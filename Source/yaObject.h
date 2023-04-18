@@ -14,7 +14,7 @@ namespace ya::object
 		Scene* scene = SceneManager::GetPlayScene();
 		Layer& layer = scene->GetLayer(type);
 		layer.AddGameObject(gameObj);
-
+		gameObj->SetLayerType(type);
 		return gameObj;
 	}
 
@@ -24,6 +24,7 @@ namespace ya::object
 		T* gameObj = new T();
 		Layer& layer = scene->GetLayer(type);
 		layer.AddGameObject(gameObj);
+		gameObj->SetLayerType(type);
 
 		return gameObj;
 	}
@@ -38,6 +39,7 @@ namespace ya::object
 
 		Transform* tr = gameObj->GameObject::GetComponent<Transform>();
 		tr->SetParent(parent);
+		gameObj->SetLayerType(type);
 
 		return gameObj;
 	}
@@ -49,6 +51,7 @@ namespace ya::object
 		Scene* scene = SceneManager::GetPlayScene();
 		Layer& layer = scene->GetLayer(type);
 		layer.AddGameObject(gameObj);
+		gameObj->SetLayerType(type);
 
 		Transform* tr = gameObj->GameObject::GetComponent<Transform>();
 		tr->SetPosition(position);
@@ -69,6 +72,7 @@ namespace ya::object
 		tr->SetPosition(position);
 		tr->SetRotation(rotation);
 		tr->SetParent(parent);
+		gameObj->SetLayerType(type);
 
 		return gameObj;
 	}

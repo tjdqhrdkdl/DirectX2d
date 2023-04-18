@@ -5,6 +5,7 @@
 using namespace ya::math;
 namespace ya
 {
+	class Player;
 	class MagicBall : public GameObject
 	{
 	public:
@@ -17,19 +18,27 @@ namespace ya
 		void Render()override;
 
 		void Revolove();
-		void Shoot();
+		bool Shoot();
 		void Shine();
-		void SetPlayer(GameObject* pl) { mOwnerPlayer = pl; }
+		void Activate();
+		void SetPlayer(Player* pl);
 
+		void SetType(MagicBullet::eMagicBulletType type) { mType = type; }
+		void SetTheta(float theta) { mTheta = theta; }
+		void SetHead(bool head) { mbHead = head; }
 	private:
-		float mTheta;
 		Vector3 mPos;
-		GameObject* mOwnerPlayer;
+		MagicBullet::eMagicBulletType mType;
+		Player* mOwnerPlayer;
 
+		float mTheta;
 		float mBrightness;
 		float mMaxBrightness;
+		float mActiveTimeChecker;
 
 		bool mbLightUp;
-		MagicBullet::eMagicBulletType mType;
+		bool mbHead;
+		bool mbActive;
+
 	};
 }

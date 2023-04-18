@@ -36,12 +36,14 @@ namespace ya
 		void SetAnimation();
 		void Move();
 		void Attack();
+		void Shoot();
 		void Jump();
 
 		void Fall();
 		void AttackCompleteEvent();
 
-		void SetHeadBall(MagicBall* ball) { mHeadBall = ball; }
+		void SetHeadBall(MagicBall* ball);
+		void AddBall(MagicBall* ball) { mBalls.push_back(ball); }
 	private:
 
 		float mFadeTime;

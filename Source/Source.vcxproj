@@ -191,7 +191,7 @@
     <ClInclude Include="yaMonster.h" />
     <ClInclude Include="yaMouseCursor.h" />
     <ClInclude Include="yaObject.h" />
-    <ClInclude Include="yaPlayerScript.h" />
+    <ClInclude Include="yaPlayer.h" />
     <ClInclude Include="yaPlayScene.h" />
     <ClInclude Include="yaRenderer.h" />
     <ClInclude Include="yaEngine.h" />
@@ -240,7 +240,7 @@
     <ClCompile Include="yaMeshRenderer.cpp" />
     <ClCompile Include="yaMonster.cpp" />
     <ClCompile Include="yaMouseCursor.cpp" />
-    <ClCompile Include="yaPlayerScript.cpp" />
+    <ClCompile Include="yaPlayer.cpp" />
     <ClCompile Include="yaPlayScene.cpp" />
     <ClCompile Include="yaRenderer.cpp" />
     <ClCompile Include="yaResource.cpp" />

@@ -11,7 +11,7 @@
 #include "yaLight.h"
 #include "yaRigidBody.h"
 
-#include "yaPlayerScript.h"
+#include "yaPlayer.h"
 #include "yaGroundScript.h"
 #include "yaMouseCursor.h"
 #include "yaMagicBall.h"
@@ -49,9 +49,9 @@ namespace ya
 		//}
 
 		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Ground, true);
+		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Monster, true);
 		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::PlayerProjectTile, true);
 		CollisionManager::CollisionLayerCheck(eLayerType::Monster, eLayerType::Ground, true);
-		CollisionManager::CollisionLayerCheck(eLayerType::Player, eLayerType::Monster, true);
 		CollisionManager::CollisionLayerCheck(eLayerType::Monster, eLayerType::PlayerProjectTile, true);
 
 
@@ -91,21 +91,36 @@ namespace ya
 			//Ground
 			Ground* ground = object::Instantiate<Ground>(eLayerType::Ground);
 			Transform* tr = ground->GetComponent<Transform>();
-			tr->SetPosition(Vector3(0, -1, 0));
+			tr->SetPosition(Vector3(0, -5, 0));
+			tr->SetScale(Vector3(1, 10, 1));
 
 			//MagicBall
 			MagicBall* ball = object::Instantiate<MagicBall>(eLayerType::PlayerProjectTile);
 			ball->SetPlayer(player);
+			ball->SetType(MagicBullet::eMagicBulletType::XBall);
+			//MagicBall2
+			MagicBall* ball2 = object::Instantiate<MagicBall>(eLayerType::PlayerProjectTile);
+			ball2->SetPlayer(player);
+			ball2->SetTheta(XM_2PI / 3);
+			ball2->SetType(MagicBullet::eMagicBulletType::YBall);
+
+			//MagicBall3
+			MagicBall* ball3 = object::Instantiate<MagicBall>(eLayerType::PlayerProjectTile);
+			ball3->SetPlayer(player);
+			ball3->SetTheta(XM_2PI *2/ 3);
+			ball3->SetType(MagicBullet::eMagicBulletType::ZBall);
+
+
 			player->SetHeadBall(ball);
 
-			//MagicBall
+			//Cursor
 			object::Instantiate<MouseCursor>(eLayerType::UI);
 
 			//monster
 			object::Instantiate<Monster>(eLayerType::Monster);
 
 			//BackSky
-			object::Instantiate<BackSky>(eLayerType::None);
+			object::Instantiate<BackSky>(eLayerType::Ground);
 
 
 		}

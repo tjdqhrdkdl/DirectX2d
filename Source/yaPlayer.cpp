@@ -1,4 +1,4 @@
-#include "yaPlayerScript.h"
+#include "yaPlayer.h"
 #include "yaTransform.h"
 #include "yaSpriteRenderer.h"
 #include "yaResources.h"
@@ -28,7 +28,7 @@ namespace ya
 	{	
 		mBaseScale = Vector3(2, 2, 1);
 		Transform* playerTr = GetComponent<Transform>();
-		playerTr->SetPosition(Vector3(0, 3, 10));
+		playerTr->SetPosition(Vector3(0, 5, 10));
 		playerTr->SetScale(Vector3(2, 2, 1));
 
 		SpriteRenderer* playerSr = AddComponent<SpriteRenderer>();
@@ -46,7 +46,7 @@ namespace ya
 
 		Collider2D* jumpCol = AddComponent<Collider2D>();
 		jumpCol->SetType(eColliderType::Rect);
-		jumpCol->SetSize(Vector2(0.05, 0.05));
+		jumpCol->SetSize(Vector2(0.2, 0.05));
 		jumpCol->SetCenter(Vector2(0, -0.4));
 		bodyCol->SetJumpBox(true);
 		jumpCol->Initialize();
@@ -161,12 +161,12 @@ namespace ya
 
 		if (Input::GetKeyDown(eKeyCode::T))
 		{
-			GetComponent<Transform>()->SetPosition(Vector3(0, 2, 0));
+			GetComponent<Transform>()->SetPosition(Vector3(0, 2, 10));
 		}
 
 		if (Input::GetKeyDown(eKeyCode::LBTN))
 		{
-			mHeadBall->Shoot();
+			Shoot();
 		}
 	}
 
@@ -239,6 +239,16 @@ namespace ya
 	{
 	}
 
+	void Player::Shoot()
+	{
+		if (mHeadBall->Shoot())
+		{
+			if (++mHeadNum > mBalls.size() - 1)
+				mHeadNum = 0;
+			SetHeadBall(mBalls[mHeadNum]);
+		}
+	}
+
 	void Player::Jump()
 	{
 		if (mRigidbody->isGround())
@@ -254,6 +264,12 @@ namespace ya
 	void Player::AttackCompleteEvent()
 	{
 		RM_STATE(PlayerState_Attack);
+	}
+
+	void Player::SetHeadBall(MagicBall* ball)
+	{ 
+		mHeadBall = ball;
+		ball->SetHead(true);
 	}
 
 	void Player::OnCollisionEnter(Collider2D* collider)

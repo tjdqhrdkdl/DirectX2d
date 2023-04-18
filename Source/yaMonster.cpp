@@ -25,6 +25,7 @@ namespace ya
 
 		Transform* tr = GetComponent<Transform>();
 		tr->SetScale(Vector3(4.0f, 4.0f, 1));
+		tr->SetPosition(Vector3(0, 5, 10));
 
 		SpriteRenderer* sr = AddComponent<SpriteRenderer>();
 		shared_ptr<Mesh> mesh = Resources::Find<Mesh>(L"RectMesh");
